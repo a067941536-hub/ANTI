@@ -1,0 +1,4398 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTI 內在動物特質分析系統</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            /* 白天模式 - 療癒溫室與繽紛馬卡龍 */
+            --bg-gradient: linear-gradient(135deg, #f2faf4 0%, #edf7f5 50%, #f6f0fa 100%);
+            --panel-bg: rgba(255, 255, 255, 0.88);
+            --panel-border: rgba(129, 199, 132, 0.35);
+            --text-primary: #12241a;
+            --text-secondary: #4a6154;
+            --primary-glow: #51b055;
+            
+            --color-aesthetic: #9575cd; /* 薰衣草紫 */
+            --color-social: #ff7043;    /* 陽光暖橘 */
+            --color-stress: #fbc02d;    /* 向日葵黃 */
+            --color-cognitive: #26a69a; /* 活力青綠 */
+            --color-drive: #ec407a;     /* 蜜桃粉紅 */
+            
+            --btn-start-bg: linear-gradient(135deg, #66bb6a 0%, #26a69a 100%);
+            --btn-catalog-bg: linear-gradient(135deg, #9575cd 0%, #ec407a 100%);
+            --orb-1: rgba(102, 187, 106, 0.22);
+            --orb-2: rgba(255, 112, 67, 0.18);
+            --orb-3: rgba(149, 117, 205, 0.22);
+            
+            --shadow-primary: 0 25px 60px rgba(18, 36, 26, 0.08);
+            --glass-blur: blur(25px);
+            --nav-bg: rgba(255, 255, 255, 0.7);
+        }
+
+        [data-theme="dark"] {
+            /* 夜晚模式 - 暗夜極光與霓虹流光 */
+            --bg-gradient: linear-gradient(135deg, #050a07 0%, #08120e 50%, #0d0614 100%);
+            --panel-bg: rgba(10, 20, 15, 0.88);
+            --panel-border: rgba(0, 255, 204, 0.25);
+            --text-primary: #e0f2f1;
+            --text-secondary: #8da499;
+            --primary-glow: #00ffcc;
+            
+            --color-aesthetic: #b388ff; /* 霓虹迷幻紫 */
+            --color-social: #ff6e40;    /* 熾熱熔岩橘 */
+            --color-stress: #ffd740;    /* 螢光太陰黃 */
+            --color-cognitive: #00ffff; /* 電光冰晶藍 */
+            --color-drive: #ff4081;     /* 狂野霓虹粉 */
+            
+            --btn-start-bg: linear-gradient(135deg, #00ffcc 0%, #00ffff 100%);
+            --btn-catalog-bg: linear-gradient(135deg, #b388ff 0%, #ff4081 100%);
+            --orb-1: rgba(0, 255, 204, 0.15);
+            --orb-2: rgba(0, 240, 255, 0.12);
+            --orb-3: rgba(255, 64, 129, 0.12);
+            
+            --shadow-primary: 0 25px 60px rgba(0, 255, 204, 0.06);
+            --nav-bg: rgba(8, 16, 12, 0.75);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background 0.4s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 滾動條美化 */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--panel-border);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-glow);
+        }
+
+        .ambient-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            animation: floatOrb 25s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--orb-1);
+            top: -10%;
+            right: 5%;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: var(--orb-2);
+            bottom: -15%;
+            left: 5%;
+            animation-delay: -6s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: var(--orb-3);
+            top: 35%;
+            left: 45%;
+            transform: translate(-50%, -50%);
+            animation-delay: -12s;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(70px, -50px) scale(1.15); }
+            100% { transform: translate(-50px, 60px) scale(0.9); }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            background: var(--nav-bg);
+            backdrop-filter: var(--glass-blur);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid transparent;
+            transition: padding 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 12px 40px;
+            border-bottom-color: var(--panel-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            background: var(--nav-bg);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Comfortaa', cursive;
+            font-weight: 700;
+            font-size: 26px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        .brand i {
+            color: var(--primary-glow);
+            font-size: 28px;
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .music-panel {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            padding: 4px 14px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .icon-btn {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        .icon-btn:hover {
+            transform: scale(1.05);
+            border-color: var(--primary-glow);
+            color: var(--primary-glow);
+        }
+
+        .music-playing i {
+            animation: rotateMusic 4s infinite linear;
+        }
+
+        @keyframes rotateMusic {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        /* 滿版 Landing Page 多重滾動區段 */
+        .landing-scroll-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-viewport-section {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 24px 60px;
+            position: relative;
+        }
+
+        /* Scroll-Reveal Class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 35px;
+            padding: 40px;
+            box-shadow: var(--shadow-primary);
+            backdrop-filter: var(--glass-blur);
+            position: relative;
+            overflow: hidden;
+            margin: 100px auto 40px;
+        }
+
+        .screen {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-title-area {
+            max-width: 900px;
+            margin-bottom: 45px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            background: rgba(102, 187, 106, 0.12);
+            color: var(--primary-glow);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-bottom: 25px;
+            border: 1px solid var(--panel-border);
+            text-transform: uppercase;
+        }
+
+        .hero-title-area h1 {
+            font-family: 'Comfortaa', cursive;
+            font-size: clamp(38px, 6vw, 72px);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, var(--text-primary) 20%, var(--primary-glow) 100%);
+    
+    /* 這裡加上標準屬性，通常就能消除警告 */
+            -webkit-background-clip: text;
+            background-clip: text; 
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-title-area p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .hero-actions-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 15px;
+        }
+
+        .landing-card-btn {
+            flex: 1;
+            min-width: 320px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 30px;
+            padding: 40px 30px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .landing-card-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--card-glow);
+        }
+
+        .landing-card-btn .card-icon {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--panel-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--card-text-color);
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+        }
+
+        .landing-card-btn h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .landing-card-btn p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .btn-glow-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            border-radius: 30px;
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 15px;
+            background: var(--card-glow);
+            border: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .landing-card-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+            border-color: var(--card-text-color);
+        }
+
+        /* 滾動指引 */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* 5 大維度專屬精美卡片 */
+        .dimension-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.02);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .dimension-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 6px;
+            height: 100%;
+            background: var(--dim-color);
+        }
+
+        .dimension-card .dim-icon {
+            color: var(--dim-color);
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        /* 首頁動物交互展示區 */
+        .showcase-tab {
+            cursor: pointer;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 15px;
+            border: 1px solid var(--panel-border);
+            background: var(--panel-bg);
+            color: var(--text-secondary);
+        }
+
+        .showcase-tab.active {
+            background: var(--primary-glow);
+            color: #ffffff;
+            border-color: var(--primary-glow);
+            box-shadow: 0 8px 20px rgba(81, 176, 85, 0.25);
+        }
+
+        /* FAQ 風琴拉簾 */
+        .faq-item {
+            border-bottom: 1px solid var(--panel-border);
+            padding: 20px 0;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, margin-top 0.4s ease;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            margin-top: 15px;
+        }
+
+        .faq-item.active .faq-toggle-icon {
+            transform: rotate(180deg);
+            color: var(--primary-glow);
+        }
+
+        /* 測驗進度 */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .quiz-category {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            padding: 6px 16px;
+            border-radius: 30px;
+            background: var(--cat-bg);
+            color: var(--cat-color);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .quiz-counter {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar-wrapper {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 45px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--panel-border);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--color-aesthetic), var(--color-social), var(--color-stress), var(--color-cognitive), var(--color-drive));
+            border-radius: 10px;
+            transition: width 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
+        }
+
+        .question-card {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 10px;
+        }
+
+        .question-card h2 {
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .options-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--panel-border);
+            padding: 24px 28px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: left;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+            height: 100%;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--cat-color);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+        }
+
+        .option-btn .option-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid var(--panel-border);
+            font-size: 14px;
+            font-weight: 800;
+            margin-right: 15px;
+            flex-shrink: 0;
+            color: var(--cat-color);
+        }
+
+        .animal-canvas-wrapper {
+            width: 100%;
+            max-width: 320px;
+            height: 320px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--panel-border);
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin: 0 auto;
+        }
+
+        .animal-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .option-btn .option-text {
+            flex-grow: 1;
+            line-height: 1.4;
+        }
+
+        .option-btn i {
+            font-size: 18px;
+            color: var(--cat-color);
+            opacity: 0;
+            transform: translateX(10px);
+            transition: opacity 0.2s, transform 0.2s;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        .option-btn:hover i {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid var(--panel-border);
+        }
+
+        .btn-prev {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-prev:hover {
+            color: var(--primary-glow);
+        }
+
+        .catalog-header {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .catalog-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .catalog-search-bar {
+            width: 100%;
+            max-width: 320px;
+            position: relative;
+        }
+
+        .catalog-search-bar input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 30px;
+            border: 1px solid var(--panel-border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .catalog-search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 15px rgba(102, 187, 106, 0.2);
+        }
+
+        .catalog-search-bar i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-tags-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            border: 1px solid var(--panel-border);
+            background: rgba(255,255,255,0.02);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .filter-tag:hover {
+            border-color: var(--primary-glow);
+            color: var(--primary-glow);
+        }
+
+        .filter-tag.active {
+            background: var(--primary-glow);
+            color: #ffffff;
+            border-color: var(--primary-glow);
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .catalog-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--panel-border);
+            border-radius: 22px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.01);
+        }
+
+        .catalog-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-glow);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+        }
+
+        .catalog-card h4 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .catalog-card .card-mbti {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 800;
+            background: var(--primary-glow);
+            color: #ffffff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .catalog-card .card-cat {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 30px;
+            padding: 35px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--color-drive);
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .toast-msg {
+            background: var(--panel-bg);
+            border: 1.5px solid var(--primary-glow);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            color: var(--text-primary);
+            padding: 16px 28px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: toastIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, toastOut 0.3s ease 2.7s forwards;
+            backdrop-filter: var(--glass-blur);
+            pointer-events: auto;
+        }
+
+        @keyframes toastIn {
+            from { transform: translateY(50px) scale(0.8); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        @keyframes toastOut {
+            from { transform: translateY(0) scale(1); opacity: 1; }
+            to { transform: translateY(-20px) scale(0.8); opacity: 0; }
+        }
+
+        .loading-wrapper {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .loader {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+        }
+
+        .loader-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 6px solid transparent;
+            border-top-color: var(--primary-glow);
+            border-radius: 50%;
+            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .loader-ring:nth-child(2) {
+            border-top-color: var(--color-drive);
+            animation-duration: 1.8s;
+        }
+
+        .loader-ring:nth-child(3) {
+            border-top-color: var(--color-cognitive);
+            animation-duration: 2.4s;
+        }
+
+        .loader-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            color: var(--text-primary);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+        }
+
+        .loading-text {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .loading-subtext {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .result-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .result-layout {
+                grid-template-columns: 1.1fr 0.9fr;
+            }
+        }
+
+        .result-left {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .result-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .match-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .match-card .percentage {
+            font-family: 'Comfortaa', cursive;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary-glow);
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+        }
+
+        .match-card h1 {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .mbti-tag {
+            background: var(--mbti-color, var(--primary-glow));
+            color: #12241a;
+            font-weight: 900;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .animal-classification {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--panel-border);
+        }
+
+        .analysis-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .analysis-box h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analysis-box h3 i {
+            color: var(--primary-glow);
+        }
+
+        .analysis-box p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .radar-chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            padding: 30px;
+        }
+
+        .radar-chart-container h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .radar-svg {
+            overflow: visible;
+        }
+
+        .radar-grid-line {
+            stroke: var(--panel-border);
+            stroke-width: 1;
+            fill: none;
+        }
+
+        .radar-axis-line {
+            stroke: var(--panel-border);
+            stroke-width: 1;
+        }
+
+        .radar-axis-text {
+            fill: var(--text-primary);
+            font-size: 10px;
+            font-weight: 700;
+            text-anchor: middle;
+        }
+
+        .radar-polygon {
+            fill: rgba(0, 255, 204, 0.2);
+            stroke: var(--primary-glow);
+            stroke-width: 2.5;
+            transition: all 0.5s ease;
+        }
+
+        .radar-point {
+            fill: #ffffff;
+            stroke: var(--primary-glow);
+            stroke-width: 2;
+        }
+
+        .similar-matches-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .similar-matches-box h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .similar-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .similar-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .similar-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .similar-mbti {
+            font-size: 12px;
+            font-weight: 800;
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+
+        .similar-bar-bg {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin: 0 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .similar-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--primary-glow);
+        }
+
+        .similar-pct {
+            font-family: 'Comfortaa', cursive;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            min-width: 45px;
+            text-align: right;
+        }
+
+        .prompt-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--panel-border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 24px;
+            position: relative;
+        }
+
+        .prompt-box h4 {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--primary-glow);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .prompt-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-style: italic;
+            word-break: break-all;
+            background: rgba(0,0,0,0.15);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .btn-copy {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: fit-content;
+            margin-left: auto;
+        }
+
+        .radar-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .bottom-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn-restart {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--panel-border);
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- 音樂 HTML5 MP3 播放核心元件：更換為您指定的本地/相對路徑 Music.mp3 -->
+    <audio id="bg-music" loop src="Music.mp3"></audio>
+    <!-- 動態光暈背景 -->
+    <div class="ambient-background">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <header id="app-header">
+        <div class="brand" id="logo-anti">
+            <i class="fa-solid fa-compass-drafting"></i>
+            <span>ANTI</span>
+        </div>
+        <div class="header-actions">
+            <!-- 音樂播放與音量控制器 -->
+            <div class="music-panel">
+                <button class="icon-btn !border-0 !shadow-none !w-8 !h-8" id="music-toggle" aria-label="播放背景音樂">
+                    <i class="fa-solid fa-volume-xmark"></i>
+                </button>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5" class="w-16 h-1 bg-gray-300 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-emerald-500 hover:accent-emerald-400 transition" aria-label="音量調節">
+            </div>
+            <!-- 日夜間主題切換 -->
+            <button class="icon-btn" id="theme-toggle" aria-label="切換主題">
+                <i class="fa-solid fa-sun"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- 畫面 1：多層滾動式 Landing Page (Scrollable Landing Screen) -->
+        <div id="screen-landing" class="landing-scroll-container">
+            
+            <!-- Section 1: Hero 滿版主視覺 -->
+            <section class="full-viewport-section">
+                <div class="hero-title-area reveal active">
+                    <span class="hero-badge">ANTI-PSYCHOLOGY EXPERIMENT</span>
+                    <h1>ANTI 內在動物特質</h1>
+                    <p>探索您不曾察覺的內在精神結構。本系統透過 50 道高細緻度、高度日常化的情境題目，精準捕捉您的美學偏好、社交頻率、情緒應激、大腦認知與核心動力。由多維向量幾何演算法，從 30 種常見的靈魂動物中，映射出最真實的您與相似影子動物。</p>
+                </div>
+
+                <div class="hero-actions-grid reveal active" style="transition-delay: 200ms;">
+                    <div class="landing-card-btn" id="btn-to-quiz" style="--card-glow: var(--btn-start-bg); --card-text-color: var(--primary-glow)">
+                        <div class="card-icon"><i class="fa-solid fa-dna"></i></div>
+                        <h3>開啟意識測繪</h3>
+                        <p>解鎖 50 題 4 選 1 明白了當的日常生活情境，描摹出您絕無僅有的 5 次元精神雷達圖。</p>
+                        <button class="btn-glow-action">
+                            <span>開啟測驗</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="landing-card-btn" id="btn-to-catalog" style="--card-glow: var(--btn-catalog-bg); --card-text-color: var(--color-aesthetic)">
+                        <div class="card-icon"><i class="fa-solid fa-book-open-reader"></i></div>
+                        <h3>探索靈魂圖鑑</h3>
+                        <p>隨時參閱 30 種常見本命動物的深入性格解讀、優缺點分析、社交指南與 MBTI 搭配學理。</p>
+                        <button class="btn-glow-action" style="background: var(--btn-catalog-bg)">
+                            <span>開啟圖鑑</span>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator">
+                    <span>SCROLL DOWN</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </section>
+
+            <!-- Section 2: 5 次元精神坐標說明 -->
+            <section class="py-24 px-8 max-w-6xl mx-auto w-full">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-5xl font-extrabold mb-4" style="font-family: 'Comfortaa', cursive;">五次元意識雷達圖譜</h2>
+                    <p class="text-gray-500 max-w-2xl mx-auto">我們拒絕將人類死板地二分法歸類。ANTI 透過五個維度的連續向量坐標，還原您靈魂的立體光譜。請參考設計樣式 `image_2cd65e.jpg`</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full reveal">
+                    <div class="dimension-card" style="--dim-color: var(--color-aesthetic)">
+                        <div class="dim-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                        <h4 class="text-xl font-bold mb-2">美學偏好 (AES)</h4>
+                        <p class="text-sm text-gray-500 leading-relaxed">捕捉您的色彩舒適區、居住擺飾喜好與放空儀式感。反映出您內在感官的敏銳度與靈魂生活格調。</p>
+                    </div>
+                    <div class="dimension-card" style="--dim-color: var(--color-social)">
+                        <div class="dim-icon"><i class="fa-solid fa-comments"></i></div>
+                        <h4 class="text-xl font-bold mb-2">社交發散 (SOC)</h4>
+                        <p class="text-sm text-gray-500 leading-relaxed">分析已讀訊息的心理動機與群體聚會時的社交邊界。精準判定您是需要靜謐充電還是群聚共鳴。</p>
+                    </div>
+                    <div class="dimension-card" style="--dim-color: var(--color-stress)">
+                        <div class="dim-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h4 class="text-xl font-bold mb-2">情緒應激 (STR)</h4>
+                        <p class="text-sm text-gray-500 leading-relaxed">模擬面對日常危機（如未存檔當機、當面敵意）時的第一反應，繪製您心靈免疫系統的抗壓厚度。</p>
+                    </div>
+                    <div class="dimension-card" style="--dim-color: var(--color-cognitive)">
+                        <div class="dim-icon"><i class="fa-solid fa-brain"></i></div>
+                        <h4 class="text-xl font-bold mb-2">大腦認知 (COG)</h4>
+                        <p class="text-sm text-gray-500 leading-relaxed">解構決策模型。您是透過縝密數據公式，還是驚人神準的直覺與人性的溫度來導航生活？</p>
+                    </div>
+                    <!-- 修正卡片5標籤斷聯問題：確實關閉結構，徹底修復 image_2cd65e.jpg 中的版面錯位！ -->
+                    <div class="dimension-card" style="--dim-color: var(--color-drive)">
+                        <div class="dim-icon"><i class="fa-solid fa-rocket"></i></div>
+                        <h4 class="text-xl font-bold mb-2">驅動動力 (DRV)</h4>
+                        <p class="text-sm text-gray-500 leading-relaxed">挖掘您最底層的生存渴望與潛在野心。反映您驅使自己每日朝向目標前進的純粹精神引力。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: 每日靈魂動物搶先看 (Interactive Daily Showcase) -->
+            <section class="py-24 px-8 max-w-6xl mx-auto w-full">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-5xl font-extrabold mb-4" style="font-family: 'Comfortaa', cursive;">今日靈魂之星</h2>
+                    <p class="text-gray-500 max-w-2xl mx-auto">每日午夜零點自動刷新！透過 ANTI 演算法隨機推薦今日靈魂動物，搶先體驗深度分析。</p>
+                    
+                    <!-- 倒數計時器 -->
+                    <div class="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-dashed border-emerald-500/30 text-sm font-semibold text-emerald-500 bg-emerald-500/5">
+                        <i class="fa-regular fa-clock animate-pulse"></i>
+                        <span>距離今日推薦刷新：</span>
+                        <span id="daily-countdown" class="font-mono text-base font-bold text-emerald-500">00:00:00</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
+                    <!-- 左：Canvas 動態著色插圖 -->
+                    <div class="flex flex-col items-center">
+                        <div class="animal-canvas-wrapper shadow-2xl">
+                            <canvas id="showcase-animal-canvas" class="animal-canvas" width="320" height="320"></canvas>
+                        </div>
+                        <div class="flex gap-4 mt-8 flex-wrap justify-center">
+                            <button class="showcase-tab active" id="btn-daily-recommend" data-animal="治癒系水豚">今日推薦：載入中</button>
+                            <button class="showcase-tab" id="btn-daily-random-1" data-animal="精緻家貓">草食溫和：家貓</button>
+                            <button class="showcase-tab" id="btn-daily-random-2" data-animal="團隊灰狼">肉食領袖：灰狼</button>
+                        </div>
+                    </div>
+                    <!-- 右：深度細項分析與配對 -->
+                    <div class="flex flex-col gap-6">
+                        <div class="flex items-center gap-4">
+                            <span class="mbti-tag" id="showcase-mbti">ISFP</span>
+                            <span class="animal-classification" id="showcase-class">草食溫和系</span>
+                        </div>
+                        <h3 class="text-4xl font-extrabold" id="showcase-name">治癒系水豚</h3>
+                        <p class="text-lg font-bold text-emerald-500" id="showcase-short">極致放鬆的社交黑洞，對世間一切紛擾徹底絕緣。</p>
+                        
+                        <div class="analysis-box">
+                            <h4 class="font-bold mb-1"><i class="fa-solid fa-heart mr-2"></i>本質解碼</h4>
+                            <p class="text-sm text-gray-500" id="showcase-desc">您溫和不爭，能完美吸收周圍的負能量。您像一隻隨遇而安的水豚，極其專注於當下的感官愉悅...</p>
+                        </div>
+
+                        <div class="analysis-box border-l-4 border-amber-400">
+                            <h4 class="font-bold mb-1 text-amber-500"><i class="fa-solid fa-user-group mr-2"></i>做朋友可能會有的問題</h4>
+                            <p class="text-sm text-gray-500" id="showcase-friend">他們極少主動聯繫或邀約，常常給人『已讀隨性』或是不著痕跡的疏離感。如果你想深入挖掘...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: 常見問答 F.A.Q -->
+            <section class="py-24 px-8 max-w-4xl mx-auto w-full">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-5xl font-extrabold mb-4" style="font-family: 'Comfortaa', cursive;">常見疑惑解答</h2>
+                    <p class="text-gray-500">關於 ANTI 分析與意識指紋，您可能想了解的事情。</p>
+                </div>
+
+                <div class="flex flex-col gap-4 reveal">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>ANTI 測驗和常見的 MBTI 有什麼不同？</span>
+                            <i class="fa-solid fa-chevron-down faq-toggle-icon transition-transform"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>常見的 MBTI 是基於 16 種性格的「二分法」（例如非 I 即 E）。而 ANTI 採用的是「多維連續向量演算法」，我們不只給您一個固定的字母，而是測量您在 5 次元空間中的具體座標，並據此算出與 30 種動物數據庫的精確幾何距離（%數），為您挑選出本命動物與兩隻影子相似動物。</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>為什麼測驗有 50 題這麼多？</span>
+                            <i class="fa-solid fa-chevron-down faq-toggle-icon transition-transform"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>為了精準劃分一個人的生活喜好與細微習慣，我們將測驗細分為「美學感知」、「社交頻率」、「應激本能」、「決策認知」、「核心動力」五大軸線，每個軸線分配 10 題高度日常化的 4 選 1 情境。細密的題目配置能保證得出的動物性格解讀、優缺點分析和交友指南擁有極高的參考價值。</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>我要如何使用結果頁給出的 Canva Prompt 指令？</span>
+                            <i class="fa-solid fa-chevron-down faq-toggle-icon transition-transform"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>我們在每隻動物的結果中，都內嵌了專屬為您設計的 Canva AI 繪圖指令。您可以一鍵複製該指令，並在 Canva 軟體內的「Magic Media（AI 繪圖功能）」中貼上，即可直接生成高度契合該動物氣質、極簡北歐風格的炫彩扁平插畫，作為您獨一無二的社群大頭貼！</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: 頁尾 -->
+            <footer class="py-12 border-t border-emerald-500/20 text-center text-sm text-gray-500 w-full reveal">
+                <p class="mb-2">© 2026 ANTI-PSYCHOLOGY EXPERIMENT. All Rights Reserved.</p>
+                <p>探索無意識深處的精神指紋 · 以愛與理性重塑您的自我認知</p>
+            </footer>
+
+        </div>
+
+        <div class="container hidden" id="main-card-container">
+            <!-- 畫面 2：問卷頁 (Questionnaire Screen) -->
+            <div id="screen-question" class="screen hidden">
+                <div class="quiz-header">
+                    <span class="quiz-category" id="quiz-category">生活與美學</span>
+                    <span class="quiz-counter" id="quiz-counter">01 / 50</span>
+                </div>
+
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+
+                <div class="question-card">
+                    <h2 id="question-text">如果你要為自己的秘密避難所漆上顏色，你會選擇？</h2>
+                </div>
+
+                <!-- 四選一選項排版 -->
+                <div class="options-container" id="options-container">
+                    <!-- JS 動態生成四選項 -->
+                </div>
+
+                <div class="nav-controls">
+                    <button class="btn-prev" id="btn-prev-question" style="visibility: hidden;">
+                        <i class="fa-solid fa-chevron-left"></i>
+                        <span>返回上一題</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 畫面 3：角色圖鑑頁 (Catalog Screen) -->
+            <div id="screen-catalog" class="screen hidden">
+                <div class="catalog-header">
+                    <div class="catalog-title-row">
+                        <h2 style="font-family: 'Comfortaa', cursive; font-size: 32px;"><i class="fa-solid fa-paw text-primary-glow"></i> ANTI 30種常見動物圖鑑</h2>
+                        <div class="catalog-search-bar">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="catalog-search-input" placeholder="搜尋動物名稱或 MBTI...">
+                        </div>
+                    </div>
+
+                    <div class="filter-tags-row">
+                        <span class="filter-tag active" data-filter="all">全部動物</span>
+                        <span class="filter-tag" data-filter="草食溫和系">草食溫和系</span>
+                        <span class="filter-tag" data-filter="肉食領袖系">肉食領袖系</span>
+                        <span class="filter-tag" data-filter="靈巧適應系">靈巧適應系</span>
+                        <span class="filter-tag" data-filter="獨特邊緣系">獨特邊緣系</span>
+                    </div>
+                </div>
+
+                <!-- 30種動物卡片網格 -->
+                <div class="catalog-grid" id="catalog-grid-container">
+                    <!-- JS 動態填入 -->
+                </div>
+
+                <div class="bottom-actions">
+                    <button class="btn-action btn-restart" id="btn-catalog-back">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>回到主畫面</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 畫面 4：過渡加載頁 (Loading Screen) -->
+            <div id="screen-loading" class="screen hidden">
+                <div class="loading-wrapper">
+                    <div class="loader">
+                        <div class="loader-ring"></div>
+                        <div class="loader-ring"></div>
+                        <div class="loader-ring"></div>
+                        <div class="loader-icon"><i class="fa-solid fa-dna"></i></div>
+                    </div>
+                    <div class="loading-text" id="loading-title">正在解析您的意識指紋...</div>
+                    <div class="loading-subtext" id="loading-subtitle">測量 5 軸幾何歐氏空間距離...</div>
+                </div>
+            </div>
+
+            <!-- 畫面 5：結果頁 (Result Screen) -->
+            <div id="screen-result" class="screen hidden">
+                <div class="result-layout">
+                    <!-- 左半：動態著色 Canvas & 特色 -->
+                    <div class="result-left">
+                        <div class="result-badge-row">
+                            <span class="mbti-tag" id="res-mbti">ISFP</span>
+                            <span class="animal-classification" id="res-class">草食溫和系</span>
+                        </div>
+                        
+                        <!-- 動態著色插圖容器 -->
+                        <div class="animal-canvas-wrapper my-4">
+                            <canvas id="result-animal-canvas" class="animal-canvas" width="320" height="320"></canvas>
+                        </div>
+
+                        <div class="match-card">
+                            <div class="percentage" id="res-percent">94% 契合度</div>
+                            <h1 id="res-animal-name">治癒系水豚</h1>
+                            <p style="font-size: 16px; line-height: 1.5; color: var(--text-secondary);" id="res-short-desc">
+                                極致鬆弛的社交核心，對外界干擾徹底絕緣。
+                            </p>
+                        </div>
+
+                        <div class="analysis-box">
+                            <h3><i class="fa-solid fa-heart"></i> 本質特徵分析</h3>
+                            <p id="res-full-desc">載入中...</p>
+                        </div>
+
+                        <div class="analysis-box">
+                            <h3><i class="fa-solid fa-compass"></i> 優勢與潛在盲點</h3>
+                            <p id="res-traits-detail">載入中...</p>
+                        </div>
+
+                        <div class="analysis-box border-l-4 border-amber-400">
+                            <h3><i class="fa-solid fa-user-group text-amber-500"></i> 交友引導 & 潛在摩擦問題</h3>
+                            <p id="res-friend-advice">載入中...</p>
+                        </div>
+
+                        <div class="analysis-box border-l-4 border-rose-400">
+                            <h3><i class="fa-solid fa-heart-crack text-rose-500"></i> 戀愛適應度、對象 & 相處警訊</h3>
+                            <p id="res-love-advice">載入中...</p>
+                        </div>
+
+                        <div class="analysis-box">
+                            <h3><i class="fa-solid fa-circle-question"></i> 為何契合此 MBTI？</h3>
+                            <p id="res-mbti-why">載入中...</p>
+                        </div>
+
+                        <div class="analysis-box">
+                            <h3><i class="fa-solid fa-link"></i> 靈魂契合夥伴</h3>
+                            <p id="res-partner">載入中...</p>
+                        </div>
+                    </div>
+
+                    <!-- 右半：雷達圖 & 影子動物 -->
+                    <div class="result-right" style="display: flex; flex-direction: column; gap: 24px;">
+                        <div class="radar-chart-container">
+                            <h3>5 次元性格雷達</h3>
+                            <svg width="220" height="220" class="radar-svg" id="radar-chart">
+                                <!-- 由 JS 動態繪製 -->
+                            </svg>
+                            
+                            <div class="radar-legend">
+                                <div class="legend-item"><div class="legend-dot" style="background: var(--color-aesthetic)"></div>美學偏好 (AES)</div>
+                                <div class="legend-item"><div class="legend-dot" style="background: var(--color-social)"></div>社交發散 (SOC)</div>
+                                <div class="legend-item"><div class="legend-dot" style="background: var(--color-stress)"></div>情緒應激 (STR)</div>
+                                <div class="legend-item"><div class="legend-dot" style="background: var(--color-cognitive)"></div>大腦認知 (COG)</div>
+                                <div class="legend-item"><div class="legend-dot" style="background: var(--color-drive)"></div>驅動動力 (DRV)</div>
+                            </div>
+                        </div>
+
+                        <div class="similar-matches-box">
+                            <h3>影子動物 (相似配對)</h3>
+                            <div id="similar-list-container">
+                                <!-- 動態渲染其他影子動物 -->
+                            </div>
+                        </div>
+
+                        <div class="prompt-box">
+                            <h4><i class="fa-solid fa-palette"></i> Canva 繪圖 Prompt 指令</h4>
+                            <div class="prompt-text" id="prompt-text-content">
+                                "A minimalist flat vector illustration..."
+                            </div>
+                            <button class="btn-copy" id="btn-copy-prompt">
+                                <i class="fa-solid fa-copy"></i>
+                                <span>複製指令</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 社群分享與多功能引導專區 -->
+                <div class="mt-8 pt-8 border-t border-emerald-500/20 w-full text-center">
+                    <h3 class="text-xl font-bold mb-4 flex items-center justify-center gap-2" style="font-family: 'Comfortaa', cursive;">
+                        <i class="fa-solid fa-share-nodes text-emerald-500 dark:text-emerald-400"></i> 分享你的內在動物
+                    </h3>
+                    <p class="text-sm text-gray-500 mb-6">將這份驚人準確的心理分析成果發布給好友，讓大家也一起玩吧！</p>
+                    
+                    <div class="flex flex-wrap justify-center gap-4 mb-8">
+                        <!-- Facebook -->
+                        <button class="px-5 py-3 rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-500 font-bold text-sm hover:bg-blue-500 hover:text-white transition shadow-lg hover:shadow-blue-500/20 flex items-center gap-2" onclick="shareToFacebook()">
+                            <i class="fa-brands fa-facebook text-lg"></i> FB 分享
+                        </button>
+                        <!-- Line -->
+                        <button class="px-5 py-3 rounded-xl border border-[#06C755]/30 bg-[#06C755]/10 text-[#06C755] font-bold text-sm hover:bg-[#06C755] hover:text-white transition shadow-lg hover:shadow-[#06C755]/20 flex items-center gap-2" onclick="shareToLine()">
+                            <i class="fa-brands fa-line text-lg"></i> LINE 分享
+                        </button>
+                        <!-- Threads -->
+                        <button class="px-5 py-3 rounded-xl border border-slate-500/30 bg-slate-500/10 text-slate-800 dark:text-slate-200 font-bold text-sm hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition shadow-lg hover:shadow-slate-500/20 flex items-center gap-2" onclick="shareToThreads()">
+                            <i class="fa-brands fa-threads text-lg"></i> Threads 發布
+                        </button>
+                        <!-- X / Twitter -->
+                        <button class="px-5 py-3 rounded-xl border border-sky-500/30 bg-sky-500/10 text-sky-500 font-bold text-sm hover:bg-sky-500 hover:text-white transition shadow-lg hover:shadow-sky-500/20 flex items-center gap-2" onclick="shareToTwitter()">
+                            <i class="fa-brands fa-x-twitter text-lg"></i> X 分享
+                        </button>
+                        <!-- Instagram -->
+                        <button class="px-5 py-3 rounded-xl border border-pink-500/30 bg-pink-500/10 text-pink-500 font-bold text-sm hover:bg-pink-500 hover:text-white transition shadow-lg hover:shadow-pink-500/20 flex items-center gap-2" onclick="copyForInstagram()">
+                            <i class="fa-brands fa-instagram text-lg"></i> 複製 IG 貼文/限動文案
+                        </button>
+                        <!-- Discord -->
+                        <button class="px-5 py-3 rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-500 font-bold text-sm hover:bg-indigo-500 hover:text-white transition shadow-lg hover:shadow-indigo-500/20 flex items-center gap-2" onclick="copyForDiscord()">
+                            <i class="fa-brands fa-discord text-lg"></i> 複製 Discord 格式
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bottom-actions flex flex-wrap justify-center gap-4">
+                    <button class="btn-action px-6 py-3 rounded-full font-bold text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30 hover:scale-105 transition flex items-center gap-2" id="btn-restart">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>再測一次</span>
+                    </button>
+                    <button class="btn-action btn-restart px-6 py-3 rounded-full font-bold text-sm border border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10 transition flex items-center gap-2" id="btn-result-home">
+                        <i class="fa-solid fa-house"></i>
+                        <span>回到主畫面</span>
+                    </button>
+                    <button class="btn-action btn-restart px-6 py-3 rounded-full font-bold text-sm border border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10 transition flex items-center gap-2" id="btn-result-catalog">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>查看所有動物</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="catalog-modal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <button class="modal-close-btn" id="modal-close" aria-label="關閉"><i class="fa-solid fa-circle-xmark"></i></button>
+            <div id="modal-content-inner">
+                <!-- 動態注入內容 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 自定義退出確認 Modal (防呆防 Native confirm) -->
+    <div id="confirm-modal" class="modal-overlay hidden" style="z-index: 500;">
+        <div class="modal-container max-w-sm text-center">
+            <h3 class="text-xl font-bold mb-4" style="color: var(--text-primary);"><i class="fa-solid fa-circle-exclamation text-yellow-500 mr-2"></i>確定離開？</h3>
+            <p class="text-sm mb-6" style="color: var(--text-secondary);">測驗正在進行中，現在返回將會遺失目前所有的作答進度。</p>
+            <div class="flex justify-center gap-4">
+                <button id="btn-confirm-cancel" class="px-5 py-2.5 rounded-full border border-gray-300 font-semibold text-sm hover:bg-gray-100 transition">取消</button>
+                <button id="btn-confirm-ok" class="px-5 py-2.5 rounded-full text-white font-semibold text-sm bg-red-500 hover:bg-red-600 transition shadow-lg shadow-red-500/30">確定離開</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局 Toast 通知容器 -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        const ANIMALS = [
+            {
+                name: "治癒系水豚", mbti: "ISFP", category: "草食溫和系", vector: [85, 30, 10, 45, 20],
+                short: "極致放鬆的社交黑洞，對世間一切紛擾徹底絕緣。",
+                desc: "您溫和不爭，能完美吸收周圍的負能量。您像一隻隨遇而安的水豚，極其專注於當下的感官愉悅（泡溫泉與曬太陽），任何危機在您眼中都只是大自然的一段插曲。",
+                traits: "優勢：情緒穩定度極高、極佳的和諧陪伴感。盲點：過於被動，容易陷入拖延或隨波逐流。",
+                friendAdvice: "做朋友會有的問題：他們極少主動聯繫或邀約，常常給人『已讀隨性』或是不著痕跡的疏離感。如果你想深入挖掘他們的秘密心境，可能會被他們完美的太極防衛彈開。",
+                loveMatch: "92% (忠誠黃金獵犬 / 紳士企鵝)",
+                loveAdvice: "戀愛相處警告：水豚在親密關係中極度抗拒被管束或催促。一旦對手試圖強加人生規劃或瘋狂碎碎念，他們會一言不發地潛入水底「物理失蹤」，避免任何正面衝突。",
+                why: "ISFP 渴望自由且專注於當下審美，水豚極富禪意的鬆弛感是 ISFP 溫和隨性生活型態的極致寫照。",
+                partner: "忠誠黃金獵犬、慵懶無尾熊",
+                prompt: "A gorgeous minimalist flat vector illustration of a cute sleepy capybara with a mini orange on its head in hot springs, pastel cream background, cozy design --ar 1:1"
+            },
+            {
+                name: "忠誠黃金獵犬", mbti: "ESFJ", category: "草食溫和系", vector: [55, 95, 30, 40, 70],
+                short: "陽光治癒的派對核心，用無條件的愛黏合所有人。",
+                desc: "您擁有融化冰雪的溫柔，天生善於觀察他人的需要。只要有您在，群體就能充滿和諧與秩序，您是朋友圈中最堅實的情感後盾。",
+                traits: "優勢：超強共情力、執行與服務細節完美。盲點：過度在乎他人看法，有自我忽視的傾向。",
+                friendAdvice: "做朋友會有的問題：有時關心過度會演變成令人窒息的『情感綁架』。他們太害怕被孤立，甚至會在無意中當起『討好型雙面人』來討好兩方。",
+                loveMatch: "95% (治癒系水豚 / 溫順白兔)",
+                loveAdvice: "戀愛相處警告：他們在戀愛中需要極大量的言語肯定。如果另一半過於冷漠或是不懂得即時給予情感反饋，黃金獵犬內心的小劇場會崩潰，進而產生無理取鬧的焦慮。",
+                why: "ESFJ 崇尚社會秩序與群體和諧，黃金獵犬將人際互動視為生命核心的本能與其完美契合。",
+                partner: "溫順白兔、紳士企鵝",
+                prompt: "A beautiful minimal vector illustration of a happy fluffy golden retriever, soft daylight, warm pastel sage green background, modern art --ar 1:1"
+            },
+            {
+                name: "精緻家貓", mbti: "INFP", category: "靈巧適應系", vector: [95, 25, 75, 80, 35],
+                short: "優雅傲嬌的界線守護者，注重極致生活質感與感官哲學。",
+                desc: "您外表看似冷淡疏離，內心卻是一片璀璨溫暖的精神星空。只有在極少數被您「寵幸」的至交面前，您才會露出極致細膩的一面。",
+                traits: "優勢：美學品味超群、獨立、擁有細緻深奧的直覺。盲點：極其敏感，容易築起厚重的心防逃避現實。",
+                friendAdvice: "做朋友會有的問題：他們的友情邊界晴雨不定。可能今天熱情似火，明天卻突然縮進自己的貓窩不見任何人，給人陰晴不定、難以捉摸的怪僻印象。",
+                loveMatch: "90% (優雅梅花鹿 / 理性貓頭鷹)",
+                loveAdvice: "戀愛相處警告：家貓追求純粹的精神共鳴。如果另一半在相處中流露出世俗、粗鄙或是不尊重其獨立空間的舉動，家貓會瞬間收回利爪，冷酷地判處對方精神出局。",
+                why: "INFP 懷揣純真理想並具備強烈的主觀防禦，家貓對環境高度挑剔且守護內心淨土的姿態與其一致。",
+                partner: "優雅梅花鹿、理性貓頭鷹",
+                prompt: "A stylish minimalist flat illustration of an elegant domestic cat looking side-ways, pastel lilac and soft cream white aesthetic --ar 1:1"
+            },
+            {
+                name: "霸氣雄獅", mbti: "ESTJ", category: "肉食領袖系", vector: [60, 80, 20, 60, 95],
+                short: "威嚴秩序的掌舵者，帶領團隊開疆闢土的實踐先鋒。",
+                desc: "您有著與生俱來的掌控力，討厭低效率與無規章的混亂。您行事果斷，習慣在混亂中迅速定立紀律，帶領大家邁向既定目標。",
+                traits: "優勢：決策精準、極度負責任、善於管理全局。盲點：行事可能顯得過於強硬，不易接納不同觀點。",
+                friendAdvice: "做朋友會有的問題：他們經常不自覺地把『說教』和『糾偏』帶入友誼，喜歡幫朋友規劃人生，有時令人感到沉重的控制壓迫。",
+                loveMatch: "88% (團隊灰狼 / 秩序長頸鹿)",
+                loveAdvice: "戀愛相處警告：雄獅討厭失控感，在關係中習慣居於主導。如果另一半過度散漫、缺乏責任心或愛講大道理，獅子會失去耐心，展開雷霆般的威權壓迫。",
+                why: "ESTJ 堅信社會規範與高效架構，雄獅維護領地尊嚴、嚴格劃分階級與守序的特質是 ESTJ 的化身。",
+                partner: "團隊灰狼、秩序長頸鹿",
+                prompt: "A powerful clean flat vector portrait of a majestic lion with a rich glowing golden mane, mint green background, organic geometry --ar 1:1"
+            },
+            {
+                name: "溫順白兔", mbti: "ISFJ", category: "草食溫和系", vector: [80, 45, 85, 30, 25],
+                short: "極致貼心的精緻守護者，在溫馨角落打理生活微光。",
+                desc: "您心思極其細密，善於防微杜漸。您容易因外界風吹草動而緊張，但也因此磨練出最頂尖的規劃與防禦本能，將家照料得完美無瑕。",
+                traits: "優勢：無私奉獻、記憶力驚人、善於照顧細節。盲點：抗壓性較弱，面對突發變故容易驚慌內耗。",
+                friendAdvice: "做朋友會有的問題：由於他們極度害怕衝突，遇到問題常選擇『委曲求全』，把不滿憋在心裡，積壓過久容易突然爆發，讓朋友一頭霧水。",
+                loveMatch: "91% (忠誠黃金獵犬 / 守護綿羊)",
+                loveAdvice: "戀愛相處警告：白兔的愛是細水長流的。但如果對方一味享受他們的照顧卻毫無感激之意，白兔會陷入嚴重的內耗，最終在極度失望中絕望且安靜地跳走。",
+                why: "ISFJ 強調安全與對珍愛之人之無聲守護，小白兔保持敏銳警覺與溫柔築巢的本能是其真實鏡像。",
+                partner: "忠誠黃金獵犬、勤勉乳牛",
+                prompt: "An adorable cozy vector illustration of a sweet little white rabbit with cute ears sitting in pastel mint flowers, modern soft art --ar 1:1"
+            },
+            {
+                name: "狡黠紅狐", mbti: "ENTP", category: "肉食領袖系", vector: [75, 75, 45, 90, 80],
+                short: "不走尋常路的智多星，以靈慧智慧解構世俗規則。",
+                desc: "您大腦運轉極快，充滿古靈精怪的點子。您熱愛挑戰常規，擅長在矛盾與混沌中捕捉前所未有的生存商機，思維彈性極大。",
+                traits: "優勢：智計百出、口才一流、在極端變局中適應力極強。盲點：缺乏耐力，容易把繁複的細部執行工作半途而廢。",
+                friendAdvice: "做朋友會有的問題：天生好辯（Debater），經常為了論證邏輯而與朋友唱反調，有時會讓人覺得他們『愛抬槓、不講情面』。",
+                loveMatch: "89% (智慧海豚 / 偽裝變色龍)",
+                loveAdvice: "戀愛相處警告：紅狐在戀愛中極其需要思想碰撞。如果另一半過於木訥、生活一成不變或極度守舊，紅狐會感到無聊透頂，進而到處尋求新的刺激與探險。",
+                why: "ENTP 熱衷拆解世界與概念思辨，紅狐機敏靈動、不按常理出牌的特質正是這群點子大師的象徵。",
+                partner: "智慧海豚、偽裝變色龍",
+                prompt: "A sleek modern vector art of a clever orange red fox sitting playfully, pastel teal background, bright warm shapes --ar 1:1"
+            },
+            {
+                name: "沉穩棕熊", mbti: "ISTJ", category: "草食溫和系", vector: [40, 20, 30, 75, 55],
+                short: "腳踏實地的森林隱士，用絕對誠信編織安全壁壘。",
+                desc: "您不尚空談，相信行動和數據才是安身立命之本。您性格堅實，不喜歡鋪張與喧囂，在既定步調中默默累積財富與經驗。",
+                traits: "優勢：極度可靠、行事有始有終。盲點：有些頑固，不輕易改變固有習慣。",
+                friendAdvice: "做朋友會有的問題：過於死板、嚴肅，甚至有些不解風情。有時朋友只是想找個肩膀哭訴，棕熊卻一上來就理性分析、講道理、提方案。",
+                loveMatch: "86% (秩序長頸鹿 / 工匠河狸)",
+                loveAdvice: "戀愛相處警告：棕熊用物質安全感與默默陪伴表達愛，不擅長甜言蜜語。如果另一半追求海誓山盟與戲劇性的浪漫，會覺得棕熊像一塊冰冷的木頭。",
+                why: "ISTJ 注重邏輯、事實與極致的踏實負責，棕熊沉穩、不怒而威卻極其守序的特質與其一致。",
+                partner: "秩序長頸鹿、工匠河狸",
+                prompt: "A cozy flat vector of a big friendly brown bear, deep pine green background, scandinavian design --ar 1:1"
+            },
+            {
+                name: "睿智大象", mbti: "INFJ", category: "草食溫和系", vector: [65, 55, 15, 85, 60],
+                short: "精神與悲憫的共情長老，以崇高格局點亮心靈迷霧。",
+                desc: "您看世界的方式具備極強的宏觀精神性，輕易能感知靈魂深處的和諧。您是天然的心靈捕手，總在無聲中給予溫暖與智慧。",
+                traits: "優勢：洞察力驚人、富有遠見與深切的奉獻同理心。盲點：容易過度感同身受他人痛苦，導致自身內耗。",
+                friendAdvice: "做朋友會有的問題：心思太重、太過敏感。有時朋友隨口一句玩笑，大象會在心裡琢磨三天，並默默在內心深處為這段友誼減分。",
+                loveMatch: "93% (完美天鵝 / 深海藍鯨)",
+                loveAdvice: "戀愛相處警告：大象追求靈魂與精神的高純度共鳴。一旦發現另一半思想膚淺、只關心物質瑣事、或對人性缺乏悲憫心，大象會產生深深的孤獨與失望感。",
+                why: "INFJ 一生在追尋深層意義與人道守護，大象長壽、富含情感記憶且默默引領族群前行的崇高感是其具象。",
+                partner: "完美天鵝、深海藍鯨",
+                prompt: "An elegant minimalist illustration of a gentle elephant under a beautiful starry sky, cosmic pastel blue theme --ar 1:1"
+            },
+            {
+                name: "俏皮靈猴", mbti: "ENFP", category: "靈巧適應系", vector: [50, 90, 50, 70, 75],
+                short: "散播歡樂的靈魂火花，永遠追尋新鮮好玩的樂園。",
+                desc: "您是當之無愧的派對亮點與創意思維發散中心。您拒絕被任何人或常規約束，人生對您而言就是一場沒有終點的奇幻冒險。",
+                traits: "優勢：極具生命感染力、腦洞大開。盲點：專注力不夠，容易在細節執行上丟三落四。",
+                friendAdvice: "做朋友會有的問題：熱度退得太快。可能這週跟你是形影不離的至交，下週被新的有趣事物吸引就突然消失在你的生活圈中。",
+                loveMatch: "94% (智慧海豚 / 華麗孔雀)",
+                loveAdvice: "戀愛相處警告：靈猴需要空間與新奇感。任何試圖用規章、承諾將其套牢，或是生活沉悶枯燥的另一半，都會迅速逼迫靈猴跳到下一棵樹上。",
+                why: "ENFP 充滿新奇聯想與熱情，靈猴熱愛探索、靈動跳躍的性格是其專屬印記。",
+                partner: "智慧海豚、華麗孔雀",
+                prompt: "A vibrant playful vector design of a clever monkey swinging through neon mint tropical leaves, modern colorful palette --ar 1:1"
+            },
+            {
+                name: "團隊灰狼", mbti: "ENTJ", category: "肉食領袖系", vector: [55, 70, 25, 85, 90],
+                short: "謀定後動的鐵腕將軍，以極致效率引領團隊攻無不克。",
+                desc: "您有著無與倫比的戰略眼光與鋼鐵般的意志。您重視團隊協作，但堅信只有強大的核心才能帶領群體在弱肉強食的世界中開闢領地。",
+                traits: "優勢：行動力與魄力驚人、條理極其清晰。盲點：有時過於鐵面無私，容易給人留下支配欲過強的威脅感。",
+                friendAdvice: "做朋友會有的問題：太過強勢，對朋友的要求極高。看見朋友生活頹廢或做蠢決定時，會忍不住重拳出擊、嚴厲批評，有時會刺傷脆弱的心靈。",
+                loveMatch: "89% (霸氣雄獅 / 孤高蒼鷹)",
+                loveAdvice: "戀愛相處警告：灰狼在親密關係中依然追求進步。如果另一半過度散漫、不思進取或總是用情感勒索抗拒前進，灰狼會冷酷地快刀斬亂麻，結束這段低效的關係。",
+                why: "ENTJ 代表無畏的執行力與藍圖建構，灰狼高度重視階級秩序、戰術紀律與狼首威嚴的本性完美契合其特質。",
+                partner: "霸氣雄獅、孤高蒼鷹",
+                prompt: "A strong geometric flat vector of a howling grey wolf under a neon moon, cool mint and glowing laser blue background --ar 1:1"
+            },
+            {
+                name: "孤高蒼鷹", mbti: "INTJ", category: "肉食領袖系", vector: [70, 15, 30, 95, 85],
+                short: "高空鳥瞰的戰略大師，在冷靜中謀劃顛覆常規的藍圖。",
+                desc: "您習慣與人群保持絕對的安全距離。您的高傲源自於您那高速運轉、高度嚴密的大腦，不喜盲從，習慣站在更高維度拆解全局。",
+                traits: "優勢：思維嚴密、專注力驚人、目標必達。盲點：極其冷漠，對無關緊要的人際情感缺乏包容力。",
+                friendAdvice: "做朋友會有的問題：極難接近，毒舌且毫不客氣。他們對低智商或情緒化的言論零容忍，容易在無意間用刻薄的邏輯分析擊碎朋友的熱情。",
+                loveMatch: "87% (團隊灰狼 / 理性貓頭鷹)",
+                loveAdvice: "戀愛相處警告：蒼鷹的愛情極其稀有且挑剔。如果另一半習慣用情緒化、大哭大鬧的方式來解決矛盾，蒼鷹會用看『原始生物』的冰冷目光審視對方，並轉身離去。",
+                why: "INTJ 致力於邏輯體系與長遠戰略，蒼鷹遺世獨立、一擊必中的高空姿態完美呼應其傲然風采。",
+                partner: "團隊灰狼、理性貓頭鷹",
+                prompt: "A powerful minimalist vector of a soaring eagle with geometric patterns, deep indigo sky and yellow neon sun background --ar 1:1"
+            },
+            {
+                name: "實踐猛虎", mbti: "ISTP", category: "肉食領袖系", vector: [50, 15, 35, 75, 80],
+                short: "冷靜務實的爆發獵手，用頂級行動力解決一切現實難題。",
+                desc: "您話語不多，但每一步都精準無比。您是天生的危機解決大師，當周圍陷入驚慌時，您那理性的冷靜能迅速找出最實用的物理生存手段。",
+                traits: "優勢：危機應變天賦、動手能力極強。盲點：對情感溝通極其冷淡，容易讓人覺得難以走進內心。",
+                friendAdvice: "做朋友會有的問題：超級不愛社交，神隱大師。經常不回訊息、不參加聚會，只在自己感興趣的事物或有求於你時才會現身。",
+                loveMatch: "90% (防禦刺蝟 / 奔騰野馬)",
+                loveAdvice: "戀愛相處警告：猛虎需要極大的物理獨立。如果另一半天天要求報備行程、瘋狂黏人或干涉其個人興趣，猛虎會感到極度窒息，迅速斬斷這條綁在脖子上的繩子。",
+                why: "ISTP 偏愛工具實踐、理性分析與高度應變，猛虎悄無聲息、一擊致命的狩獵本能與 ISTP 高度契合。",
+                partner: "防禦刺蝟、奔騰野馬",
+                prompt: "A sleek modern vector design of a tiger walking silently through dark glowing green bamboo forest, warm neon highlights --ar 1:1"
+            },
+            {
+                name: "守護綿羊", mbti: "ISFJ", category: "草食溫和系", vector: [65, 60, 40, 35, 30],
+                short: "溫柔合群的奉獻守望者，默默編織最安定的幸福港灣。",
+                desc: "您渴求安定，是群體中最可靠的溫柔屏障。您不喜歡引人注目，但您的體貼和對細節的默默打理，是所有人離不開的安全感來源。",
+                traits: "優勢：體貼、極度忠誠且守信用。盲點：過於妥協，容易在遭遇霸凌或不公時選擇默默隱忍。",
+                friendAdvice: "做朋友會有的問題：太過敏感和多疑。因為他們習慣為別人付出，如果朋友沒有展現出對等的感激，綿羊會暗自傷心並陷入深深的被害者內耗。",
+                loveMatch: "91% (溫順白兔 / 忠誠黃金獵犬)",
+                loveAdvice: "戀愛相處警告：綿羊全心全意照顧家庭。但如果對方習慣了被伺候、甚至用理所當然的傲慢態度對待他們，綿羊一旦突破忍耐極限，會徹底黑化，永遠收回所有的溫柔。",
+                why: "ISFJ 崇尚穩定與無私守護，綿羊溫順合群、甘當屏障且默默照拂彼此的本能是其真實縮影。",
+                partner: "溫順白兔、勤勉乳牛",
+                prompt: "A lovely flat vector design of fluffy sheep on rolling pastel violet hills under a sunset mint green sky, warm soft mood --ar 1:1"
+            },
+            {
+                name: "活潑松鼠", mbti: "ESFP", category: "靈巧適應系", vector: [60, 85, 60, 40, 55],
+                short: "活力爆棚的當下玩家，用笑聲點亮平庸生活的調味劑。",
+                desc: "您天生具備捕捉快樂的能力，討厭死板、嚴肅與繁瑣。您樂觀活潑，能把最枯燥的日常過得像一場繽紛燦爛的嘉年華派對。",
+                traits: "優勢：社交魅力十足、極佳的生活情趣與當下行動力。盲點：耐性差，容易被眼前新奇的事物帶偏方向。",
+                friendAdvice: "做朋友會有的問題：做事有些毛躁，經常遲到或忘記約定。他們注意力太容易分散，在嚴肅談話時容易顯得心不在焉、不夠莊重。",
+                loveMatch: "93% (華麗孔雀 / 軟萌倉鼠)",
+                loveAdvice: "戀愛相處警告：松鼠需要熱情、色彩與互動。如果另一半生活刻板、不解風情、甚至試圖用嚴格的財務或行為規範限制他們享受生活，松鼠會感到窒息並迅速溜走。",
+                why: "ESFP 追求極致的感官體驗與當下享樂，松鼠隨時收集美好堅果並向世界展示活力的特質正是其寫照。",
+                partner: "華麗孔雀、軟萌倉鼠",
+                prompt: "A delightful flat vector of a cute squirrel holding a golden acorn with bright autumn neon foliage background, whimsical style --ar 1:1"
+            },
+            {
+                name: "智慧海豚", mbti: "ENFP", category: "靈巧適應系", vector: [75, 95, 30, 85, 70],
+                short: "高智商高共情的水晶精靈，用愛與智慧穿梭於人間海洋。",
+                desc: "您兼具了卓越的頭腦與細膩的情感。您在不同圈子中都能遊刃有餘，在提供精神指導的同時，也源源不絕地散播著治癒與浪漫。",
+                traits: "優勢：天生的溝通大師、悲天憫人且直覺敏銳。盲點：夜深人靜時極易陷入孤獨感，渴望極度深層的理解。",
+                friendAdvice: "做朋友會有的問題：有時顯得過於博愛。因為他們對每個人都很好，常常會讓他們的密友或另一半吃醋，覺得自己對海豚而言『並不夠特別』。",
+                loveMatch: "96% (俏皮靈猴 / 狡黠紅狐)",
+                loveAdvice: "戀愛相處警告：海豚需要高純度的靈魂連結。如果另一半只在乎柴米油鹽、說話冷漠粗俗，海豚會在關係中慢慢乾枯，最後發射寂寞的 52 赫茲信號孤獨地游向深海。",
+                why: "ENFP 熱愛深度連結與精神探索，海豚作為高共情、樂於助人且極高智商的海洋精靈，是其完美化身。",
+                partner: "俏皮靈猴、狡黠紅狐",
+                prompt: "A breathtaking minimalist vector illustration of dolphins jumping out of deep neon blue ocean waves under a pastel sky, cosmic vibes --ar 1:1"
+            },
+            {
+                name: "理性貓頭鷹", mbti: "INTP", category: "靈巧適應系", vector: [60, 10, 20, 95, 65],
+                short: "黑夜中的無聲解構者，在寂靜中拆解宇宙萬物的底層邏輯。",
+                desc: "您是終其一生的真理追尋者。喧喧鬧鬧的世俗社交只會讓您覺得疲憊，您更喜歡在無人的深夜，將世界拆成一行行完美的代碼與因果邏輯。",
+                traits: "優勢：邏輯推演頂級、理性客觀、思維深邃。盲點：對他人的情感反應遲鈍，不擅長處理細碎的生活情緒。",
+                friendAdvice: "做朋友會有的問題：經常已讀不回，甚至能失蹤幾個月。當你興高采烈地跟他分享一件事，他可能會像個無情的機器人一樣開始挑你語病或指出邏輯漏洞。",
+                loveMatch: "88% (偽裝變色龍 / 慵懶無尾熊)",
+                loveAdvice: "戀愛相處警告：貓頭鷹極度討厭情感勒索。一旦被要求『你愛不愛我、為什麼不陪我』等感性拷問，貓頭鷹的邏輯大腦會瞬間死機，進而用最冷酷、不屑的態度關閉對話。",
+                why: "INTP 核心探索者特質，貓頭鷹在暗夜中獨立思考的孤寂姿態是 INTP 的最佳投射。",
+                partner: "偽裝變色龍、慵懶無尾熊",
+                prompt: "An atmospheric minimalist vector of a wise owl perched on a branch under a starry emerald green and yellow sky, soft glowing elements --ar 1:1"
+            },
+            {
+                name: "奔騰野馬", mbti: "ESTP", category: "肉食領袖系", vector: [40, 75, 40, 50, 85],
+                short: "現實曠野的熱血開拓者，用速度與勇氣擊碎一切物理阻礙。",
+                desc: "您是實幹派的代名詞，無法忍受冗長無用的紙上談兵。您熱愛速度、體能、競技與當下的生理反饋，相信一切困難都是用來被衝破的。",
+                traits: "優勢：膽大無畏、現實應變力驚人、實戰大師。盲點：容易流於衝動，可能在長遠規劃上缺乏足夠的遠見與耐心。",
+                friendAdvice: "做朋友會有的問題：太過粗線條。經常在言行中得罪心思細密的朋友而不自知，甚至把朋友拉進高風險或高強度的活動中，讓人吃不消。",
+                loveMatch: "91% (實踐猛虎 / 爆發袋鼠)",
+                loveAdvice: "戀愛相處警告：野馬渴望在動態中狂奔。如果另一半試圖用婚姻、責任將其牢牢綁死在安穩的牛棚裡，野馬會暴躁不安，最終野性爆發，踩碎柵欄揚長而去。",
+                why: "ESTP 崇尚冒險與真實生活體驗，駿馬無拘無束、一往無前、在原野中展現極致爆發力的風采是其最佳寫照。",
+                partner: "實踐猛虎、爆發袋鼠",
+                prompt: "A majestic vector illustration of a running wild horse kicking up orange dust under a glowing neon sunset sky, raw dynamic feel --ar 1:1"
+            },
+            {
+                name: "慵懶無尾熊", mbti: "INTP", category: "草食溫和系", vector: [55, 15, 10, 60, 20],
+                short: "低能耗運作的生活哲學家，在自己的微型宇宙中獨自浪漫。",
+                desc: "您深諳生命的「省電模式」，拒絕任何無謂的內耗與情感攀比。在自己的尤加利樹上，用悠閒的步調打量周圍，就是您最完美的避風港。",
+                traits: "優勢：情緒穩定度極高、隨和、深諳極簡生活哲學。盲點：行動力稍嫌不足，時常把事情拖延到最後一刻。",
+                friendAdvice: "做朋友會有的問題：極度懶散，約不出來。經常在約會前最後一秒因為「床太舒服了」而臨時放鴿子，在朋友圈中是出了名的神隱樹懶。",
+                loveMatch: "89% (沉穩棕熊 / 理性貓頭鷹)",
+                loveAdvice: "戀愛相處警告：無尾熊需要無壓力的伴侶。如果另一半天天要求上進、瘋狂催促或製造生活焦慮，無尾熊會徹底進入冬眠模式，關閉任何心靈溝通的管道。",
+                why: "INTP 超脫的氣質與省電作風在無尾熊身上展露無疑，對世俗爭端保持優雅的疏離。",
+                partner: "沉穩棕熊、理性貓頭鷹",
+                prompt: "A relaxing flat vector of a cute koala hugging a neon green eucalyptus branch, soft pastel cream background, minimalistic scandinavian style --ar 1:1"
+            },
+            {
+                name: "優雅梅花鹿", mbti: "INFP", category: "草食溫和系", vector: [90, 35, 70, 60, 30],
+                short: "輕盈空靈的森林隱士，用詩意溫柔守護靈魂的微光。",
+                desc: "您擁有如朝露般純淨、細膩的心靈。喧鬧的鋼筋水泥都市會迅速抽乾您的能量，您熱愛雨天、落葉與所有充滿儀式感的生活微光。",
+                traits: "優勢：審美感知超群、極富同理心。盲點：抗挫折力較弱，受傷時容易縮回自己幻想的殼中。",
+                friendAdvice: "做朋友會有的問題：內心戲過度豐富。朋友無心的一句評價，會在梅花鹿心裡引發海嘯，並在不挑明的情況下突然退縮，讓人無所適從。",
+                loveMatch: "91% (精緻家貓 / 完美天鵝)",
+                loveAdvice: "戀愛相處警告：梅花鹿需要童話般的精神共鳴。如果另一半滿口銅臭、說話粗糙甚至用現實的理性嘲笑他們的浪漫夢想，梅花鹿會心碎並安靜地消失在迷霧森林中。",
+                why: "INFP 熱愛美學、追求脫俗的精神，梅花鹿輕盈、空靈卻又帶著防禦與警覺的姿態，是溫柔 INFP 的化身。",
+                partner: "精緻家貓、完美天鵝",
+                prompt: "A beautiful fairytale vector illustration of a deer with floral antlers in a magical mist forest, pastel violet light theme --ar 1:1"
+            },
+            {
+                name: "秩序長頸鹿", mbti: "ISTJ", category: "草食溫和系", vector: [50, 30, 20, 70, 50],
+                short: "不露聲色的高空觀察員，腳踏實地默默將細節做到極致。",
+                desc: "您安靜務實，習慣站在一個安全的位置不失禮貌地審視周圍。您非常看重契約、規則與時間觀念，討厭任何突如其來的混亂。",
+                traits: "優勢：極其踏實負責、觀察入微、條理井然。盲點：固執守舊，對意外變革的適應速度較慢。",
+                friendAdvice: "做朋友會有的問題：過於死板、不知變通。如果約會遲到五分鐘，長頸鹿臉色會非常難看，甚至在心裡給你的可靠度畫上一個大大的紅叉。",
+                loveMatch: "88% (幾何斑馬 / 工匠河狸)",
+                loveAdvice: "戀愛相處警告：長頸鹿渴望穩定。如果另一半生活混亂無章、不按規矩來或頻繁製造意外驚喜，長頸鹿會感到精神受創，進而用冷暴力和挑剔來折磨彼此。",
+                why: "ISTJ 講求規則、追求簡潔與可靠，長頸鹿腳踏實地、默默按規則運作的沉穩姿態正是其寫照。",
+                partner: "幾何斑馬、工匠河狸",
+                prompt: "A beautiful tall giraffe vector design, minimalistic geometric pastel background, clean artwork with gentle colors --ar 1:1"
+            },
+            {
+                name: "紳士企鵝", mbti: "ESFJ", category: "靈巧適應系", vector: [45, 80, 35, 55, 60],
+                short: "極致團結的禮儀大師，用默契守護著溫暖的集體溫室。",
+                desc: "您穿著得體、行事大方，是維持朋友圈運作的靈魂黏合劑。您樂於承擔繁瑣的組織工作，用對細節的掌控給予大家滿滿安全感。",
+                traits: "優勢：超強社交默契、有禮、極具組織協調力。盲點：害怕被群體邊緣化，容易委曲求全。",
+                friendAdvice: "做朋友會有的問題：容易在無意間傳播八卦或過度干涉他人隱私。因為他們太想融入並管理群體，有時會讓人覺得『管得太寬、太過市儈』。",
+                loveMatch: "92% (忠誠黃金獵犬 / 守護綿羊)",
+                loveAdvice: "戀愛相處警告：企鵝熱愛世俗的家庭溫馨。如果另一半是一個極致追求精神孤獨、排斥家庭聚會、且說話帶刺的靈魂，企鵝會感到深深的受挫與被嫌棄。",
+                why: "ESFJ 重視社會化和諧與家庭責任，企鵝在極地中相互擁抱、彬彬有禮的特性與其高度同步。",
+                partner: "忠誠黃金獵犬、守護綿羊",
+                prompt: "A charming vector design of penguins walking in a neat row, soft polar blue and pastel yellow snow background --ar 1:1"
+            },
+            {
+                name: "完美天鵝", mbti: "INFJ", category: "獨特邊緣系", vector: [95, 30, 40, 75, 50],
+                short: "極致完美主義的美學孤鶩，在靜謐湖面優雅滑行。",
+                desc: "您有著極其挑剔的審美與絕不妥協的精神追求。不論世界多麼混亂，您都要在自己的世界裡優雅到骨子裡。您追求「一生一世一雙人」的絕對純粹。",
+                traits: "優勢：審美品味極高、忠誠專一。盲點：完美主義傾向嚴重，容易給人留下清高不易親近的感覺。",
+                friendAdvice: "做朋友會有的問題：道德標準與心理防線極高。一旦朋友展現出任何庸俗、背叛或是不誠信的舉動，天鵝會默默在心裡將其拉黑，毫無預兆地徹底絕交。",
+                loveMatch: "93% (睿智大象 / 深海藍鯨)",
+                loveAdvice: "戀愛相處警告：天鵝無法容忍平庸的敷衍。如果另一半過於現實、不解風情，甚至將他們的浪漫情懷視為作秀，天鵝會冷酷地拍動翅膀，飛往更安靜的孤寂湖泊。",
+                why: "INFJ 追求完美的精神堅持與深度和諧，天鵝一生守護伴侶、潔身自好的特質正是其寫照。",
+                partner: "睿智大象、深海藍鯨",
+                prompt: "A highly elegant flat vector of a swan floating on dark water, pastel lavender glow background, minimalist design --ar 1:1"
+            },
+            {
+                name: "勤勉乳牛", mbti: "ISFJ", category: "草食溫和系", vector: [35, 50, 15, 30, 35],
+                short: "默默奉獻的生命供養者，在平凡中編織最偉大的穩定與溫柔。",
+                desc: "您不追求奢華與出風頭，只渴望腳踏實地的生活。您默默奉獻自己的光與熱，細緻入微地打理著生活與家庭。您具有驚人的耐心。",
+                traits: "優勢：腳踏實地、財富累積度佳、忠厚老實。盲點：抗拒變化，缺乏一些冒險與突破的精神。",
+                friendAdvice: "做朋友會有的問題：太過卑微和被動。他們極少表達自己的真實渴望，在朋友圈中總是『隨便、都好』，時間長了會讓朋友覺得跟他們相處缺乏靈魂深度。",
+                loveMatch: "90% (溫順白兔 / 守護綿羊)",
+                loveAdvice: "戀愛相處警告：乳牛渴望一成不變的安全生活。如果伴侶是一個極致冒險、頻繁更換城市、或是生活充滿變數的浪子，乳牛會每天活在焦慮失眠中，最終心力交瘁地離開。",
+                why: "ISFJ 注重實際、甘於平凡的付出，乳牛溫順踏實、對環境適應度高的性格正是其真實寫照。",
+                partner: "溫順白兔、守護綿羊",
+                prompt: "A peaceful countryside flat illustration of a cute cow with soft pastel green rolling hills background, warm sunset aesthetic --ar 1:1"
+            },
+            {
+                name: "防禦刺蝟", mbti: "ISTP", category: "靈巧適應系", vector: [45, 10, 80, 50, 35],
+                short: "外剛內柔的邊界建築師，用棘刺守護最細膩的溫柔。",
+                desc: "您具有極其強烈的防禦心與邊界意識。遇到陌生環境或試探，您會本能地「蜷縮起來」展現冷酷的一面。但只要真正走進您內心，就會發現您極度溫柔。",
+                traits: "優勢：自立自強、邊界感分明、實踐動手能力佳。盲點：防備心太重，容易讓人覺得難以突破其心防。",
+                friendAdvice: "做朋友會有的問題：防備心極強，說話帶刺。如果你想主動跨過他們的心理安全線，他們會立刻豎起棘刺，用冷言冷語刺痛你的熱情。",
+                loveMatch: "90% (實踐猛虎 / 變色龍)",
+                loveAdvice: "戀愛相處警告：刺蝟需要極慢的慢熱過程。如果另一半一上來就要求熱戀、要求公開所有隱私或天天黏在一起，刺蝟會因為安全感崩潰而迅速將對方扎得遍體鱗傷。",
+                why: "ISTP 極度注重個人空間與獨立分析，刺蝟用物理荊棘隔絕世界的特性正是其寫照。",
+                partner: "實踐猛虎",
+                prompt: "A lovely flat vector illustration of a tiny hedgehog under a neon yellow mushroom, pastel warm peach background --ar 1:1"
+            },
+            {
+                name: "幾何斑馬", mbti: "ISTJ", category: "靈巧適應系", vector: [55, 65, 45, 50, 55],
+                short: "條理清晰的極簡主義者，黑白分明，行事精準如鐘錶。",
+                desc: "您眼中的世界黑白分明，沒有灰色地帶。您非常看重契約、規則和時間觀念。在團隊中，您是一個隨時保持清醒、用邏輯把關每一處數據的人。",
+                traits: "優勢：行事嚴謹、注重效率與契約、極度可靠。盲點：思維僵化，容錯率較低，對模糊地帶容忍度差。",
+                friendAdvice: "做朋友會有的問題：說話過於直白、得理不饒人。當朋友向他們尋求情感安慰時，斑馬會冷冰冰地指出朋友自身的所有不當細節，讓人感到大潑冷水。",
+                loveMatch: "87% (秩序長頸鹿 / 工匠河狸)",
+                loveAdvice: "戀愛相處警告：斑馬需要生活高度守序。如果伴侶是一個極致隨性、花錢大手大腳、或是生活計畫隨時脫軌的藝術家，斑馬會天天在家裡咆哮，最終分道揚鑣。",
+                why: "ISTJ 講求規則、追求簡潔與可靠，幾何條紋帶來的精準感，是其完美的天然寫照。",
+                partner: "秩序長頸鹿、工匠河狸",
+                prompt: "An artistic minimalist vector of a zebra under geometric background, sharp lines with neon mint accents --ar 1:1"
+            },
+            {
+                name: "深海藍鯨", mbti: "INFJ", category: "草食溫和系", vector: [80, 20, 15, 90, 50],
+                short: "精神宇宙的巨型遊俠，發射著獨一無二的 52 赫茲頻率。",
+                desc: "您的精神空間巨大無比，往往裝載著宏大的哲學、悲憫與藝術。您對淺薄的情感毫無興趣，終其一生都在尋找能聽懂您獨特聲納的靈魂旅伴。",
+                traits: "優勢：思想極具格局、悲天憫人、精神力量強大。盲點：容易感到與世隔絕的孤獨，曲高和寡。",
+                friendAdvice: "做朋友會有的問題：太過高深和冷漠。他們極少主動參與日常娛樂，在聚會中常顯得與世無爭或超凡脫俗，讓人覺得難以建立起真正的世俗交情。",
+                loveMatch: "94% (睿智大象 / 完美天鵝)",
+                loveAdvice: "戀愛相處警告：藍鯨需要完全的精神同頻。如果伴侶完全不懂他們的藝術世界或靈性追求，只關心俗世的利弊與應酬，藍鯨會在心中默默遊向最漆黑、深遂的無光深海。",
+                why: "INFJ 是靈魂的探索者，往往感到與世俗格格不入。藍鯨獨自游動在深海的姿態是其極致隱喻。",
+                partner: "睿智大象、完美天鵝",
+                prompt: "A breathtaking minimalist vector of a blue whale swimming in dark deep ocean with glowing cosmic aurora light --ar 1:1"
+            },
+            {
+                name: "爆發袋鼠", mbti: "ESTP", category: "獨特邊緣系", vector: [35, 70, 30, 45, 80],
+                short: "極致動感與冒險的代名詞，用強悍爆發力衝破重重阻礙。",
+                desc: "您擁有過人的活力，天生就不是一個能安靜坐在辦公桌前的人。您熱愛挑戰體能、面對面的衝突或需要極致應變的動態競爭。",
+                traits: "優勢：膽大無畏、爆發力與應變力極佳。盲點：耐心不足，不擅長處理需要長時間耕耘的靜態計畫。",
+                friendAdvice: "做朋友會有的問題：太過好戰和衝動。常在無意間捲入各種紛爭或肢體碰撞中，讓同行的朋友提心膽戰，甚至在言行中充滿侵略性。",
+                loveMatch: "91% (奔騰野馬 / 實踐猛虎)",
+                loveAdvice: "戀愛相處警告：袋鼠需要極致的征服感。一旦另一半過度溫順、無趣，或是試圖用繁複的日常瑣事鎖住他們，袋鼠會覺得這段戀情索然無味，轉頭尋找下一個對手。",
+                why: "ESTP 是生活中的冒險王，擁有極高的運動本能。袋鼠用爆發性的雙腿在原野中戰勝一切敵人的姿態是其具象化。",
+                partner: "奔騰野馬、實踐猛虎",
+                prompt: "A dynamic flat vector of a kangaroo jumping with glowing neon dust clouds background, high speed feel --ar 1:1"
+            },
+            {
+                name: "工匠河狸", mbti: "ISTJ", category: "靈巧適應系", vector: [30, 40, 35, 85, 75],
+                short: "極致完美的手作狂魔，在細節處建構起固若金湯的城堡。",
+                desc: "您是細節的魔鬼。不論是工作項目、手作、還是生活的邏輯，您都要一磚一瓦、用極限的專注將其打造成無懈可擊的系統。",
+                traits: "優勢：驚人的動手與細部建構能力、務實、細心。盲點：過於注重細部繁瑣程序，有時會忽略整體大局。",
+                friendAdvice: "做朋友會有的問題：強烈強迫症。如果你跟他們一起旅行，不小心弄亂了行程表或放錯了生活用品，河狸會反覆糾正你，讓人感到極大精神緊繃。",
+                loveMatch: "89% (幾何斑馬 / 秩序長頸鹿)",
+                loveAdvice: "戀愛相處警告：河狸用精細的樹枝和驚人毅力建構起完美大壩的工匠本能，是其最好的代言。",
+                why: "ISTJ 是最完美的系統維護與建構者。河狸用精細的樹枝和驚人毅力建構起完美大壩的工匠本能，是其最好的代言。",
+                partner: "幾何斑馬、秩序長頸鹿",
+                prompt: "A highly detailed flat vector of a cute beaver near its log cabin dam, organic clean lineart, soft sunset background --ar 1:1"
+            },
+            {
+                name: "華麗孔雀", mbti: "ESFP", category: "獨特邊緣系", vector: [100, 85, 50, 45, 70],
+                short: "極致華麗的感官主宰，天生就要在聚光燈下綻放百般光彩。",
+                desc: "您的一生絕不容許平淡無奇。您對美、目光有著天然的致命追求。您擅長在社交場所中用華麗的自我表達吸引所有人的眼球。",
+                traits: "優勢：無懈可擊的視覺表現力、社交亮點。盲點：極度依賴外界目光，當失去焦點時容易感到失落焦慮。",
+                friendAdvice: "做朋友會有的問題：太過自我中心（Drama Queen/King）。常常在聊天中搶風頭，把話題強行扭轉回自己身上，讓朋友覺得自己像個無用的陪襯。",
+                loveMatch: "93% (俏皮靈猴 / 活潑松鼠)",
+                loveAdvice: "戀愛相處警告：孔雀開屏需要忠實觀眾。如果另一半生性低調、抗拒公開秀恩愛、或吝於給予誇讚，孔雀會覺得在這段關係中被明珠投暗，進而尋求外界的豔羨目光。",
+                why: "ESFP 熱愛生命之美、追求極致的感官衝擊，孔雀開屏那一瞬間震撼人心的視覺盛宴是其最佳寫照。",
+                partner: "俏皮靈猴、活潑松鼠",
+                prompt: "A stunning colorful flat vector of a peacock displaying its gorgeous feathers, neon emerald green and sapphire blue light --ar 1:1"
+            },
+            {
+                name: "軟萌倉鼠", mbti: "ISFP", category: "獨特邊緣系", vector: [85, 40, 90, 30, 20],
+                short: "精緻物質享樂天才，將自己藏在堆滿美味的溫馨小窩中。",
+                desc: "您是極致感官與物質安逸的收藏家。您喜歡將個人空間塞滿軟綿綿的抱枕、高級甜點與精緻小物。您有些膽小，但溫柔無比。",
+                traits: "優勢：溫順可愛、懂生活、善於營造療癒環境。盲點：過度缺乏安全感，容易對外界未知產生逃避心態。",
+                friendAdvice: "做朋友會有的問題：極度抗拒踏出舒適圈。如果你約他們去爬山、露營、或去新環境社交，倉鼠會死守自己的被窩，找一百個理由推託，是典型的「窩裡橫」。",
+                loveMatch: "92% (沉穩棕熊 / 活潑松鼠)",
+                loveAdvice: "戀愛相處警告：倉鼠在感情中極需安撫與保護。如果伴侶經常對他們大聲說話、說話尖銳或不提供足夠的物質安穩承諾，倉鼠會因為嚇壞了而立刻咬斷情感線，縮回自己的洞穴深處。",
+                why: "ISFP 熱愛物理審美、崇尚安逸且敏感，倉鼠囤積美味、打造溫馨柔軟洞穴的本能是其完美化身。",
+                partner: "沉穩棕熊、活潑松鼠",
+                prompt: "An adorably sweet vector of a fluffy hamster eating seeds inside its cozy nest, pastel warm peach and cream background --ar 1:1"
+            },
+            {
+                name: "偽裝變色龍", mbti: "INTP", category: "獨特邊緣系", vector: [70, 20, 60, 90, 40],
+                short: "深不可測的觀察變色龍，完美融入環境卻保有最純粹的思維。",
+                desc: "您是一個思維發達、且具備驚人適應力的靈魂。您不急於發表意見，而是根據環境變化調整外在狀態，以保護獨立思考的運作。",
+                traits: "優勢：極限環境適應力、冷靜多維思考。盲點：過度隱藏锋芒，容易給人摸不透真實心意的「心機重」印象。",
+                friendAdvice: "做朋友會有的問題：極難猜透他們的真實想法。在人前永遠帶著大方、客氣的偽裝面具，讓你不知道他們何時是真心、何時只是客套。",
+                loveMatch: "90% (理性貓頭鷹 / 防禦刺蝟)",
+                loveAdvice: "戀愛相處警告：變色龍極度討厭情感的深度黏著與監控。一旦對方試圖窺探他們的靈魂死角、限制他們的私密獨立思維，變色龍會瞬間變成與周圍背景一模一樣的顏色，在感情中徹底人間蒸發。",
+                why: "INTP 追求客觀的理性，變色龍默默偽裝、用 360 度獨立旋轉雙眼旁觀剖析世界的姿態正是其象徵。",
+                partner: "理性貓頭鷹、防禦刺蝟",
+                prompt: "An ultra modern vector art of a chameleon blending with colorful geometric tropical leaves, neon mint and hot pink light --ar 1:1"
+            }
+        ];
+
+        const QUESTIONS = [
+            // C1: 美學感知 (Aesthetic)
+            {
+                category: "美學與日常偏好", dimension: 0,
+                text: "如果週末要為自己的秘密避難所漆上主色調，你的直覺選擇是？",
+                a: "極致夢幻的香氛薰衣草紫、暖調微光與蕾絲軟墊",
+                b: "乾淨清亮且自帶現代文青感的薄荷草綠色系",
+                c: "以原木、純白或不張揚的棉麻素雅大地色為主",
+                d: "不買任何裝飾，純黑深灰等好打理耐髒的顏色"
+            },
+            {
+                category: "美學與日常偏好", dimension: 0,
+                text: "好友送你一個精美奇特、但完全沒有任何實用價值的純手工擺飾，你會？",
+                a: "極度興奮！立刻供在房間最顯顯的展示位，天天欣賞",
+                b: "很驚喜，拍照發社群分享，然後精緻地收進玻璃櫃",
+                c: "覺得好看，但默默覺得如果送個實用的杯子更棒",
+                d: "完全當成佔位置的雜物，收在最深不見光的抽屜"
+            },
+            {
+                category: "美學與日常偏好", dimension: 0,
+                text: "出門選購衣服時，你最看重的抉擇點是？",
+                a: "剪裁大膽、配色有強烈個性，撞衫是我的大忌",
+                b: "色系協調、面料高階，散發低調的高級質感",
+                c: "舒適、寬鬆好活動，多以基本黑白灰為主",
+                d: "完全機能主義！耐磨防風耐髒口袋多最重要"
+            },
+            {
+                category: "美學與日常偏好", dimension: 0,
+                text: "如果今天獲得一個奢侈的下午放空時間，你會怎麼享受？",
+                a: "預約極致隱密的英式下午茶，用骨瓷餐具喝茶看書",
+                b: "造訪一間隱密的文青手沖咖啡廳，在窗邊陽光下放空",
+                c: "待在家裡播放舒服的雨聲音樂，窩在沙發上滑手機",
+                d: "直接倒頭大睡，對任何下午茶和浪漫生活完全無感"
+            },
+            {
+                category: "美學與日常偏好", dimension: 0,
+                text: "選購筆記本或文具時，你會因為什麼而爽快買單？",
+                a: "封面的獨特紙質、燙金線條與插畫家藝術插圖",
+                b: "封皮觸感極佳、紙張寫起來不暈墨的實用品質",
+                c: "大眾品牌、格子線條乾淨，價格平易近人的素面本",
+                d: "隨便用紙張或手機備忘錄記錄，本子對我沒什麼用"
+            },
+            {
+                category: "美學與日常偏好", dimension: 0,
+                text: "面對自己房間有些雜亂的景象，你的忍受極限是？",
+                a: "完全不能忍！所有物品必須依美學高度強迫症式歸位",
+                b: "維持基本乾淨，東西雖然多但各有其收納秩序",
+                c: "稍微亂無所謂，反而覺得亂亂的很有生活溫度與安全感",
+                d: "隨便能有路走、能找到東西，亂不亂根本不影響我"
+            },
+            {
+                category: "美學與日常偏好", dimension: 0,
+                text: "如果你能一鍵獲得超能力，你更希望擁抱哪一種？",
+                a: "能將所有空間化為萬花璀璨藝術溫室的空間美化力",
+                b: "能將內心情緒瞬間轉化為動人音樂的感官藝術力",
+                c: "能看穿一切物理構造、機械運作因果的深度解析力",
+                d: "能瞬間估算出所有投資理財最大經濟效益的精準計算力"
+            },
+            {
+                category: "美學與日常偏好", dimension: 0,
+                text: "你如何看待生活中的「節日儀式感」（如生日、聖誕等）？",
+                a: "非常看重！生活需要這些精緻浪漫的高光時刻來串聯",
+                b: "蠻喜歡的，會精心準備小禮物與重要的人一起慶祝",
+                c: "隨意，如果大家都過就跟著過，沒過也不會遺憾",
+                d: "不過是消費主義的噱頭，形式主義讓人覺得很累"
+            },
+            {
+                category: "美學與日常偏好", dimension: 0,
+                text: "挑選下一部新手機的外殼時，你的首要考量是？",
+                a: "與小眾藝術家聯名的驚艷彩繪，或者金屬工藝極佳的設計",
+                b: "高級防指紋、半透明極簡，拿在手上舒服柔和的霧面款",
+                c: "普通全透明水晶防摔殼，便宜實用能展現原本機身就行",
+                d: "防摔度最高、帶重甲支架、磁吸防護力點滿的厚重機能殼"
+            },
+            {
+                category: "美學與日常偏好", dimension: 0,
+                text: "一場完美的放鬆旅行，你最不可退讓的底線是？",
+                a: "住宿必須極具美學氛圍，周邊景致要詩情畫意如畫般美麗",
+                b: "行程不趕、流暢度極佳，且一定要挖掘到隱藏的在地美食",
+                c: "景點好玩、交通便利，不要花太多冤枉錢",
+                d: "只要床鋪乾淨、洗澡熱水夠強、性價比高就完全合格"
+            },
+
+            // C2: 日常社交 (Social)
+            {
+                category: "能量社交與棲息地", dimension: 1,
+                text: "在一個有許多新面孔的熱鬧社交派對上，你通常會出現在？",
+                a: "人群的核心，主動帶起話題、談笑風生並積極交換社群",
+                b: "與身邊一兩個人聊得很熱絡，但也會偶爾配合大家大笑",
+                c: "安靜坐在角落沙發，一邊享受派對美食，一邊面帶微笑",
+                d: "站在陽台放空查閱手機，找最合適的理由提前溜回家"
+            },
+            {
+                category: "能量社交與棲息地", dimension: 1,
+                text: "工作或上課疲憊了一整週，週六你最渴望的充電行程是？",
+                a: "約一大群人去唱歌狂歡，或者在熱鬧的市集酒吧度過",
+                b: "找兩三個摯友聚餐，喝點小酒聊聊彼此的近期八卦與苦悶",
+                c: "跟熟識的伴侶或死黨待在家裡看電影，不需要過多客套",
+                d: "徹底消失，手機開靜音，關在房間裡瘋狂打遊戲或睡覺"
+            },
+            {
+                category: "能量社交與棲息地", dimension: 1,
+                text: "好朋友發來一連串瑣碎的日常生活牢騷、美食分享訊息，你會？",
+                a: "立刻秒讀秒回，甚至直接打電話過去熱烈大聊特聊",
+                b: "在半小時內快速回覆，附上逗趣貼圖，維持高度互動",
+                c: "先放著，等晚一點手頭事情徹底忙完、心力充足時再回",
+                d: "已讀，甚至只在心中回了，有空時敷衍傳個笑臉貼圖了事"
+            },
+            {
+                category: "能量社交與棲息地", dimension: 1,
+                text: "在一個大團隊合作的專案中，你更容易扮演什麼角色？",
+                a: "主動代表發言、掌控整體氣氛，協調各方衝突的領頭羊",
+                b: "負責居中協調、擔任合作橋樑，並積極提出創意構想",
+                c: "默默認領自己能做的工作，除非被點名否則絕不主動發言",
+                d: "徹底發揮隱形邊緣人精神，只求做好份內事快速下班"
+            },
+            {
+                category: "能量社交與棲息地", dimension: 1,
+                text: "如果讓你連續 48 小時不使用任何社群與人溝通，你會？",
+                a: "感到極度窒息與無聊，感覺自己正在被這個世界遺忘",
+                b: "前一天會覺得挺輕鬆，但第二天晚上會忍不住想找人說話",
+                c: "感到非常自在與愜意，終於可以擺脫所有需要客套的場合",
+                d: "簡直是人間仙境！如果可以我甚至希望延長到一整個月"
+            },
+            {
+                category: "能量社交與棲息地", dimension: 1,
+                text: "在一群人面前發表完一場重要簡報，你的第一心理反應是？",
+                a: "腎上腺素飆升、熱血沸騰，非常享受大家目光聚焦的快感",
+                b: "很有成就感，雖然有些許疲倦但對自己的表現感到驕傲",
+                c: "鬆了一口氣，這是一項必做的工作，幸好平穩完成了",
+                d: "能量被徹底抽乾，靈魂嚴重透支，只想立刻回家縮起來"
+            },
+            {
+                category: "能量社交與棲息地", dimension: 1,
+                text: "在聚會聊天中，你通常的表達習慣更偏向於？",
+                a: "滔滔不絕、生動有趣地分享見聞，是全場故事的主角",
+                b: "雙向互動，分享自己的事，同時也會細心發問聆聽對方",
+                c: "以安靜傾聽為主，偶爾微笑點頭，點到重點才插上一兩句",
+                d: "保持絕對安靜、放空，心裡偷偷算著時間幾點可以解散"
+            },
+            {
+                category: "能量社交與棲息地", dimension: 1,
+                text: "當你心情不好、遭遇挫折時，你通常的宣洩策略是？",
+                a: "立刻廣發訊息約一票人出來喝酒，藉由熱鬧忘掉憂鬱",
+                b: "找一個最親密且懂自己的閨蜜死黨傾訴，尋求深層安慰",
+                c: "自己去健身房運動、或吃一頓奢侈大餐，不跟任何人提起",
+                d: "默默躲在被窩裡睡覺或看劇，拒絕任何打擾直到自癒"
+            },
+            {
+                category: "能量社交與棲息地", dimension: 1,
+                text: "對於你自己的「社交朋友圈」，你內心真實的經營態度是？",
+                a: "多多益善、廣結善緣！各行各業、各種個性的朋友都是養分",
+                b: "維持幾個核心圈的熱度，結交新朋友也珍惜溫柔的舊友",
+                c: "順其自然，討厭刻意去巴結，只維持平常自然聯絡的圈子",
+                d: "極度精簡，這輩子有兩三個能知道我所有秘密的知己就夠了"
+            },
+            {
+                category: "能量社交與棲息地", dimension: 1,
+                text: "在路上遠遠看到一個平時不太熟的同事迎面走來，你的本能是？",
+                a: "熱情地快步走過去打招呼，大聲寒暄幾句最近的近況",
+                b: "面帶微笑、禮貌地揮揮手，短暫交談幾句隨即離開",
+                c: "假裝專注滑手機或看路邊店鋪櫥窗，默默加速擦肩而過",
+                d: "立刻繞道而行，甚至躲進便利商店，完全避免正面對視"
+            },
+
+            // C3: 情緒應激 (Stress)
+            {
+                category: "情緒應激與本能", dimension: 2,
+                text: "當電腦突然藍屏，你發現辛辛苦苦寫了三小時未存檔的報告全部消失時，你的第一反應是？",
+                a: "當場崩潰、血壓飆升，會大叫或重摔滑鼠，必須找人狂吐槽",
+                b: "心跳漏一拍，非常焦慮焦急，會花半小時上網發文宣洩憤怒",
+                c: "有些無奈，但深吸一口氣，立刻冷靜下來尋找電腦備份檔案",
+                d: "毫無表情，大腦一秒進入冷酷理智，不浪費情緒直接重寫"
+            },
+            {
+                category: "情緒應激與本能", dimension: 2,
+                text: "當聽到別人在背後無端誤解你，或者在社群上對你惡意質疑時，你會？",
+                a: "全身毛髮豎立，火冒三丈，必須立刻發文反擊、公開對證",
+                b: "內心深受打擊，會糾結焦慮一整天，試著找中間人解釋清楚",
+                c: "有些不高興，但想想算了，清者自清，不值得為笨人浪費時間",
+                d: "內心毫無波動，甚至覺得愚蠢得有些滑稽，完全當作耳邊風"
+            },
+            {
+                category: "情緒應激與本能", dimension: 2,
+                text: "你最親密的朋友突然在你面前情緒失控崩潰大哭，你會？",
+                a: "心慌意亂，跟著手忙腳亂，情感大受震動，甚至也跟著哭",
+                b: "充滿疼惜與同理，緊緊抱著對方，溫柔地用安撫性話語安慰",
+                c: "冷靜溫和地拍拍對方，遞上面紙，默默陪伴在身邊聽他哭泣",
+                d: "理智大腦立刻啟動，一邊分析崩潰起因一邊默默替他想策略"
+            },
+            {
+                category: "情緒應激與本能", dimension: 2,
+                text: "對於行程計畫中「突如其來的插曲與變數」，你內心的真實焦慮是？",
+                a: "極度煩躁焦慮！失控的感覺會徹底毀掉我整天的充沛心情",
+                b: "有些不適，會緊張地確認替代方案，心情需要一段時間調適",
+                c: "無所謂，計畫趕不上變化，生活隨時充滿彈性與應變",
+                d: "完全沒感覺，甚至會覺得計畫外的脫軌讓生活多了一絲刺激"
+            },
+            {
+                category: "情緒應激與本能", dimension: 2,
+                text: "你認為自己是一個容易陷入「想太多、自我精神內耗」的人嗎？",
+                a: "是的，別人的一個無心眼神或一句話，我會在腦海裡解讀整晚",
+                b: "有些感性，遇到大事容易胡思亂想，會找朋友傾訴排解焦慮",
+                c: "還好，基本能夠自我調節，不太會為了瑣事跟自己過不去",
+                d: "完全不內耗！神經強韌且大條，天大的事睡一覺起來自動翻篇"
+            },
+            {
+                category: "情緒應激與本能", dimension: 2,
+                text: "在高壓與迫近死線（Deadline）的雙重工作環境中，你通常展現出？",
+                a: "焦慮緊繃、急躁不安，不停確認進度，神經像拉滿的弓弦",
+                b: "壓力很大，會瘋狂碎碎念發牢騷，但依然能咬牙把事情逼出來",
+                c: "和平常差不多，按照輕重緩急默默推進，相信一定能完成",
+                d: "異常冷靜沉著，高壓反而能激發戰鬥力，按部就班超常發揮"
+            },
+            {
+                category: "情緒應激與本能", dimension: 2,
+                text: "如果有人在公共場所（如公車）對你展現出明顯敵意或言詞不遜，你會？",
+                a: "瞬間血液沸騰，寸步不讓，立刻用銳利或犀利話語正面回擊",
+                b: "很生氣，會氣憤地跟對方理論，事後一整天都覺得窩火委屈",
+                c: "為了安全起見，會冷瞪對方一眼，然後主動換到遠一點位置",
+                d: "像看滑稽的戲碼一樣，內心毫無波瀾，完全不影響自己心情"
+            },
+            {
+                category: "情緒應激與本能", dimension: 2,
+                text: "當你觀看一部極其悲傷、觸動心靈的電影時，你的情感反應是？",
+                a: "情感防線徹底失守，哭到眼淚狂飆，久久沉浸在悲傷中無法抽離",
+                b: "會悄悄流淚，被角色的悲歡離合深深打動，感到一陣酸澀",
+                c: "內心有感動，但能夠理性抽離，單純作為一門好藝術來鑑賞",
+                d: "鐵石心腸，完全無法理解這有什麼好哭的，覺得刻意煽情又無聊"
+            },
+            {
+                category: "情緒應激與本能", dimension: 2,
+                text: "遇到極度難熬與悲傷的低谷時，你會選擇隱藏自己的脆弱嗎？",
+                a: "完全不隱藏，需要向信任的人徹底敞開心房，透過哭泣尋求安撫",
+                b: "會向極少數親密的朋友尋求安慰，但對外依然維持正常的樣子",
+                c: "不喜歡麻煩別人，習慣自己一個人去運動或散心默默療傷",
+                d: "極度強硬，絕對不會在任何人面前掉淚，用最堅硬外殼包起自己"
+            },
+            {
+                category: "情緒應激與本能", dimension: 2,
+                text: "當你在關鍵的抉擇中犯了嚴重的錯誤，你的心理復原期通常是？",
+                a: "陷入無邊無際的懊悔自責，反覆拷問自己『為什麼當時不這樣』",
+                b: "很沮喪，會難過一兩週，需要不斷跟身邊人訴說來獲得自我和解",
+                c: "雖然遺憾，但知道事情無法挽回，會快速思考彌補方案並推進",
+                d: "一秒翻篇，後悔是最浪費生命的反應，立刻投入下一個行動"
+            },
+
+            // C4: 大腦認知 (Cognitive)
+            {
+                category: "大腦思維與決策", dimension: 3,
+                text: "在理解一個全新且複雜的概念時，你更容易被哪種方式點亮？",
+                a: "富有畫面感的生動隱喻、感性故事與富有溫度的情感共鳴",
+                b: "圖文並茂的心智圖、流程圖與老師舉出的實際生活案例",
+                c: "嚴格的邏輯公式、層次分明的學術定義與因果鏈推導",
+                d: "直接丟給我源代碼、原始數據與底層規律讓我自己拆解"
+            },
+            {
+                category: "大腦思維與決策", dimension: 3,
+                text: "挑選昂貴的個人筆電或 3C 產品時，你的購物決策邏輯是？",
+                a: "第一眼的心動直覺！外殼顏色絕美、外型戳中我，哪怕參數差一點",
+                b: "外型要好看，也會大致看一下開箱點評，只要不踩雷就行",
+                c: "對比兩三家大廠的參數，看看各大部落客的 CP 值評測，折衷選擇",
+                d: "狂熱參數控！自製 Excel 橫向對比跑分、散熱與性價比，極致推導"
+            },
+            {
+                category: "大腦思維與決策", dimension: 3,
+                text: "觀看一部高智商燒腦懸疑劇時，最讓你享受的靈魂部分是？",
+                a: "劇中角色在極端環境下展現出的人性掙扎與那股藝術的留白",
+                b: "編劇對於人物動機、愛恨交織的細膩刻畫與感人至深的救贖",
+                c: "跟著主角抽絲剝繭地還原犯罪時間線，享受謎底揭曉的智商震撼",
+                d: "瘋狂尋找劇情的細微 Bug，冷靜推理無懈可擊的嚴密邏輯鏈條"
+            },
+            {
+                category: "大腦思維與決策", dimension: 3,
+                text: "你如何看待人類玄妙的「直覺（第六感）」這件事？",
+                a: "極度信任！我的第一直覺通常極其靈驗，無數次避開危險或做對事",
+                b: "還算相信，通常直覺對的人，相處起來也確實會比較和諧",
+                c: "當作輔助參考，但關鍵決定還是更相信客觀事實與邏輯分析",
+                d: "完全不信，直覺不過是大腦皮質潛意識的未證實運算，事實唯一"
+            },
+            {
+                category: "大腦思維與決策", dimension: 3,
+                text: "在生活中，你最害怕遇到哪一種類型的人際溝通對象？",
+                a: "毫無幽默感、死板得像機器人、開不起玩笑且只會冷冰冰講道理",
+                b: "說話冷漠、不給予任何情感反饋，凡事都過度理性與計較利弊",
+                c: "講話拐彎抹角，說一分要你猜十分，拒絕直接坦誠溝通的人",
+                d: "說話毫無條理與邏輯、前後矛盾，完全被情緒牽著瘋狂輸出的人"
+            },
+            {
+                category: "大腦思維與決策", dimension: 3,
+                text: "如果你去探索一個完全陌生的新城市與景點，你的導航習慣是？",
+                a: "大致看一眼方位，收起手機憑直覺隨性穿梭，享受迷路的驚喜",
+                b: "跟著網路熱門推薦的散步地圖走，邊走邊看，自由度很高",
+                c: "嚴格跟著導航地圖的實時定位，精準走在規劃好的路線上",
+                d: "出發前精準規劃好步行出口、地鐵車廂位置與最優省力換乘時間"
+            },
+            {
+                category: "大腦思維與決策", dimension: 3,
+                text: "在思索深奧哲學或人性問題時，你大腦思維通常呈現出的景象是？",
+                a: "思維無限發散，聯想到生命的浪漫本質與各種詩意藝術隱喻",
+                b: "傾向於聯想到身邊具體人事物，試著將高深哲學與日常經驗對比",
+                c: "會將其歸納為幾個核心論點，條理分明地在腦中建立起理論模型",
+                d: "自動將問題拆解成多個對立的二元邏輯，用嚴格理性定義推算"
+            },
+            {
+                category: "大腦思維與決策", dimension: 3,
+                text: "你相信世界上的道德與事情，都有「絕對的黑白對錯」嗎？",
+                a: "完全不相信，萬事萬物背後都是主觀情感與灰色的重疊，沒有標準",
+                b: "不相信絕對，每個人站的角度不同，看見的黑白深淺就不一樣",
+                c: "大部分相信，雖然有例外，但在社會規範下還是有清晰對錯界線",
+                d: "極度相信，在健全的理性與客觀普世價值下，對就是對，錯就是錯"
+            },
+            {
+                category: "大腦思維與決策", dimension: 3,
+                text: "如果讓你撰寫一篇文章，哪種題材最能發揮你真實的實力？",
+                a: "文字唯美浪漫、富有穿透情感與極大想像空間的情感散文小說",
+                b: "充滿同理心、觀察生活細節、敘事溫馨且容易引起大眾共鳴的專欄",
+                c: "條理清晰、結構嚴密且層次分明的社論或科技科普說明文",
+                d: "極度嚴謹的邏輯推導、充滿數據、圖表與因果關係的專業論文"
+            },
+            {
+                category: "大腦思維與決策", dimension: 3,
+                text: "當你做出一項人生重大決定後，你最常用來支持自己內心的是？",
+                a: "「我的靈魂與內心深處有一股強烈聲音告訴我，這就是我的路。」",
+                b: "「這個決定能讓我身邊愛我的人感到心安，也符合溫和的和諧感。」",
+                c: "「我衡量過長短期的利弊，這條路在邏輯推論上是最穩妥出錯低的。」",
+                d: "「這項決定完美符合我列出的所有數據分析與現實客觀利弊運算。」"
+            },
+
+            // C5: 核心動力 (Drive)
+            {
+                category: "核心動力與捕獵", dimension: 4,
+                text: "驅使你每天早起、不斷在現實世界奮力前行的最底層渴望是？",
+                a: "追求極致刺激的人生體驗、站在金字塔頂的掌控權與名望成就",
+                b: "追求在自己專業領域內獲得極高的讚譽、認可與大眾崇拜的鮮花",
+                c: "追求財務自由、穩定的社會地位，給予家人最無憂的安全保障",
+                d: "追求內心靈魂的極致平靜與自由、不受世俗規則捆綁的隱逸生活"
+            },
+            {
+                category: "核心動力與捕獵", dimension: 4,
+                text: "如果你的工作領域出現一個各項能力極強、處處挑釁你的競爭對手，你會？",
+                a: "鬥志被瞬間完全點燃！哪怕熬夜到吐血也一定要擊敗、超越對方",
+                b: "感到有些壓力，會默默跟對方較勁，當作激勵自己成長的免費動力",
+                c: "不太舒服，但不喜歡競爭，會盡量避開正面交鋒，走適合自己的路",
+                d: "毫無興趣，你過你的獨木橋，我走我的陽關道，對贏家遊戲徹底免疫"
+            },
+            {
+                category: "核心動力與捕獵", dimension: 4,
+                text: "如果突然中大獎得到美金一千萬元，你最直覺、真實的處置想法是？",
+                a: "投資一個富野心的高難度創業，或者買下奢華已久的昂貴超跑",
+                b: "拿去環遊世界、享受高階名店，好好的大方犒賞自己與親友",
+                c: "買下穩健的績優股、做資產配置定存，或付一筆理想房產的首付",
+                d: "買一塊世外桃源的小土地蓋間木屋，立刻開啟夢寐以求的退休隱居"
+            },
+            {
+                category: "核心動力與捕獵", dimension: 4,
+                text: "對世俗定義的「安穩平淡但毫無高光的生活」，你內心真實態度是？",
+                a: "極度抗拒！生命只有一次，寧做燃燒殆盡的煙火，絕不做暗淡枯燈",
+                b: "有些不甘，還是希望在有限的一生中，有些拿得出手的成就讓大家讚嘆",
+                c: "非常嚮往，能安穩無憂、不缺吃穿，就是最高級的幸福與奢侈",
+                d: "究極追求，擺脫名韁利鎖的束縛、悠閒活在自己步調裡是終極目標"
+            },
+            {
+                category: "核心動力與捕獵", dimension: 4,
+                text: "當你遭遇一次慘痛無比的重大挫敗時，你的逆襲反應是？",
+                a: "低落一秒隨即爆發出更狂野的復仇渴望，誓要在下一次親手拿回尊嚴",
+                b: "會先大哭一場，然後認真分析失敗原因重新整裝，相信終會成功",
+                c: "溫和地安慰自己，也許是運氣不好，重新出發調整不給太大壓力",
+                d: "優雅平靜地接受，也許這條路本來就不屬於我，換一條好走的就行"
+            },
+            {
+                category: "核心動力與捕獵", dimension: 4,
+                text: "在尋找工作或發展志業時，你衡量好工作的最核心權重是？",
+                a: "卓越的升遷管道、能掌握龐大決策影響力與無可替代的職稱光環",
+                b: "優渥的薪資、能充分施展才華與得到主管和行業的最高專業認可",
+                c: "穩定、不輕易裁員，且退休福利與健康保障無懈可擊的大型企業",
+                d: "和諧無壓力的辦公氛圍、人性化彈性上下班與不加班的極高自由度"
+            },
+            {
+                category: "核心動力與捕獵", dimension: 4,
+                text: "如果讓你描繪十年後的自己，你腦海中浮現最驕傲的景象是？",
+                a: "成為業界呼風喚雨的精英、開創個人帝國，擁有無可替代的地位",
+                b: "在自己的領域裡成為知名的權威專家，受人尊敬分享成功經驗",
+                c: "擁有一個溫馨幸福家庭、穩健被動收入，生活井井有條、衣食無憂",
+                d: "徹底隱居，過著悠閒自得、沒有任何人際與世俗紛擾的自由生活"
+            },
+            {
+                category: "核心動力與捕獵", dimension: 4,
+                text: "面對一個「困難重重、但回報驚人」的高風險目標，你的本能想法是？",
+                a: "極度興奮！越是難以攻克、充滿骸骨的險峻高峰，越能證明我的價值",
+                b: "躍躍欲試，雖然會害怕，但成功的巨大回報值得我拼盡全力賭一次",
+                c: "非常警惕，不值得為了虛無的野心冒損害健康與既有財產的巨大風險",
+                d: "完全繞道，平穩才是福，高風險追逐對我而言只是一種折壽的行為"
+            },
+            {
+                category: "核心動力與捕獵", dimension: 4,
+                text: "你如何看待自然界的「成王敗寇、適者生存」這條競爭法則？",
+                a: "非常認同，這就是世界最真實的底層邏輯，必須不斷變強征服它",
+                b: "認同它是現實，但在拼命往上爬的同時，也要保留底線與風度",
+                c: "不太認同，強弱隨時在變，一味崇尚競爭只會讓所有人都活在窒息中",
+                d: "完全抗拒，這套達爾文主義是病態的，世界應該溫柔讓弱者也活得舒服"
+            },
+            {
+                category: "核心動力與捕獵", dimension: 4,
+                text: "當你完成了一項極其傲人、甚至在群體裡引起轟動的偉大成就時，你最渴望？",
+                a: "萬眾矚目的全場起立掌聲、媒體的追捧與無上榮耀的獎章肯定",
+                b: "主管的升職加薪承諾、同事崇拜讚許的目光與知己的共同慶祝",
+                c: "心裡一陣踏實的安定感，感覺自己的生存壁壘又變厚了一層",
+                d: "內心無聲的充實，隨即給自己放一場長達一個月的無壓力假期"
+            }
+        ];
+
+        let particles = [];
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeParticleCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeParticleCanvas);
+        resizeParticleCanvas();
+
+        class Particle {
+            constructor(x, y, color, isClick = false) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * (isClick ? 8 : 4) + 1;
+                this.speedX = Math.random() * (isClick ? 6 : 2) - (isClick ? 3 : 1);
+                this.speedY = Math.random() * (isClick ? 6 : 2) - (isClick ? 3 : 1) - (isClick ? 1 : 0.5);
+                this.color = color;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.02 + 0.01;
+                this.isClick = isClick;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.alpha -= this.decay;
+                if (this.isClick) {
+                    this.size *= 0.98;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                if (this.isClick) {
+                    for (let i = 0; i < 5; i++) {
+                        ctx.lineTo(this.x + Math.cos(i * 1.25) * this.size, this.y + Math.sin(i * 1.25) * this.size);
+                    }
+                } else {
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                }
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createTrail(e) {
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            const color = isDark ? `hsla(${Math.random() * 60 + 150}, 100%, 70%, 1)` : `hsla(${Math.random() * 60 + 100}, 70%, 50%, 1)`;
+            const x = e.clientX || (e.touches && e.touches[0].clientX);
+            const y = e.clientY || (e.touches && e.touches[0].clientY);
+            if (x && y) {
+                for (let i = 0; i < 2; i++) {
+                    particles.push(new Particle(x, y, color));
+                }
+            }
+        }
+
+        window.addEventListener('mousemove', createTrail);
+        window.addEventListener('touchmove', createTrail);
+
+        window.addEventListener('mousedown', (e) => {
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            const baseHue = isDark ? 160 : 120;
+            for (let i = 0; i < 20; i++) {
+                const color = `hsla(${baseHue + Math.random() * 120}, 90%, 65%, 1)`;
+                particles.push(new Particle(e.clientX, e.clientY, color, true));
+            }
+        });
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].alpha <= 0 || particles[i].size <= 0.1) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        function drawAnimalProcedural(canvasId, animalName) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+
+            // 清空畫布並繪製炫麗背景
+            ctx.clearRect(0, 0, w, h);
+            const bgGrad = ctx.createRadialGradient(w/2, h/2, 20, w/2, h/2, 160);
+            if (isDark) {
+                bgGrad.addColorStop(0, '#102e21');
+                bgGrad.addColorStop(1, '#050a07');
+            } else {
+                bgGrad.addColorStop(0, '#e8f5e9');
+                bgGrad.addColorStop(1, '#ffffff');
+            }
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            // 繪製背景發光幾何圓環
+            ctx.strokeStyle = isDark ? 'rgba(0, 255, 204, 0.15)' : 'rgba(102, 187, 106, 0.15)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.arc(w/2, h/2, 110, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.save();
+            ctx.translate(w/2, h/2);
+
+            // 定義常用色調
+            const primaryColor = isDark ? '#00ffcc' : '#51b055';
+            const secondaryColor = '#ec407a';
+            const accentColor = '#ffd740';
+
+            // 依據 30 種動物進行 100% 完全客製化的 2D 平面插畫
+            if (animalName.includes("水豚")) {
+                ctx.fillStyle = '#8d6e63'; 
+                ctx.beginPath();
+                ctx.roundRect(-50, -30, 100, 75, [25, 25, 15, 15]);
+                ctx.fill();
+
+                ctx.fillStyle = '#5d4037';
+                ctx.beginPath();
+                ctx.arc(-45, -30, 10, 0, Math.PI, true);
+                ctx.arc(45, -30, 10, 0, Math.PI, true);
+                ctx.fill();
+
+                ctx.strokeStyle = '#3e2723';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(-30, -5); ctx.lineTo(-15, -5);
+                ctx.moveTo(15, -5); ctx.lineTo(30, -5);
+                ctx.stroke();
+
+                ctx.fillStyle = '#3e2723';
+                ctx.beginPath();
+                ctx.roundRect(-12, 10, 24, 15, 6);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff9800';
+                ctx.beginPath();
+                ctx.arc(0, -42, 12, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#4caf50'; 
+                ctx.beginPath();
+                ctx.ellipse(3, -54, 4, 8, Math.PI/4, 0, Math.PI*2);
+                ctx.fill();
+            } 
+            else if (animalName.includes("家貓")) {
+                ctx.fillStyle = '#cfd8dc';
+                ctx.beginPath();
+                ctx.roundRect(-45, -25, 90, 65, 20);
+                ctx.fill();
+
+                ctx.fillStyle = '#90a4ae';
+                ctx.beginPath();
+                ctx.moveTo(-40, -20); ctx.lineTo(-50, -55); ctx.lineTo(-15, -20);
+                ctx.moveTo(40, -20); ctx.lineTo(50, -55); ctx.lineTo(15, -20);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff8a80';
+                ctx.beginPath();
+                ctx.moveTo(-35, -20); ctx.lineTo(-42, -45); ctx.lineTo(-22, -20);
+                ctx.moveTo(35, -20); ctx.lineTo(42, -45); ctx.lineTo(22, -20);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffd54f';
+                ctx.beginPath();
+                ctx.ellipse(-20, -5, 12, 6, Math.PI/12, 0, Math.PI*2);
+                ctx.ellipse(20, -5, 12, 6, -Math.PI/12, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#263238'; 
+                ctx.beginPath();
+                ctx.ellipse(-20, -5, 3, 6, 0, 0, Math.PI*2);
+                ctx.ellipse(20, -5, 3, 6, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.strokeStyle = '#90a4ae';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(-45, 10); ctx.lineTo(-70, 8);
+                ctx.moveTo(-45, 15); ctx.lineTo(-68, 20);
+                ctx.moveTo(45, 10); ctx.lineTo(70, 8);
+                ctx.moveTo(45, 15); ctx.lineTo(68, 20);
+                ctx.stroke();
+            }
+            else if (animalName.includes("黃金獵犬")) {
+                ctx.fillStyle = '#ffe082'; 
+                ctx.beginPath();
+                ctx.roundRect(-45, -25, 90, 65, 22);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffb300';
+                ctx.beginPath();
+                ctx.roundRect(-58, -25, 18, 55, 9);
+                ctx.roundRect(40, -25, 18, 55, 9);
+                ctx.fill();
+
+                ctx.fillStyle = '#3e2723';
+                ctx.beginPath();
+                ctx.arc(-20, -5, 6, 0, Math.PI * 2);
+                ctx.arc(20, -5, 6, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.roundRect(-10, 8, 20, 12, 5);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff8a80';
+                ctx.beginPath();
+                ctx.roundRect(-8, 18, 16, 18, [0, 0, 8, 8]);
+                ctx.fill();
+            }
+            else if (animalName.includes("白兔")) {
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.roundRect(-40, -20, 80, 60, 25);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.roundRect(-30, -75, 18, 60, 9);
+                ctx.roundRect(12, -75, 18, 60, 9);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff8a80'; 
+                ctx.beginPath();
+                ctx.roundRect(-26, -70, 10, 50, 5);
+                ctx.roundRect(16, -70, 10, 50, 5);
+                ctx.fill();
+
+                ctx.fillStyle = 'rgba(236, 64, 121, 0.4)';
+                ctx.beginPath();
+                ctx.arc(-26, 15, 8, 0, Math.PI * 2);
+                ctx.arc(26, 15, 8, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#d32f2f';
+                ctx.beginPath();
+                ctx.arc(-16, -2, 5, 0, Math.PI * 2);
+                ctx.arc(16, -2, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            else if (animalName.includes("雄獅")) {
+                ctx.fillStyle = '#ff7043'; 
+                ctx.beginPath();
+                ctx.arc(0, 0, 65, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffe082';
+                ctx.beginPath();
+                ctx.roundRect(-35, -25, 70, 55, 18);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-16, -5, 6, 0, Math.PI*2);
+                ctx.arc(16, -5, 6, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.strokeStyle = '#d84315';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(0, -22); ctx.lineTo(0, -12);
+                ctx.moveTo(-8, -17); ctx.lineTo(8, -17);
+                ctx.stroke();
+            }
+            else if (animalName.includes("紅狐")) {
+                ctx.fillStyle = '#ff5722';
+                ctx.beginPath();
+                ctx.moveTo(0, 30);
+                ctx.quadraticCurveTo(-55, -15, -45, -30);
+                ctx.quadraticCurveTo(0, -20, 45, -30);
+                ctx.quadraticCurveTo(55, -15, 0, 30);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.moveTo(-45, -30);
+                ctx.quadraticCurveTo(-25, -25, 0, -5);
+                ctx.quadraticCurveTo(-35, 15, -45, -10);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.moveTo(45, -30);
+                ctx.quadraticCurveTo(25, -25, 0, -5);
+                ctx.quadraticCurveTo(35, 15, 45, -10);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#3e2723';
+                ctx.beginPath();
+                ctx.moveTo(-45, -30); ctx.lineTo(-55, -60); ctx.lineTo(-20, -27); ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(45, -30); ctx.lineTo(55, -60); ctx.lineTo(20, -27); ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-18, -10, 5, 0, Math.PI*2);
+                ctx.arc(18, -10, 5, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(0, 25, 6, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("灰狼")) {
+                ctx.fillStyle = '#78909c';
+                ctx.beginPath();
+                ctx.moveTo(0, 40);
+                ctx.lineTo(-45, -20);
+                ctx.lineTo(-30, -45);
+                ctx.lineTo(0, -25);
+                ctx.lineTo(30, -45);
+                ctx.lineTo(45, -20);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#37474f';
+                ctx.beginPath();
+                ctx.moveTo(-35, -25); ctx.lineTo(-45, -65); ctx.lineTo(-15, -30); ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(35, -25); ctx.lineTo(55, -65); ctx.lineTo(15, -30); ctx.fill();
+
+                ctx.fillStyle = '#ffd54f';
+                ctx.beginPath();
+                ctx.ellipse(-16, -10, 8, 4, Math.PI/6, 0, Math.PI*2);
+                ctx.ellipse(16, -10, 8, 4, -Math.PI/6, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-16, -10, 3, 0, Math.PI*2);
+                ctx.arc(16, -10, 3, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.roundRect(-8, 28, 16, 12, 4);
+                ctx.fill();
+            }
+            else if (animalName.includes("棕熊")) {
+                ctx.fillStyle = '#5d4037';
+                ctx.beginPath();
+                ctx.roundRect(-50, -30, 100, 75, 25);
+                ctx.fill();
+
+                ctx.fillStyle = '#3e2723';
+                ctx.beginPath();
+                ctx.arc(-42, -32, 16, 0, Math.PI*2);
+                ctx.arc(42, -32, 16, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#ff8a80';
+                ctx.beginPath();
+                ctx.arc(-42, -32, 8, 0, Math.PI*2);
+                ctx.arc(42, -32, 8, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#d7ccc8';
+                ctx.beginPath();
+                ctx.ellipse(0, 18, 24, 16, 0, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(0, 10, 6, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-18, -2, 5, 0, Math.PI*2);
+                ctx.arc(18, -2, 5, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("大象")) {
+                ctx.fillStyle = '#b0bec5';
+                ctx.beginPath();
+                ctx.roundRect(-45, -30, 90, 70, 20);
+                ctx.fill();
+
+                ctx.fillStyle = '#90a4ae';
+                ctx.beginPath();
+                ctx.ellipse(-55, -10, 25, 35, Math.PI/12, 0, Math.PI*2);
+                ctx.ellipse(55, -10, 25, 35, -Math.PI/12, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#78909c';
+                ctx.beginPath();
+                ctx.roundRect(-10, 10, 20, 50, 10);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-20, -5, 5, 0, Math.PI*2);
+                ctx.arc(20, -5, 5, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("靈猴")) {
+                ctx.fillStyle = '#5d4037';
+                ctx.beginPath();
+                ctx.arc(0, 0, 48, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#d7ccc8';
+                ctx.beginPath();
+                ctx.ellipse(-16, -8, 20, 20, 0, 0, Math.PI*2);
+                ctx.ellipse(16, -8, 20, 20, 0, 0, Math.PI*2);
+                ctx.ellipse(0, 12, 28, 22, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#5d4037';
+                ctx.beginPath();
+                ctx.arc(-52, 0, 14, 0, Math.PI*2);
+                ctx.arc(52, 0, 14, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#ff8a80';
+                ctx.beginPath();
+                ctx.arc(-52, 0, 7, 0, Math.PI*2);
+                ctx.arc(52, 0, 7, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-15, -8, 6, 0, Math.PI*2);
+                ctx.arc(15, -8, 6, 0, Math.PI*2);
+                ctx.fill();
+                ctx.strokeStyle = '#212121';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(0, 12, 10, 0, Math.PI, false);
+                ctx.stroke();
+            }
+            else if (animalName.includes("蒼鷹")) {
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(0, -10, 45, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#4e342e';
+                ctx.beginPath();
+                ctx.moveTo(-45, -10);
+                ctx.lineTo(-5, -55);
+                ctx.lineTo(45, -10);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#ffca28';
+                ctx.beginPath();
+                ctx.moveTo(-12, -2);
+                ctx.quadraticCurveTo(0, 10, 0, 32);
+                ctx.quadraticCurveTo(8, 10, 12, -2);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-18, -12, 6, 0, Math.PI*2);
+                ctx.arc(18, -12, 6, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(-16, -14, 2, 0, Math.PI*2);
+                ctx.arc(20, -14, 2, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("猛虎")) {
+                ctx.fillStyle = '#ff9800';
+                ctx.beginPath();
+                ctx.roundRect(-48, -25, 96, 70, 20);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.ellipse(-16, 18, 22, 14, 0, 0, Math.PI*2);
+                ctx.ellipse(16, 18, 22, 14, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.fillRect(-4, -25, 8, 14);
+                ctx.fillRect(-15, -25, 4, 10);
+                ctx.fillRect(11, -25, 4, 10);
+                ctx.fillRect(-48, -2, 14, 4);
+                ctx.fillRect(-48, 8, 10, 4);
+                ctx.fillRect(34, -2, 14, 4);
+                ctx.fillRect(38, 8, 10, 4);
+
+                ctx.beginPath();
+                ctx.arc(-20, -2, 6, 0, Math.PI*2);
+                ctx.arc(20, -2, 6, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(0, 12, 5, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("綿羊")) {
+                ctx.fillStyle = '#ffffff';
+                const pts = [[-35,-20], [0,-35], [35,-20], [35,15], [0,25], [-35,15], [-20,-5], [20,-5]];
+                pts.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p[0], p[1], 28, 0, Math.PI*2);
+                    ctx.fill();
+                });
+
+                ctx.fillStyle = '#cfd8dc';
+                ctx.beginPath();
+                ctx.roundRect(-24, -10, 48, 42, 15);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-10, 2, 4, 0, Math.PI*2);
+                ctx.arc(10, 2, 4, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#b0bec5';
+                ctx.beginPath();
+                ctx.ellipse(-26, 0, 8, 18, Math.PI/4, 0, Math.PI*2);
+                ctx.ellipse(26, 0, 8, 18, -Math.PI/4, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("松鼠")) {
+                ctx.fillStyle = '#e65100';
+                ctx.beginPath();
+                ctx.ellipse(45, -15, 30, 45, Math.PI/6, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#ffb74d';
+                ctx.beginPath();
+                ctx.ellipse(45, -15, 18, 30, Math.PI/6, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff7043';
+                ctx.beginPath();
+                ctx.roundRect(-42, -25, 84, 65, 18);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.ellipse(-15, 15, 16, 12, 0, 0, Math.PI*2);
+                ctx.ellipse(15, 15, 16, 12, 0, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillRect(-6, 16, 5, 10);
+                ctx.fillRect(1, 16, 5, 10);
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-16, -2, 6, 0, Math.PI*2);
+                ctx.arc(16, -2, 6, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(0, 8, 4, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("海豚")) {
+                ctx.fillStyle = '#4fc3f7';
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 60, 35, -Math.PI/12, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.moveTo(-45, 10);
+                ctx.quadraticCurveTo(-75, 45, -65, 55);
+                ctx.quadraticCurveTo(-50, 45, -35, 18);
+                ctx.fill();
+
+                ctx.fillStyle = '#e1f5fe';
+                ctx.beginPath();
+                ctx.ellipse(-5, 12, 45, 20, -Math.PI/12, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-24, -8, 5, 0, Math.PI*2);
+                ctx.fill();
+                ctx.strokeStyle = '#212121';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(-26, 2, 8, 0, Math.PI/2, false);
+                ctx.stroke();
+            }
+            else if (animalName.includes("貓頭鷹")) {
+                ctx.fillStyle = '#795548';
+                ctx.beginPath();
+                ctx.roundRect(-42, -35, 84, 80, 20);
+                ctx.fill();
+
+                ctx.fillStyle = '#d7ccc8';
+                ctx.beginPath();
+                ctx.roundRect(-30, 5, 60, 30, [0, 0, 15, 15]);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffeb3b';
+                ctx.beginPath();
+                ctx.arc(-18, -12, 16, 0, Math.PI*2);
+                ctx.arc(18, -12, 16, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-18, -12, 8, 0, Math.PI*2);
+                ctx.arc(18, -12, 8, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff9800';
+                ctx.beginPath();
+                ctx.moveTo(-6, -8); ctx.lineTo(0, 4); ctx.lineTo(6, -8); ctx.closePath();
+                ctx.fill();
+            }
+            else if (animalName.includes("野馬")) {
+                ctx.fillStyle = '#8d6e63';
+                ctx.beginPath();
+                ctx.roundRect(-35, -30, 70, 75, [18, 18, 5, 5]);
+                ctx.fill();
+
+                ctx.fillStyle = '#4e342e'; 
+                ctx.beginPath();
+                ctx.moveTo(-35, -28);
+                ctx.quadraticCurveTo(-65, -5, -55, 35);
+                ctx.lineTo(-33, 20);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#5d4037';
+                ctx.beginPath();
+                ctx.roundRect(-35, 20, 70, 25, 8);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-14, -8, 5, 0, Math.PI*2);
+                ctx.arc(14, -8, 5, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(-10, 32, 3, 0, Math.PI*2);
+                ctx.arc(10, 32, 3, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("無尾熊")) {
+                ctx.fillStyle = '#b0bec5';
+                ctx.beginPath();
+                ctx.roundRect(-44, -22, 88, 62, 22);
+                ctx.fill();
+
+                ctx.fillStyle = '#90a4ae';
+                ctx.beginPath();
+                ctx.arc(-46, -24, 20, 0, Math.PI*2);
+                ctx.arc(46, -24, 20, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(-46, -24, 12, 0, Math.PI*2);
+                ctx.arc(46, -24, 12, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#37474f';
+                ctx.beginPath();
+                ctx.roundRect(-12, -4, 24, 32, 10);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-18, -6, 5, 0, Math.PI*2);
+                ctx.arc(18, -6, 5, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("梅花鹿")) {
+                ctx.fillStyle = '#ffb74d';
+                ctx.beginPath();
+                ctx.roundRect(-40, -20, 80, 65, [22, 22, 12, 12]);
+                ctx.fill();
+
+                ctx.strokeStyle = '#5d4037';
+                ctx.lineWidth = 4;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(-25, -18); ctx.lineTo(-45, -52); ctx.moveTo(-35, -35); ctx.lineTo(-52, -38);
+                ctx.moveTo(25, -18); ctx.lineTo(45, -52); ctx.moveTo(35, -35); ctx.lineTo(52, -38);
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(-15, -8, 3, 0, Math.PI*2);
+                ctx.arc(15, -8, 3, 0, Math.PI*2);
+                ctx.arc(0, -12, 2.5, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-16, 5, 5, 0, Math.PI*2);
+                ctx.arc(16, 5, 5, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(0, 18, 6, 4, 0, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("長頸鹿")) {
+                ctx.fillStyle = '#ffd54f';
+                ctx.beginPath();
+                ctx.roundRect(-30, 0, 60, 50, 10);
+                ctx.roundRect(-14, 15, 28, 55, 6); 
+                ctx.fill();
+
+                ctx.fillStyle = '#ffb300'; 
+                ctx.beginPath();
+                ctx.arc(-14, 12, 6, 0, Math.PI*2);
+                ctx.arc(14, 15, 5, 0, Math.PI*2);
+                ctx.arc(0, 36, 7, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.strokeStyle = '#ffb300';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(-15, 2); ctx.lineTo(-25, -18);
+                ctx.moveTo(15, 2); ctx.lineTo(25, -18);
+                ctx.stroke();
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-25, -18, 4, 0, Math.PI*2);
+                ctx.arc(25, -18, 4, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(-12, 12, 4, 0, Math.PI*2);
+                ctx.arc(12, 12, 4, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("企鵝")) {
+                ctx.fillStyle = '#263238';
+                ctx.beginPath();
+                ctx.roundRect(-42, -30, 84, 75, 25);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.ellipse(0, 8, 34, 30, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff9800'; 
+                ctx.beginPath();
+                ctx.moveTo(-10, -4); ctx.lineTo(0, 8); ctx.lineTo(10, -4); ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-14, -10, 5, 0, Math.PI*2);
+                ctx.arc(14, -10, 5, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffd54f'; 
+                ctx.beginPath();
+                ctx.moveTo(-12, 22); ctx.lineTo(12, 30); ctx.lineTo(12, 22); ctx.lineTo(-12, 30); ctx.closePath();
+                ctx.fill();
+            }
+            else if (animalName.includes("天鵝")) {
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.ellipse(20, 20, 42, 20, 0, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.roundRect(-15, -45, 16, 65, 8);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(-7, -45, 12, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff9800'; 
+                ctx.beginPath();
+                ctx.moveTo(-19, -48); ctx.lineTo(-32, -43); ctx.lineTo(-19, -40); ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-11, -48, 2.5, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.strokeStyle = '#4fc3f7';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(0, 36, 60, 0, Math.PI, false);
+                ctx.stroke();
+            }
+            else if (animalName.includes("乳牛")) {
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.roundRect(-42, -25, 84, 65, 20);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121'; 
+                ctx.beginPath();
+                ctx.ellipse(-26, -14, 15, 10, Math.PI/4, 0, Math.PI*2);
+                ctx.ellipse(18, 12, 14, 18, -Math.PI/6, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff8a80'; 
+                ctx.beginPath();
+                ctx.roundRect(-24, 12, 48, 24, 10);
+                ctx.fill();
+                ctx.fillStyle = '#d81b60';
+                ctx.beginPath();
+                ctx.arc(-8, 24, 3, 0, Math.PI*2);
+                ctx.arc(8, 24, 3, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-16, -2, 5, 0, Math.PI*2);
+                ctx.arc(16, -2, 5, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("刺蝟")) {
+                ctx.strokeStyle = '#4e342e';
+                ctx.lineWidth = 4;
+                ctx.lineCap = 'round';
+                for (let a = -Math.PI; a < 0; a += 0.25) {
+                    const rInner = 35, rOuter = 58;
+                    ctx.beginPath();
+                    ctx.moveTo(rInner*Math.cos(a), rInner*Math.sin(a));
+                    ctx.lineTo(rOuter*Math.cos(a), rOuter*Math.sin(a));
+                    ctx.stroke();
+                }
+
+                ctx.fillStyle = '#ffe0b2';
+                ctx.beginPath();
+                ctx.ellipse(0, 10, 42, 28, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-20, 10, 4, 0, Math.PI*2);
+                ctx.arc(20, 10, 4, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(0, 24, 5, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("幾何斑馬")) {
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.roundRect(-38, -25, 76, 70, 18);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121'; 
+                ctx.fillRect(-38, -12, 22, 5);
+                ctx.fillRect(-38, 8, 18, 5);
+                ctx.fillRect(16, -12, 22, 5);
+                ctx.fillRect(20, 8, 18, 5);
+                ctx.fillRect(-10, -25, 20, 8);
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-14, -2, 5, 0, Math.PI*2);
+                ctx.arc(14, -2, 5, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("藍鯨")) {
+                ctx.fillStyle = '#0288d1';
+                ctx.beginPath();
+                ctx.ellipse(0, 10, 62, 35, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#e1f5fe';
+                ctx.beginPath();
+                ctx.ellipse(0, 26, 42, 14, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#29b6f6'; 
+                ctx.fillRect(-2, -45, 4, 24);
+                ctx.beginPath();
+                ctx.arc(-10, -45, 6, 0, Math.PI*2);
+                ctx.arc(10, -45, 6, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.moveTo(-35, 8); ctx.quadraticCurveTo(-25, 14, -15, 8);
+                ctx.stroke();
+            }
+            else if (animalName.includes("袋鼠")) {
+                ctx.fillStyle = '#a1887f';
+                ctx.beginPath();
+                ctx.roundRect(-32, -15, 64, 60, [15, 15, 5, 5]);
+                ctx.fill();
+
+                ctx.fillStyle = '#8d6e63'; 
+                ctx.beginPath();
+                ctx.roundRect(-24, -62, 14, 52, 6);
+                ctx.roundRect(10, -62, 14, 52, 6);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-12, 2, 5, 0, Math.PI*2);
+                ctx.arc(12, 2, 5, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(0, 32, 10, 6, 0, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("河狸")) {
+                ctx.fillStyle = '#5d4037';
+                ctx.beginPath();
+                ctx.roundRect(-45, -25, 90, 65, 22);
+                ctx.fill();
+
+                ctx.fillStyle = '#ff9800'; 
+                ctx.fillRect(-10, 18, 9, 14);
+                ctx.fillRect(1, 18, 9, 14);
+
+                ctx.fillStyle = '#d7ccc8';
+                ctx.beginPath();
+                ctx.ellipse(-18, 12, 14, 10, 0, 0, Math.PI*2);
+                ctx.ellipse(18, 12, 14, 10, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-18, -2, 6, 0, Math.PI*2);
+                ctx.arc(18, -2, 6, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(0, 10, 5, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("孔雀")) {
+                ctx.fillStyle = '#4caf50'; 
+                for (let a = -Math.PI; a < 0; a += 0.35) {
+                    ctx.beginPath();
+                    ctx.ellipse(75*Math.cos(a), 75*Math.sin(a), 12, 24, a + Math.PI/2, 0, Math.PI*2);
+                    ctx.fill();
+                }
+
+                ctx.fillStyle = '#0288d1';
+                ctx.beginPath();
+                ctx.ellipse(0, 12, 24, 34, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffca28';
+                ctx.beginPath();
+                ctx.moveTo(-6, 2); ctx.lineTo(0, 12); ctx.lineTo(6, 2); ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(-10, -4, 4, 0, Math.PI*2);
+                ctx.arc(10, -4, 4, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("倉鼠")) {
+                ctx.fillStyle = '#ffb74d';
+                ctx.beginPath();
+                ctx.roundRect(-42, -22, 84, 62, 22);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff'; 
+                ctx.beginPath();
+                ctx.ellipse(0, 18, 24, 18, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#757575'; 
+                ctx.beginPath();
+                ctx.ellipse(0, 14, 8, 12, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-18, -4, 5, 0, Math.PI*2);
+                ctx.arc(18, -4, 5, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#ff8a80'; 
+                ctx.beginPath();
+                ctx.arc(-26, 8, 6, 0, Math.PI*2);
+                ctx.arc(26, 8, 6, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else if (animalName.includes("變色龍")) {
+                ctx.fillStyle = '#4caf50';
+                ctx.beginPath();
+                ctx.roundRect(-42, -25, 84, 60, 18);
+                ctx.fill();
+
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 10;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.arc(38, 22, 16, 0, Math.PI*1.5, false);
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffeb3b'; 
+                ctx.beginPath();
+                ctx.arc(-16, -2, 14, 0, Math.PI*2);
+                ctx.fill();
+                ctx.fillStyle = '#212121';
+                ctx.beginPath();
+                ctx.arc(-16, -2, 5, 0, Math.PI*2);
+                ctx.fill();
+            }
+            else {
+                const grad = ctx.createLinearGradient(-40, -40, 40, 40);
+                grad.addColorStop(0, primaryColor);
+                grad.addColorStop(1, secondaryColor);
+                ctx.fillStyle = grad;
+
+                ctx.beginPath();
+                ctx.arc(0, -10, 45, 0, Math.PI, true);
+                ctx.lineTo(45, 20);
+                ctx.lineTo(-45, 20);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = accentColor;
+                ctx.beginPath();
+                ctx.moveTo(-15, -45); ctx.lineTo(0, -65); ctx.lineTo(15, -45);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(-16, -10, 5, 0, Math.PI * 2);
+                ctx.arc(16, -10, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        let isMusicPlaying = false;
+        const bgMusic = document.getElementById("bg-music");
+        const musicBtn = document.getElementById("music-toggle");
+        const volumeSlider = document.getElementById("volume-slider");
+
+        bgMusic.volume = 0.5;
+
+        function toggleMusic() {
+            if (!isMusicPlaying) {
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicBtn.innerHTML = `<i class="fa-solid fa-volume-high text-green-500"></i>`;
+                    musicBtn.classList.add("music-playing");
+                    showToast("fa-volume-high", "音樂已啟用，開始放鬆體驗...");
+                }).catch(err => {
+                    showToast("fa-circle-exclamation", "瀏覽器限制，請點擊畫面再次試試！");
+                });
+            } else {
+                bgMusic.pause();
+                isMusicPlaying = false;
+                musicBtn.innerHTML = `<i class="fa-solid fa-volume-xmark"></i>`;
+                musicBtn.classList.remove("music-playing");
+                showToast("fa-volume-xmark", "背景音樂已靜音");
+            }
+        }
+
+        volumeSlider.addEventListener("input", (e) => {
+            const vol = e.target.value;
+            bgMusic.volume = vol;
+            if (vol == 0) {
+                musicBtn.innerHTML = `<i class="fa-solid fa-volume-xmark text-gray-400"></i>`;
+                musicBtn.classList.remove("music-playing");
+            } else if (isMusicPlaying) {
+                musicBtn.innerHTML = `<i class="fa-solid fa-volume-high text-green-500"></i>`;
+                musicBtn.classList.add("music-playing");
+            }
+        });
+
+        let pendingAction = null;
+
+        function askConfirm(callback) {
+            pendingAction = callback;
+            document.getElementById("confirm-modal").classList.remove("hidden");
+        }
+
+        document.getElementById("btn-confirm-ok").addEventListener("click", () => {
+            document.getElementById("confirm-modal").classList.add("hidden");
+            if (pendingAction) {
+                pendingAction();
+                pendingAction = null;
+            }
+        });
+
+        document.getElementById("btn-confirm-cancel").addEventListener("click", () => {
+            document.getElementById("confirm-modal").classList.add("hidden");
+            pendingAction = null;
+        });
+
+        function showToast(icon, message) {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = "toast-msg";
+            toast.innerHTML = `
+                <i class="${icon}"></i>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        /* ==========================================================================
+           狀態管理與答題系統
+           ========================================================================== */
+        let currentQuestionIndex = 0;
+        let userScores = [50, 50, 50, 50, 50]; // 五大維度
+        let answerHistory = [];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initTheme();
+            renderCatalogGrid();
+            initScrollEffects();
+            initFAQ();
+            initShowcase();
+
+            document.getElementById("btn-to-quiz").addEventListener("click", startQuizFlow);
+            document.getElementById("btn-to-catalog").addEventListener("click", openCatalogFlow);
+            document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+            document.getElementById("music-toggle").addEventListener("click", toggleMusic);
+            document.getElementById("catalog-search-input").addEventListener("input", filterCatalog);
+
+            document.querySelectorAll(".filter-tag").forEach(tag => {
+                tag.addEventListener("click", (e) => {
+                    document.querySelectorAll(".filter-tag").forEach(t => t.classList.remove("active"));
+                    e.target.classList.add("active");
+                    filterCatalog();
+                });
+            });
+
+            document.getElementById("btn-catalog-back").addEventListener("click", returnToLandingDirectly);
+            document.getElementById("btn-restart").addEventListener("click", startQuizFlow);
+            document.getElementById("btn-result-home").addEventListener("click", returnToLandingDirectly);
+            document.getElementById("btn-result-catalog").addEventListener("click", openCatalogFlow);
+            document.getElementById("btn-copy-prompt").addEventListener("click", copyPromptToClipboard);
+            document.getElementById("btn-prev-question").addEventListener("click", prevQuestion);
+            document.getElementById("logo-anti").addEventListener("click", handleLogoClickBack);
+
+            document.getElementById("modal-close").addEventListener("click", () => {
+                document.getElementById("catalog-modal").classList.add("hidden");
+            });
+
+            // 頂部固定列陰影隨滾動變化
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('app-header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+
+        /* ==========================================================================
+           滾動漸顯與互動 FAQ、展示區邏輯
+           ========================================================================== */
+        function initScrollEffects() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            function checkReveal() {
+                const windowHeight = window.innerHeight;
+                reveals.forEach(reveal => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    const elementVisible = 100; // 觸發淡入的偏移量
+                    
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', checkReveal);
+            checkReveal(); // 初始載入時檢查一次
+        }
+
+        function initFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    faqItems.forEach(i => i.classList.remove('active'));
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        function getDailyAnimal() {
+            const d = new Date();
+            const val = d.getFullYear() * 31 + d.getMonth() * 7 + d.getDate();
+            const index = val % ANIMALS.length;
+            return ANIMALS[index];
+        }
+
+        function getDailyRandomAnimals() {
+            const d = new Date();
+            const val = d.getFullYear() * 31 + d.getMonth() * 7 + d.getDate();
+            const index1 = (val + 5) % ANIMALS.length;
+            const index2 = (val + 13) % ANIMALS.length;
+            return [ANIMALS[index1], ANIMALS[index2]];
+        }
+
+        function startDailyCountdown() {
+            const timerEl = document.getElementById("daily-countdown");
+            if (!timerEl) return;
+            
+            function updateTimer() {
+                const now = new Date();
+                const midnight = new Date();
+                midnight.setHours(24, 0, 0, 0); // 下一個午夜零點
+                const diff = midnight - now;
+                
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                timerEl.innerText = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+            
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        function initShowcase() {
+            const dailyAnimal = getDailyAnimal();
+            const [rand1, rand2] = getDailyRandomAnimals();
+
+            const btnDaily = document.getElementById("btn-daily-recommend");
+            const btnRand1 = document.getElementById("btn-daily-random-1");
+            const btnRand2 = document.getElementById("btn-daily-random-2");
+
+            if (btnDaily && btnRand1 && btnRand2) {
+                btnDaily.innerText = `🌟 今日推薦：${dailyAnimal.name}`;
+                btnDaily.setAttribute("data-animal", dailyAnimal.name);
+
+                btnRand1.innerText = `🔮 靈巧適應：${rand1.name}`;
+                btnRand1.setAttribute("data-animal", rand1.name);
+
+                btnRand2.innerText = `🔥 肉食領袖：${rand2.name}`;
+                btnRand2.setAttribute("data-animal", rand2.name);
+            }
+
+            // 預設渲染今日推薦
+            updateShowcaseAnimal(dailyAnimal.name);
+            startDailyCountdown();
+
+            const tabs = document.querySelectorAll('.showcase-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const targetAnimalName = tab.getAttribute('data-animal');
+                    updateShowcaseAnimal(targetAnimalName);
+                });
+            });
+        }
+
+        function updateShowcaseAnimal(name) {
+            const animal = ANIMALS.find(a => a.name === name);
+            if (!animal) return;
+
+            document.getElementById("showcase-name").innerText = animal.name;
+            document.getElementById("showcase-mbti").innerText = animal.mbti;
+            document.getElementById("showcase-class").innerText = animal.category;
+            document.getElementById("showcase-short").innerText = animal.short;
+            document.getElementById("showcase-desc").innerText = animal.desc;
+            document.getElementById("showcase-friend").innerText = animal.friendAdvice;
+
+            drawAnimalProcedural("showcase-animal-canvas", animal.name);
+        }
+
+        function getShareUrl() {
+            try {
+                return encodeURIComponent(window.location.href);
+            } catch(e) {
+                return encodeURIComponent("https://anti-profile.net");
+            }
+        }
+
+        function getShareMessage() {
+            const matchedResults = calculateMatches(userScores);
+            const primary = matchedResults[0];
+            return encodeURIComponent(`🔮 我在 ANTI 內在動物特質分析測出了 【${primary.animal.name}】(${primary.animal.mbti})，契合度高達 ${primary.percent}%！這份性格分析準確度驚人，快來探索你藏在無意識深處的靈魂之星吧！👉 `);
+        }
+
+        function shareToFacebook() {
+            const url = `https://www.facebook.com/sharer/sharer.php?u=${getShareUrl()}&quote=${getShareMessage()}`;
+            window.open(url, '_blank', 'width=600,height=400');
+        }
+
+        function shareToLine() {
+            const url = `https://social-plugins.line.me/lineit/share?url=${getShareUrl()}&text=${getShareMessage()}`;
+            window.open(url, '_blank', 'width=600,height=400');
+        }
+
+        function shareToThreads() {
+            const url = `https://threads.net/intent/post?text=${getShareMessage()}${getShareUrl()}`;
+            window.open(url, '_blank', 'width=600,height=400');
+        }
+
+        function shareToTwitter() {
+            const url = `https://twitter.com/intent/tweet?text=${getShareMessage()}&url=${getShareUrl()}`;
+            window.open(url, '_blank', 'width=600,height=400');
+        }
+
+        function copyForInstagram() {
+            const matchedResults = calculateMatches(userScores);
+            const primary = matchedResults[0];
+            const text = `✨ ANTI 內在動物特質測驗結果 ✨\n\n🐾 我的靈魂本命是：【${primary.animal.name}】(${primary.animal.mbti})\n📊 契合度：${primary.percent}%\n🌟 核心性格：「${primary.animal.short}」\n\n快來複製以下連結測出你的內在靈魂與 MBTI 吧！\n🔗 https://anti-profile.net`;
+            
+            const btn = document.querySelector('[onclick="copyForInstagram()"]');
+            copyTextToClipboardFallback(text, btn);
+            showToast("fa-brands fa-instagram text-pink-500", "已複製完美 IG 貼文/限動文案！快到 IG 分享吧！");
+        }
+
+        function copyForDiscord() {
+            const matchedResults = calculateMatches(userScores);
+            const primary = matchedResults[0];
+            const text = `>>> **🔮 ANTI 內在動物特質分析結果**\n\n• **本命動物**：__${primary.animal.name}__ (${primary.animal.mbti})\n• **靈魂匹配度**：\`${primary.percent}%\`\n• **特質概述**：*${primary.animal.short}*\n• **交友指南**：${primary.animal.friendAdvice}\n\n👉 測測看你的：https://anti-profile.net`;
+            
+            const btn = document.querySelector('[onclick="copyForDiscord()"]');
+            copyTextToClipboardFallback(text, btn);
+            showToast("fa-brands fa-discord text-indigo-500", "已複製高質感 Discord Markdown 格式！");
+        }
+
+        // 綁定至 window 全域，確保 onclick 可無縫呼叫
+        window.shareToFacebook = shareToFacebook;
+        window.shareToLine = shareToLine;
+        window.shareToThreads = shareToThreads;
+        window.shareToTwitter = shareToTwitter;
+        window.copyForInstagram = copyForInstagram;
+        window.copyForDiscord = copyForDiscord;
+
+        function showScreen(screenId) {
+            document.getElementById("screen-landing").classList.add("hidden");
+            document.getElementById("main-card-container").classList.add("hidden");
+            document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
+
+            if (screenId === "screen-landing") {
+                document.getElementById("screen-landing").classList.remove("hidden");
+                setTimeout(initScrollEffects, 100);
+            } else {
+                document.getElementById("main-card-container").classList.remove("hidden");
+                document.getElementById(screenId).classList.remove("hidden");
+            }
+        }
+
+        function handleLogoClickBack() {
+            const isQuizActive = !document.getElementById("screen-question").classList.contains("hidden");
+            if (isQuizActive && currentQuestionIndex > 0) {
+                askConfirm(() => {
+                    returnToLandingDirectly();
+                });
+            } else {
+                returnToLandingDirectly();
+            }
+        }
+
+        function returnToLandingDirectly() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            showScreen("screen-landing");
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem("anti-theme") || "light";
+            document.body.setAttribute("data-theme", savedTheme);
+            updateThemeButtonIcon(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute("data-theme");
+            const newTheme = currentTheme === "dark" ? "light" : "dark";
+            document.body.setAttribute("data-theme", newTheme);
+            localStorage.setItem("anti-theme", newTheme);
+            updateThemeButtonIcon(newTheme);
+
+            // 重新著色首頁 Showcase
+            const activeShowcaseTab = document.querySelector('.showcase-tab.active');
+            if (activeShowcaseTab) {
+                updateShowcaseAnimal(activeShowcaseTab.getAttribute('data-animal'));
+            }
+
+            // 重新著色結果頁
+            if (!document.getElementById("screen-result").classList.contains("hidden")) {
+                drawRadarChart(userScores);
+                const matchedResults = calculateMatches(userScores);
+                drawAnimalProcedural("result-animal-canvas", matchedResults[0].animal.name);
+            }
+        }
+
+        function updateThemeButtonIcon(theme) {
+            const themeBtn = document.getElementById("theme-toggle");
+            if (theme === "dark") {
+                themeBtn.innerHTML = `<i class="fa-solid fa-moon text-blue-300"></i>`;
+            } else {
+                themeBtn.innerHTML = `<i class="fa-solid fa-sun text-yellow-500"></i>`;
+            }
+        }
+
+        /* ==========================================================================
+           STREAMING_CHUNK: Handling questionnaire logic and scoring mechanics...
+           ========================================================================== */
+        function startQuizFlow() {
+            currentQuestionIndex = 0;
+            userScores = [50, 50, 50, 50, 50];
+            answerHistory = [];
+            showScreen("screen-question");
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const question = QUESTIONS[currentQuestionIndex];
+            const progressPct = ((currentQuestionIndex) / QUESTIONS.length) * 100;
+            document.getElementById("progress-fill").style.width = `${progressPct}%`;
+            document.getElementById("quiz-counter").innerText = `${String(currentQuestionIndex + 1).padStart(2, '0')} / ${QUESTIONS.length}`;
+            
+            const categoryEl = document.getElementById("quiz-category");
+            categoryEl.innerText = question.category;
+            
+            let catColor = "var(--color-aesthetic)";
+            let catBg = "rgba(149, 117, 205, 0.15)";
+            if (question.dimension === 1) { catColor = "var(--color-social)"; catBg = "rgba(255, 112, 67, 0.15)"; }
+            else if (question.dimension === 2) { catColor = "var(--color-stress)"; catBg = "rgba(251, 192, 45, 0.15)"; }
+            else if (question.dimension === 3) { catColor = "var(--color-cognitive)"; catBg = "rgba(38, 166, 154, 0.15)"; }
+            else if (question.dimension === 4) { catColor = "var(--color-drive)"; catBg = "rgba(236, 64, 121, 0.15)"; }
+            
+            document.documentElement.style.setProperty('--cat-color', catColor);
+            document.documentElement.style.setProperty('--cat-bg', catBg);
+            
+            const prevBtn = document.getElementById("btn-prev-question");
+            prevBtn.style.visibility = currentQuestionIndex > 0 ? "visible" : "hidden";
+
+            document.getElementById("question-text").innerText = question.text;
+
+            const optionsContainer = document.getElementById("options-container");
+            optionsContainer.innerHTML = "";
+
+            const optLetters = ['A', 'B', 'C', 'D'];
+            const optScores = [10, 7, 4, 1];
+            const optTexts = [question.a, question.b, question.c, question.d];
+
+            for (let i = 0; i < 4; i++) {
+                const optBtn = document.createElement("button");
+                optBtn.className = "option-btn";
+                optBtn.innerHTML = `
+                    <div class="flex items-center">
+                        <span class="option-label">${optLetters[i]}</span>
+                        <span class="option-text">${optTexts[i]}</span>
+                    </div>
+                    <i class="fa-solid fa-circle-arrow-right"></i>
+                `;
+                optBtn.addEventListener("click", () => handleAnswer(optScores[i]));
+                optionsContainer.appendChild(optBtn);
+            }
+        }
+
+        function handleAnswer(scoreValue) {
+            const question = QUESTIONS[currentQuestionIndex];
+            answerHistory.push({
+                index: currentQuestionIndex,
+                scores: [...userScores]
+            });
+
+            const scoreChange = scoreValue - 5.5; 
+            userScores[question.dimension] += scoreChange;
+            userScores[question.dimension] = Math.max(5, Math.min(95, userScores[question.dimension]));
+
+            if (currentQuestionIndex < QUESTIONS.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else {
+                runLoadingScreen();
+            }
+        }
+
+        function prevQuestion() {
+            if (answerHistory.length > 0) {
+                const prev = answerHistory.pop();
+                currentQuestionIndex = prev.index;
+                userScores = prev.scores;
+                renderQuestion();
+            }
+        }
+
+        function runLoadingScreen() {
+            showScreen("screen-loading");
+            const titles = [
+                "正在解析您的意識指紋...",
+                "建立 5 次元精神座標中...",
+                "正在與 30 種常見動物特質向量庫比對...",
+                "精密計算歐氏幾何距離...",
+                "孵化最終本命動物結果..."
+            ];
+            const subtitles = [
+                "生活與美學偏好 (AES) 權重分析中...",
+                "能量社交頻率 (SOC) 座標定位中...",
+                "日常情緒應激 (STR) 防禦阻抗測量中...",
+                "大腦直覺與決策 (COG) 多維拆解中...",
+                "捕獵核心驅動動力 (DRV) 歸一化中..."
+            ];
+
+            let step = 0;
+            const interval = setInterval(() => {
+                if (step < titles.length) {
+                    document.getElementById("loading-title").innerText = titles[step];
+                    document.getElementById("loading-subtitle").innerText = subtitles[step];
+                    step++;
+                } else {
+                    clearInterval(interval);
+                    renderResults();
+                }
+            }, 600);
+        }
+
+        function calculateMatches(userVec) {
+            let results = [];
+            ANIMALS.forEach(animal => {
+                let sumSquare = 0;
+                for (let i = 0; i < 5; i++) {
+                    sumSquare += Math.pow(userVec[i] - animal.vector[i], 2);
+                }
+                const distance = Math.sqrt(sumSquare);
+                let matchPct = 100 - (distance / 1.4); 
+                matchPct = Math.max(10, Math.min(99, Math.round(matchPct)));
+                results.push({
+                    animal: animal,
+                    percent: matchPct
+                });
+            });
+            results.sort((a, b) => b.percent - a.percent);
+            return results;
+        }
+
+        function renderResults() {
+            showScreen("screen-result");
+            const matchResults = calculateMatches(userScores);
+            const primary = matchResults[0];
+            const pAnimal = primary.animal;
+            
+            document.getElementById("res-percent").innerText = `${primary.percent}% 契合度`;
+            document.getElementById("res-animal-name").innerText = pAnimal.name;
+            document.getElementById("res-mbti").innerText = pAnimal.mbti;
+            document.getElementById("res-class").innerText = pAnimal.category;
+            document.getElementById("res-short-desc").innerText = pAnimal.short;
+            document.getElementById("res-full-desc").innerText = pAnimal.desc;
+            document.getElementById("res-traits-detail").innerText = pAnimal.traits;
+            document.getElementById("res-mbti-why").innerText = pAnimal.why;
+            document.getElementById("res-partner").innerHTML = `您的最佳契合夥伴是 <b>${pAnimal.partner}</b>，與其共處最能擦出靈魂火花。`;
+            document.getElementById("prompt-text-content").innerText = pAnimal.prompt;
+
+            document.getElementById("res-friend-advice").innerText = pAnimal.friendAdvice;
+            document.getElementById("res-love-advice").innerHTML = `<b>交往合適度：${pAnimal.loveMatch}</b><br><br>${pAnimal.loveAdvice}`;
+
+            let mbtiColor = "var(--color-aesthetic)";
+            if (pAnimal.mbti.startsWith("E")) { mbtiColor = "var(--color-social)"; }
+            if (pAnimal.mbti.endsWith("J")) { mbtiColor = "var(--color-drive)"; }
+            document.documentElement.style.setProperty('--mbti-color', mbtiColor);
+
+            // 渲染 Canvas 本命動物 procedural art 著色
+            drawAnimalProcedural("result-animal-canvas", pAnimal.name);
+
+            const similarContainer = document.getElementById("similar-list-container");
+            similarContainer.innerHTML = "";
+            for (let i = 1; i <= 3; i++) {
+                const sim = matchResults[i];
+                const item = document.createElement("div");
+                item.className = "similar-item";
+                item.innerHTML = `
+                    <div>
+                        <span class="similar-name">${sim.animal.name}</span>
+                        <span class="similar-mbti" style="background:var(--color-cognitive)">${sim.animal.mbti}</span>
+                    </div>
+                    <div class="similar-bar-bg">
+                        <div class="similar-bar-fill" style="width: ${sim.percent}%; background: var(--color-drive)"></div>
+                    </div>
+                    <span class="similar-pct">${sim.percent}%</span>
+                `;
+                similarContainer.appendChild(item);
+            }
+
+            drawRadarChart(userScores);
+        }
+
+        /* ==========================================================================
+           STREAMING_CHUNK: Generating custom SVG Radar chart and metrics...
+           ========================================================================== */
+        function drawRadarChart(scores) {
+            const svg = document.getElementById("radar-chart");
+            svg.innerHTML = "";
+
+            const size = 220;
+            const center = size / 2;
+            const rMax = 75; 
+            const totalAxes = 5;
+            const angleSlice = (Math.PI * 2) / totalAxes;
+
+            const labels = ["美學 (AES)", "社交 (SOC)", "應激 (STR)", "認知 (COG)", "動力 (DRV)"];
+            const colors = [
+                "var(--color-aesthetic)",
+                "var(--color-social)",
+                "var(--color-stress)",
+                "var(--color-cognitive)",
+                "var(--color-drive)"
+            ];
+
+            for (let j = 1; j <= 3; j++) {
+                const r = (rMax / 3) * j;
+                let pointsStr = "";
+                for (let i = 0; i < totalAxes; i++) {
+                    const angle = i * angleSlice - Math.PI / 2;
+                    const x = center + r * Math.cos(angle);
+                    const y = center + r * Math.sin(angle);
+                    pointsStr += `${x},${y} `;
+                }
+                const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+                polygon.setAttribute("points", pointsStr.trim());
+                polygon.setAttribute("class", "radar-grid-line");
+                svg.appendChild(polygon);
+            }
+
+            for (let i = 0; i < totalAxes; i++) {
+                const angle = i * angleSlice - Math.PI / 2;
+                const ax = center + rMax * Math.cos(angle);
+                const ay = center + rMax * Math.sin(angle);
+
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", center);
+                line.setAttribute("y1", center);
+                line.setAttribute("x2", ax);
+                line.setAttribute("y2", ay);
+                line.setAttribute("class", "radar-axis-line");
+                svg.appendChild(line);
+
+                const textGap = 20;
+                const tx = center + (rMax + textGap) * Math.cos(angle);
+                const ty = center + (rMax + 8) * Math.sin(angle) + 4;
+
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                text.setAttribute("x", tx);
+                text.setAttribute("y", ty);
+                text.setAttribute("class", "radar-axis-text");
+                text.setAttribute("fill", colors[i]);
+                text.textContent = labels[i];
+                svg.appendChild(text);
+            }
+
+            let userPoints = "";
+            for (let i = 0; i < totalAxes; i++) {
+                const val = scores[i];
+                const r = (val / 100) * rMax;
+                const angle = i * angleSlice - Math.PI / 2;
+                const x = center + r * Math.cos(angle);
+                const y = center + r * Math.sin(angle);
+                userPoints += `${x},${y} `;
+            }
+
+            const userPoly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+            userPoly.setAttribute("points", userPoints.trim());
+            userPoly.setAttribute("class", "radar-polygon");
+            svg.appendChild(userPoly);
+
+            for (let i = 0; i < totalAxes; i++) {
+                const val = scores[i];
+                const r = (val / 100) * rMax;
+                const angle = i * angleSlice - Math.PI / 2;
+                const x = center + r * Math.cos(angle);
+                const y = center + r * Math.sin(angle);
+
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", x);
+                circle.setAttribute("cy", y);
+                circle.setAttribute("r", "5");
+                circle.setAttribute("class", "radar-point");
+                circle.setAttribute("stroke", colors[i]);
+                svg.appendChild(circle);
+            }
+        }
+
+        /* ==========================================================================
+           圖鑑功能模組與 Modal
+           ========================================================================== */
+        function openCatalogFlow() {
+            showScreen("screen-catalog");
+            filterCatalog();
+        }
+
+        function renderCatalogGrid() {
+            const container = document.getElementById("catalog-grid-container");
+            container.innerHTML = "";
+
+            ANIMALS.forEach((animal) => {
+                const card = document.createElement("div");
+                card.className = "catalog-card";
+                card.setAttribute("data-name", animal.name);
+                card.setAttribute("data-mbti", animal.mbti);
+                card.setAttribute("data-category", animal.category);
+                
+                card.innerHTML = `
+                    <span class="card-mbti">${animal.mbti}</span>
+                    <h4>${animal.name}</h4>
+                    <span class="card-cat">${animal.category}</span>
+                `;
+
+                card.addEventListener("click", () => openAnimalDetailModal(animal));
+                container.appendChild(card);
+            });
+        }
+
+        function filterCatalog() {
+            const searchQuery = document.getElementById("catalog-search-input").value.toLowerCase();
+            const activeFilter = document.querySelector(".filter-tag.active").getAttribute("data-filter");
+            
+            const cards = document.querySelectorAll(".catalog-card");
+            cards.forEach(card => {
+                const name = card.getAttribute("data-name").toLowerCase();
+                const mbti = card.getAttribute("data-mbti").toLowerCase();
+                const category = card.getAttribute("data-category");
+
+                const matchesSearch = name.includes(searchQuery) || mbti.includes(searchQuery);
+                const matchesFilter = activeFilter === "all" || category === activeFilter;
+
+                if (matchesSearch && matchesFilter) {
+                    card.classList.remove("hidden");
+                } else {
+                    card.classList.add("hidden");
+                }
+            });
+        }
+
+        function openAnimalDetailModal(animal) {
+            const modal = document.getElementById("catalog-modal");
+            const inner = document.getElementById("modal-content-inner");
+
+            let mbtiBadgeBg = "var(--color-aesthetic)";
+            if (animal.mbti.startsWith("E")) { mbtiBadgeBg = "var(--color-social)"; }
+            if (animal.mbti.endsWith("J")) { mbtiBadgeBg = "var(--color-drive)"; }
+
+            inner.innerHTML = `
+                <div class="result-badge-row" style="margin-bottom:15px;">
+                    <span class="mbti-tag" style="background:${mbtiBadgeBg}">${animal.mbti}</span>
+                    <span class="animal-classification">${animal.category}</span>
+                </div>
+                
+                <!-- 動態著色插圖容器 -->
+                <div class="animal-canvas-wrapper my-4">
+                    <canvas id="modal-animal-canvas" class="animal-canvas" width="320" height="320"></canvas>
+                </div>
+
+                <h2 style="font-size:32px; font-weight:800; color:var(--text-primary); margin-bottom:10px;">${animal.name}</h2>
+                <p style="font-size:16px; font-weight:600; color:var(--primary-glow); margin-bottom:20px; line-height:1.4;">${animal.short}</p>
+                
+                <div class="analysis-box" style="margin-bottom:15px; background:rgba(255,255,255,0.01)">
+                    <h3 style="font-size:16px; font-weight:700; margin-bottom:8px;"><i class="fa-solid fa-heart" style="color:var(--primary-glow)"></i> 本質特徵分析</h3>
+                    <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">${animal.desc}</p>
+                </div>
+
+                <div class="analysis-box" style="margin-bottom:15px; background:rgba(255,255,255,0.01)">
+                    <h3 style="font-size:16px; font-weight:700; margin-bottom:8px;"><i class="fa-solid fa-compass" style="color:var(--color-cognitive)"></i> 優勢與潛在盲點</h3>
+                    <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">${animal.traits}</p>
+                </div>
+
+                <div class="analysis-box border-l-4 border-amber-400" style="margin-bottom:15px;">
+                    <h3 style="font-size:16px; font-weight:700; margin-bottom:8px;"><i class="fa-solid fa-user-group text-amber-500"></i> 交友引導 & 潛在摩擦問題</h3>
+                    <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">${animal.friendAdvice}</p>
+                </div>
+
+                <div class="analysis-box border-l-4 border-rose-400" style="margin-bottom:15px;">
+                    <h3 style="font-size:16px; font-weight:700; margin-bottom:8px;"><i class="fa-solid fa-heart-crack text-rose-500"></i> 戀愛相處、合適度 & 警訊</h3>
+                    <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;"><b>交往合適度：${animal.loveMatch}</b><br><br>${animal.loveAdvice}</p>
+                </div>
+
+                <div class="analysis-box" style="margin-bottom:15px; background:rgba(255,255,255,0.01)">
+                    <h3 style="font-size:16px; font-weight:700; margin-bottom:8px;"><i class="fa-solid fa-lightbulb" style="color:var(--color-stress)"></i> 為什麼是此 MBTI (${animal.mbti}) 搭配？</h3>
+                    <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">${animal.why}</p>
+                </div>
+
+                <div class="analysis-box" style="margin-bottom:20px; background:rgba(255,255,255,0.01)">
+                    <h3 style="font-size:16px; font-weight:700; margin-bottom:8px;"><i class="fa-solid fa-link" style="color:var(--color-drive)"></i> 靈魂契合夥伴</h3>
+                    <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">最佳伴侶：<b>${animal.partner}</b></p>
+                </div>
+
+                <div class="prompt-box" style="margin-top:10px;">
+                    <h4 style="font-size:13px;"><i class="fa-solid fa-palette"></i> Canva 繪圖 Prompt 指令</h4>
+                    <div class="prompt-text" id="modal-prompt-text" style="font-size:12px; margin-bottom:10px;">"${animal.prompt}"</div>
+                    <button class="btn-copy" id="btn-copy-modal-prompt" style="padding: 6px 12px; font-size:12px;">
+                        <i class="fa-solid fa-copy"></i>
+                        <span>複製指令</span>
+                    </button>
+                </div>
+            `;
+
+            modal.classList.remove("hidden");
+
+            // 著色繪圖
+            drawAnimalProcedural("modal-animal-canvas", animal.name);
+
+            // 綁定複製
+            document.getElementById("btn-copy-modal-prompt").addEventListener("click", () => {
+                const promptVal = document.getElementById("modal-prompt-text").innerText;
+                copyTextToClipboardFallback(promptVal, document.getElementById("btn-copy-modal-prompt"));
+            });
+        }
+
+        /* ==========================================================================
+           STREAMING_CHUNK: Compiling clipboard utility and helper models...
+           ========================================================================== */
+        function copyTextToClipboardFallback(text, buttonElement) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    handleCopySuccess(buttonElement);
+                }).catch(() => {
+                    execCopyFallback(text, buttonElement);
+                });
+            } else {
+                execCopyFallback(text, buttonElement);
+            }
+        }
+
+        function execCopyFallback(text, buttonElement) {
+            try {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.top = "0";
+                textArea.style.left = "0";
+                textArea.style.width = "2em";
+                textArea.style.height = "2em";
+                textArea.style.padding = "0";
+                textArea.style.border = "none";
+                textArea.style.outline = "none";
+                textArea.style.boxShadow = "none";
+                textArea.style.background = "transparent";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                if (successful) {
+                    handleCopySuccess(buttonElement);
+                } else {
+                    showToast("fa-circle-xmark", "複製失敗，請手動選取複製");
+                }
+            } catch (err) {
+                showToast("fa-circle-xmark", "瀏覽器不支援，請手動複製");
+            }
+        }
+
+        function handleCopySuccess(btn) {
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--primary-glow)"></i><span>已複製！</span>`;
+            showToast("fa-circle-check", "Prompt 指令已複製至剪貼簿！");
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 2000);
+        }
+
+        function copyPromptToClipboard() {
+            const promptText = document.getElementById("prompt-text-content").innerText;
+            copyTextToClipboardFallback(promptText, document.getElementById("btn-copy-prompt"));
+        }
+    </script>
+</body>
+</html>
