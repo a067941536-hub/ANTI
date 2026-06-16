@@ -1743,380 +1743,380 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script>
-        const ANIMALS = [
-            {
-                name: "治癒系水豚", mbti: "ISFP", category: "草食溫和系", vector: [85, 30, 10, 45, 20],
-                short: "極致放鬆的社交黑洞，對世間一切紛擾徹底絕緣。",
-                desc: "您溫和不爭，能完美吸收周圍的負能量。您像一隻隨遇而安的水豚，極其專注於當下的感官愉悅（泡溫泉與曬太陽），任何危機在您眼中都只是大自然的一段插曲。",
-                traits: "優勢：情緒穩定度極高、極佳的和諧陪伴感。盲點：過於被動，容易陷入拖延或隨波逐流。",
-                friendAdvice: "做朋友會有的問題：他們極少主動聯繫或邀約，常常給人『已讀隨性』或是不著痕跡的疏離感。如果你想深入挖掘他們的秘密心境，可能會被他們完美的太極防衛彈開。",
-                loveMatch: "92% (忠誠黃金獵犬 / 紳士企鵝)",
-                loveAdvice: "戀愛相處警告：水豚在親密關係中極度抗拒被管束或催促。一旦對手試圖強加人生規劃或瘋狂碎碎念，他們會一言不發地潛入水底「物理失蹤」，避免任何正面衝突。",
-                why: "ISFP 渴望自由且專注於當下審美，水豚極富禪意的鬆弛感是 ISFP 溫和隨性生活型態的極致寫照。",
-                partner: "忠誠黃金獵犬、慵懶無尾熊",
-                prompt: "A gorgeous minimalist flat vector illustration of a cute sleepy capybara with a mini orange on its head in hot springs, pastel cream background, cozy design --ar 1:1"
-            },
-            {
-                name: "忠誠黃金獵犬", mbti: "ESFJ", category: "草食溫和系", vector: [55, 95, 30, 40, 70],
-                short: "陽光治癒的派對核心，用無條件的愛黏合所有人。",
-                desc: "您擁有融化冰雪的溫柔，天生善於觀察他人的需要。只要有您在，群體就能充滿和諧與秩序，您是朋友圈中最堅實的情感後盾。",
-                traits: "優勢：超強共情力、執行與服務細節完美。盲點：過度在乎他人看法，有自我忽視的傾向。",
-                friendAdvice: "做朋友會有的問題：有時關心過度會演變成令人窒息的『情感綁架』。他們太害怕被孤立，甚至會在無意中當起『討好型雙面人』來討好兩方。",
-                loveMatch: "95% (治癒系水豚 / 溫順白兔)",
-                loveAdvice: "戀愛相處警告：他們在戀愛中需要極大量的言語肯定。如果另一半過於冷漠或是不懂得即時給予情感反饋，黃金獵犬內心的小劇場會崩潰，進而產生無理取鬧的焦慮。",
-                why: "ESFJ 崇尚社會秩序與群體和諧，黃金獵犬將人際互動視為生命核心的本能與其完美契合。",
-                partner: "溫順白兔、紳士企鵝",
-                prompt: "A beautiful minimal vector illustration of a happy fluffy golden retriever, soft daylight, warm pastel sage green background, modern art --ar 1:1"
-            },
-            {
-                name: "精緻家貓", mbti: "INFP", category: "靈巧適應系", vector: [95, 25, 75, 80, 35],
-                short: "優雅傲嬌的界線守護者，注重極致生活質感與感官哲學。",
-                desc: "您外表看似冷淡疏離，內心卻是一片璀璨溫暖的精神星空。只有在極少數被您「寵幸」的至交面前，您才會露出極致細膩的一面。",
-                traits: "優勢：美學品味超群、獨立、擁有細緻深奧的直覺。盲點：極其敏感，容易築起厚重的心防逃避現實。",
-                friendAdvice: "做朋友會有的問題：他們的友情邊界晴雨不定。可能今天熱情似火，明天卻突然縮進自己的貓窩不見任何人，給人陰晴不定、難以捉摸的怪僻印象。",
-                loveMatch: "90% (優雅梅花鹿 / 理性貓頭鷹)",
-                loveAdvice: "戀愛相處警告：家貓追求純粹的精神共鳴。如果另一半在相處中流露出世俗、粗鄙或是不尊重其獨立空間的舉動，家貓會瞬間收回利爪，冷酷地判處對方精神出局。",
-                why: "INFP 懷揣純真理想並具備強烈的主觀防禦，家貓對環境高度挑剔且守護內心淨土的姿態與其一致。",
-                partner: "優雅梅花鹿、理性貓頭鷹",
-                prompt: "A stylish minimalist flat illustration of an elegant domestic cat looking side-ways, pastel lilac and soft cream white aesthetic --ar 1:1"
-            },
-            {
-                name: "霸氣雄獅", mbti: "ESTJ", category: "肉食領袖系", vector: [60, 80, 20, 60, 95],
-                short: "威嚴秩序的掌舵者，帶領團隊開疆闢土的實踐先鋒。",
-                desc: "您有著與生俱來的掌控力，討厭低效率與無規章的混亂。您行事果斷，習慣在混亂中迅速定立紀律，帶領大家邁向既定目標。",
-                traits: "優勢：決策精準、極度負責任、善於管理全局。盲點：行事可能顯得過於強硬，不易接納不同觀點。",
-                friendAdvice: "做朋友會有的問題：他們經常不自覺地把『說教』和『糾偏』帶入友誼，喜歡幫朋友規劃人生，有時令人感到沉重的控制壓迫。",
-                loveMatch: "88% (團隊灰狼 / 秩序長頸鹿)",
-                loveAdvice: "戀愛相處警告：雄獅討厭失控感，在關係中習慣居於主導。如果另一半過度散漫、缺乏責任心或愛講大道理，獅子會失去耐心，展開雷霆般的威權壓迫。",
-                why: "ESTJ 堅信社會規範與高效架構，雄獅維護領地尊嚴、嚴格劃分階級與守序的特質是 ESTJ 的化身。",
-                partner: "團隊灰狼、秩序長頸鹿",
-                prompt: "A powerful clean flat vector portrait of a majestic lion with a rich glowing golden mane, mint green background, organic geometry --ar 1:1"
-            },
-            {
-                name: "溫順白兔", mbti: "ISFJ", category: "草食溫和系", vector: [80, 45, 85, 30, 25],
-                short: "極致貼心的精緻守護者，在溫馨角落打理生活微光。",
-                desc: "您心思極其細密，善於防微杜漸。您容易因外界風吹草動而緊張，但也因此磨練出最頂尖的規劃與防禦本能，將家照料得完美無瑕。",
-                traits: "優勢：無私奉獻、記憶力驚人、善於照顧細節。盲點：抗壓性較弱，面對突發變故容易驚慌內耗。",
-                friendAdvice: "做朋友會有的問題：由於他們極度害怕衝突，遇到問題常選擇『委曲求全』，把不滿憋在心裡，積壓過久容易突然爆發，讓朋友一頭霧水。",
-                loveMatch: "91% (忠誠黃金獵犬 / 守護綿羊)",
-                loveAdvice: "戀愛相處警告：白兔的愛是細水長流的。但如果對方一味享受他們的照顧卻毫無感激之意，白兔會陷入嚴重的內耗，最終在極度失望中絕望且安靜地跳走。",
-                why: "ISFJ 強調安全與對珍愛之人之無聲守護，小白兔保持敏銳警覺與溫柔築巢的本能是其真實鏡像。",
-                partner: "忠誠黃金獵犬、勤勉乳牛",
-                prompt: "An adorable cozy vector illustration of a sweet little white rabbit with cute ears sitting in pastel mint flowers, modern soft art --ar 1:1"
-            },
-            {
-                name: "狡黠紅狐", mbti: "ENTP", category: "肉食領袖系", vector: [75, 75, 45, 90, 80],
-                short: "不走尋常路的智多星，以靈慧智慧解構世俗規則。",
-                desc: "您大腦運轉極快，充滿古靈精怪的點子。您熱愛挑戰常規，擅長在矛盾與混沌中捕捉前所未有的生存商機，思維彈性極大。",
-                traits: "優勢：智計百出、口才一流、在極端變局中適應力極強。盲點：缺乏耐力，容易把繁複的細部執行工作半途而廢。",
-                friendAdvice: "做朋友會有的問題：天生好辯（Debater），經常為了論證邏輯而與朋友唱反調，有時會讓人覺得他們『愛抬槓、不講情面』。",
-                loveMatch: "89% (智慧海豚 / 偽裝變色龍)",
-                loveAdvice: "戀愛相處警告：紅狐在戀愛中極其需要思想碰撞。如果另一半過於木訥、生活一成不變或極度守舊，紅狐會感到無聊透頂，進而到處尋求新的刺激與探險。",
-                why: "ENTP 熱衷拆解世界與概念思辨，紅狐機敏靈動、不按常理出牌的特質正是這群點子大師的象徵。",
-                partner: "智慧海豚、偽裝變色龍",
-                prompt: "A sleek modern vector art of a clever orange red fox sitting playfully, pastel teal background, bright warm shapes --ar 1:1"
-            },
-            {
-                name: "沉穩棕熊", mbti: "ISTJ", category: "草食溫和系", vector: [40, 20, 30, 75, 55],
-                short: "腳踏實地的森林隱士，用絕對誠信編織安全壁壘。",
-                desc: "您不尚空談，相信行動和數據才是安身立命之本。您性格堅實，不喜歡鋪張與喧囂，在既定步調中默默累積財富與經驗。",
-                traits: "優勢：極度可靠、行事有始有終。盲點：有些頑固，不輕易改變固有習慣。",
-                friendAdvice: "做朋友會有的問題：過於死板、嚴肅，甚至有些不解風情。有時朋友只是想找個肩膀哭訴，棕熊卻一上來就理性分析、講道理、提方案。",
-                loveMatch: "86% (秩序長頸鹿 / 工匠河狸)",
-                loveAdvice: "戀愛相處警告：棕熊用物質安全感與默默陪伴表達愛，不擅長甜言蜜語。如果另一半追求海誓山盟與戲劇性的浪漫，會覺得棕熊像一塊冰冷的木頭。",
-                why: "ISTJ 注重邏輯、事實與極致的踏實負責，棕熊沉穩、不怒而威卻極其守序的特質與其一致。",
-                partner: "秩序長頸鹿、工匠河狸",
-                prompt: "A cozy flat vector of a big friendly brown bear, deep pine green background, scandinavian design --ar 1:1"
-            },
-            {
-                name: "睿智大象", mbti: "INFJ", category: "草食溫和系", vector: [65, 55, 15, 85, 60],
-                short: "精神與悲憫的共情長老，以崇高格局點亮心靈迷霧。",
-                desc: "您看世界的方式具備極強的宏觀精神性，輕易能感知靈魂深處的和諧。您是天然的心靈捕手，總在無聲中給予溫暖與智慧。",
-                traits: "優勢：洞察力驚人、富有遠見與深切的奉獻同理心。盲點：容易過度感同身受他人痛苦，導致自身內耗。",
-                friendAdvice: "做朋友會有的問題：心思太重、太過敏感。有時朋友隨口一句玩笑，大象會在心裡琢磨三天，並默默在內心深處為這段友誼減分。",
-                loveMatch: "93% (完美天鵝 / 深海藍鯨)",
-                loveAdvice: "戀愛相處警告：大象追求靈魂與精神的高純度共鳴。一旦發現另一半思想膚淺、只關心物質瑣事、或對人性缺乏悲憫心，大象會產生深深的孤獨與失望感。",
-                why: "INFJ 一生在追尋深層意義與人道守護，大象長壽、富含情感記憶且默默引領族群前行的崇高感是其具象。",
-                partner: "完美天鵝、深海藍鯨",
-                prompt: "An elegant minimalist illustration of a gentle elephant under a beautiful starry sky, cosmic pastel blue theme --ar 1:1"
-            },
-            {
-                name: "俏皮靈猴", mbti: "ENFP", category: "靈巧適應系", vector: [50, 90, 50, 70, 75],
-                short: "散播歡樂的靈魂火花，永遠追尋新鮮好玩的樂園。",
-                desc: "您是當之無愧的派對亮點與創意思維發散中心。您拒絕被任何人或常規約束，人生對您而言就是一場沒有終點的奇幻冒險。",
-                traits: "優勢：極具生命感染力、腦洞大開。盲點：專注力不夠，容易在細節執行上丟三落四。",
-                friendAdvice: "做朋友會有的問題：熱度退得太快。可能這週跟你是形影不離的至交，下週被新的有趣事物吸引就突然消失在你的生活圈中。",
-                loveMatch: "94% (智慧海豚 / 華麗孔雀)",
-                loveAdvice: "戀愛相處警告：靈猴需要空間與新奇感。任何試圖用規章、承諾將其套牢，或是生活沉悶枯燥的另一半，都會迅速逼迫靈猴跳到下一棵樹上。",
-                why: "ENFP 充滿新奇聯想與熱情，靈猴熱愛探索、靈動跳躍的性格是其專屬印記。",
-                partner: "智慧海豚、華麗孔雀",
-                prompt: "A vibrant playful vector design of a clever monkey swinging through neon mint tropical leaves, modern colorful palette --ar 1:1"
-            },
-            {
-                name: "團隊灰狼", mbti: "ENTJ", category: "肉食領袖系", vector: [55, 70, 25, 85, 90],
-                short: "謀定後動的鐵腕將軍，以極致效率引領團隊攻無不克。",
-                desc: "您有著無與倫比的戰略眼光與鋼鐵般的意志。您重視團隊協作，但堅信只有強大的核心才能帶領群體在弱肉強食的世界中開闢領地。",
-                traits: "優勢：行動力與魄力驚人、條理極其清晰。盲點：有時過於鐵面無私，容易給人留下支配欲過強的威脅感。",
-                friendAdvice: "做朋友會有的問題：太過強勢，對朋友的要求極高。看見朋友生活頹廢或做蠢決定時，會忍不住重拳出擊、嚴厲批評，有時會刺傷脆弱的心靈。",
-                loveMatch: "89% (霸氣雄獅 / 孤高蒼鷹)",
-                loveAdvice: "戀愛相處警告：灰狼在親密關係中依然追求進步。如果另一半過度散漫、不思進取或總是用情感勒索抗拒前進，灰狼會冷酷地快刀斬亂麻，結束這段低效的關係。",
-                why: "ENTJ 代表無畏的執行力與藍圖建構，灰狼高度重視階級秩序、戰術紀律與狼首威嚴的本性完美契合其特質。",
-                partner: "霸氣雄獅、孤高蒼鷹",
-                prompt: "A strong geometric flat vector of a howling grey wolf under a neon moon, cool mint and glowing laser blue background --ar 1:1"
-            },
-            {
-                name: "孤高蒼鷹", mbti: "INTJ", category: "肉食領袖系", vector: [70, 15, 30, 95, 85],
-                short: "高空鳥瞰的戰略大師，在冷靜中謀劃顛覆常規的藍圖。",
-                desc: "您習慣與人群保持絕對的安全距離。您的高傲源自於您那高速運轉、高度嚴密的大腦，不喜盲從，習慣站在更高維度拆解全局。",
-                traits: "優勢：思維嚴密、專注力驚人、目標必達。盲點：極其冷漠，對無關緊要的人際情感缺乏包容力。",
-                friendAdvice: "做朋友會有的問題：極難接近，毒舌且毫不客氣。他們對低智商或情緒化的言論零容忍，容易在無意間用刻薄的邏輯分析擊碎朋友的熱情。",
-                loveMatch: "87% (團隊灰狼 / 理性貓頭鷹)",
-                loveAdvice: "戀愛相處警告：蒼鷹的愛情極其稀有且挑剔。如果另一半習慣用情緒化、大哭大鬧的方式來解決矛盾，蒼鷹會用看『原始生物』的冰冷目光審視對方，並轉身離去。",
-                why: "INTJ 致力於邏輯體系與長遠戰略，蒼鷹遺世獨立、一擊必中的高空姿態完美呼應其傲然風采。",
-                partner: "團隊灰狼、理性貓頭鷹",
-                prompt: "A powerful minimalist vector of a soaring eagle with geometric patterns, deep indigo sky and yellow neon sun background --ar 1:1"
-            },
-            {
-                name: "實踐猛虎", mbti: "ISTP", category: "肉食領袖系", vector: [50, 15, 35, 75, 80],
-                short: "冷靜務實的爆發獵手，用頂級行動力解決一切現實難題。",
-                desc: "您話語不多，但每一步都精準無比。您是天生的危機解決大師，當周圍陷入驚慌時，您那理性的冷靜能迅速找出最實用的物理生存手段。",
-                traits: "優勢：危機應變天賦、動手能力極強。盲點：對情感溝通極其冷淡，容易讓人覺得難以走進內心。",
-                friendAdvice: "做朋友會有的問題：超級不愛社交，神隱大師。經常不回訊息、不參加聚會，只在自己感興趣的事物或有求於你時才會現身。",
-                loveMatch: "90% (防禦刺蝟 / 奔騰野馬)",
-                loveAdvice: "戀愛相處警告：猛虎需要極大的物理獨立。如果另一半天天要求報備行程、瘋狂黏人或干涉其個人興趣，猛虎會感到極度窒息，迅速斬斷這條綁在脖子上的繩子。",
-                why: "ISTP 偏愛工具實踐、理性分析與高度應變，猛虎悄無聲息、一擊致命的狩獵本能與 ISTP 高度契合。",
-                partner: "防禦刺蝟、奔騰野馬",
-                prompt: "A sleek modern vector design of a tiger walking silently through dark glowing green bamboo forest, warm neon highlights --ar 1:1"
-            },
-            {
-                name: "守護綿羊", mbti: "ISFJ", category: "草食溫和系", vector: [65, 60, 40, 35, 30],
-                short: "溫柔合群的奉獻守望者，默默編織最安定的幸福港灣。",
-                desc: "您渴求安定，是群體中最可靠的溫柔屏障。您不喜歡引人注目，但您的體貼和對細節的默默打理，是所有人離不開的安全感來源。",
-                traits: "優勢：體貼、極度忠誠且守信用。盲點：過於妥協，容易在遭遇霸凌或不公時選擇默默隱忍。",
-                friendAdvice: "做朋友會有的問題：太過敏感和多疑。因為他們習慣為別人付出，如果朋友沒有展現出對等的感激，綿羊會暗自傷心並陷入深深的被害者內耗。",
-                loveMatch: "91% (溫順白兔 / 忠誠黃金獵犬)",
-                loveAdvice: "戀愛相處警告：綿羊全心全意照顧家庭。但如果對方習慣了被伺候、甚至用理所當然的傲慢態度對待他們，綿羊一旦突破忍耐極限，會徹底黑化，永遠收回所有的溫柔。",
-                why: "ISFJ 崇尚穩定與無私守護，綿羊溫順合群、甘當屏障且默默照拂彼此的本能是其真實縮影。",
-                partner: "溫順白兔、勤勉乳牛",
-                prompt: "A lovely flat vector design of fluffy sheep on rolling pastel violet hills under a sunset mint green sky, warm soft mood --ar 1:1"
-            },
-            {
-                name: "活潑松鼠", mbti: "ESFP", category: "靈巧適應系", vector: [60, 85, 60, 40, 55],
-                short: "活力爆棚的當下玩家，用笑聲點亮平庸生活的調味劑。",
-                desc: "您天生具備捕捉快樂的能力，討厭死板、嚴肅與繁瑣。您樂觀活潑，能把最枯燥的日常過得像一場繽紛燦爛的嘉年華派對。",
-                traits: "優勢：社交魅力十足、極佳的生活情趣與當下行動力。盲點：耐性差，容易被眼前新奇的事物帶偏方向。",
-                friendAdvice: "做朋友會有的問題：做事有些毛躁，經常遲到或忘記約定。他們注意力太容易分散，在嚴肅談話時容易顯得心不在焉、不夠莊重。",
-                loveMatch: "93% (華麗孔雀 / 軟萌倉鼠)",
-                loveAdvice: "戀愛相處警告：松鼠需要熱情、色彩與互動。如果另一半生活刻板、不解風情、甚至試圖用嚴格的財務或行為規範限制他們享受生活，松鼠會感到窒息並迅速溜走。",
-                why: "ESFP 追求極致的感官體驗與當下享樂，松鼠隨時收集美好堅果並向世界展示活力的特質正是其寫照。",
-                partner: "華麗孔雀、軟萌倉鼠",
-                prompt: "A delightful flat vector of a cute squirrel holding a golden acorn with bright autumn neon foliage background, whimsical style --ar 1:1"
-            },
-            {
-                name: "智慧海豚", mbti: "ENFP", category: "靈巧適應系", vector: [75, 95, 30, 85, 70],
-                short: "高智商高共情的水晶精靈，用愛與智慧穿梭於人間海洋。",
-                desc: "您兼具了卓越的頭腦與細膩的情感。您在不同圈子中都能遊刃有餘，在提供精神指導的同時，也源源不絕地散播著治癒與浪漫。",
-                traits: "優勢：天生的溝通大師、悲天憫人且直覺敏銳。盲點：夜深人靜時極易陷入孤獨感，渴望極度深層的理解。",
-                friendAdvice: "做朋友會有的問題：有時顯得過於博愛。因為他們對每個人都很好，常常會讓他們的密友或另一半吃醋，覺得自己對海豚而言『並不夠特別』。",
-                loveMatch: "96% (俏皮靈猴 / 狡黠紅狐)",
-                loveAdvice: "戀愛相處警告：海豚需要高純度的靈魂連結。如果另一半只在乎柴米油鹽、說話冷漠粗俗，海豚會在關係中慢慢乾枯，最後發射寂寞的 52 赫茲信號孤獨地游向深海。",
-                why: "ENFP 熱愛深度連結與精神探索，海豚作為高共情、樂於助人且極高智商的海洋精靈，是其完美化身。",
-                partner: "俏皮靈猴、狡黠紅狐",
-                prompt: "A breathtaking minimalist vector illustration of dolphins jumping out of deep neon blue ocean waves under a pastel sky, cosmic vibes --ar 1:1"
-            },
-            {
-                name: "理性貓頭鷹", mbti: "INTP", category: "靈巧適應系", vector: [60, 10, 20, 95, 65],
-                short: "黑夜中的無聲解構者，在寂靜中拆解宇宙萬物的底層邏輯。",
-                desc: "您是終其一生的真理追尋者。喧喧鬧鬧的世俗社交只會讓您覺得疲憊，您更喜歡在無人的深夜，將世界拆成一行行完美的代碼與因果邏輯。",
-                traits: "優勢：邏輯推演頂級、理性客觀、思維深邃。盲點：對他人的情感反應遲鈍，不擅長處理細碎的生活情緒。",
-                friendAdvice: "做朋友會有的問題：經常已讀不回，甚至能失蹤幾個月。當你興高采烈地跟他分享一件事，他可能會像個無情的機器人一樣開始挑你語病或指出邏輯漏洞。",
-                loveMatch: "88% (偽裝變色龍 / 慵懶無尾熊)",
-                loveAdvice: "戀愛相處警告：貓頭鷹極度討厭情感勒索。一旦被要求『你愛不愛我、為什麼不陪我』等感性拷問，貓頭鷹的邏輯大腦會瞬間死機，進而用最冷酷、不屑的態度關閉對話。",
-                why: "INTP 核心探索者特質，貓頭鷹在暗夜中獨立思考的孤寂姿態是 INTP 的最佳投射。",
-                partner: "偽裝變色龍、慵懶無尾熊",
-                prompt: "An atmospheric minimalist vector of a wise owl perched on a branch under a starry emerald green and yellow sky, soft glowing elements --ar 1:1"
-            },
-            {
-                name: "奔騰野馬", mbti: "ESTP", category: "肉食領袖系", vector: [40, 75, 40, 50, 85],
-                short: "現實曠野的熱血開拓者，用速度與勇氣擊碎一切物理阻礙。",
-                desc: "您是實幹派的代名詞，無法忍受冗長無用的紙上談兵。您熱愛速度、體能、競技與當下的生理反饋，相信一切困難都是用來被衝破的。",
-                traits: "優勢：膽大無畏、現實應變力驚人、實戰大師。盲點：容易流於衝動，可能在長遠規劃上缺乏足夠的遠見與耐心。",
-                friendAdvice: "做朋友會有的問題：太過粗線條。經常在言行中得罪心思細密的朋友而不自知，甚至把朋友拉進高風險或高強度的活動中，讓人吃不消。",
-                loveMatch: "91% (實踐猛虎 / 爆發袋鼠)",
-                loveAdvice: "戀愛相處警告：野馬渴望在動態中狂奔。如果另一半試圖用婚姻、責任將其牢牢綁死在安穩的牛棚裡，野馬會暴躁不安，最終野性爆發，踩碎柵欄揚長而去。",
-                why: "ESTP 崇尚冒險與真實生活體驗，駿馬無拘無束、一往無前、在原野中展現極致爆發力的風采是其最佳寫照。",
-                partner: "實踐猛虎、爆發袋鼠",
-                prompt: "A majestic vector illustration of a running wild horse kicking up orange dust under a glowing neon sunset sky, raw dynamic feel --ar 1:1"
-            },
-            {
-                name: "慵懶無尾熊", mbti: "INTP", category: "草食溫和系", vector: [55, 15, 10, 60, 20],
-                short: "低能耗運作的生活哲學家，在自己的微型宇宙中獨自浪漫。",
-                desc: "您深諳生命的「省電模式」，拒絕任何無謂的內耗與情感攀比。在自己的尤加利樹上，用悠閒的步調打量周圍，就是您最完美的避風港。",
-                traits: "優勢：情緒穩定度極高、隨和、深諳極簡生活哲學。盲點：行動力稍嫌不足，時常把事情拖延到最後一刻。",
-                friendAdvice: "做朋友會有的問題：極度懶散，約不出來。經常在約會前最後一秒因為「床太舒服了」而臨時放鴿子，在朋友圈中是出了名的神隱樹懶。",
-                loveMatch: "89% (沉穩棕熊 / 理性貓頭鷹)",
-                loveAdvice: "戀愛相處警告：無尾熊需要無壓力的伴侶。如果另一半天天要求上進、瘋狂催促或製造生活焦慮，無尾熊會徹底進入冬眠模式，關閉任何心靈溝通的管道。",
-                why: "INTP 超脫的氣質與省電作風在無尾熊身上展露無疑，對世俗爭端保持優雅的疏離。",
-                partner: "沉穩棕熊、理性貓頭鷹",
-                prompt: "A relaxing flat vector of a cute koala hugging a neon green eucalyptus branch, soft pastel cream background, minimalistic scandinavian style --ar 1:1"
-            },
-            {
-                name: "優雅梅花鹿", mbti: "INFP", category: "草食溫和系", vector: [90, 35, 70, 60, 30],
-                short: "輕盈空靈的森林隱士，用詩意溫柔守護靈魂的微光。",
-                desc: "您擁有如朝露般純淨、細膩的心靈。喧鬧的鋼筋水泥都市會迅速抽乾您的能量，您熱愛雨天、落葉與所有充滿儀式感的生活微光。",
-                traits: "優勢：審美感知超群、極富同理心。盲點：抗挫折力較弱，受傷時容易縮回自己幻想的殼中。",
-                friendAdvice: "做朋友會有的問題：內心戲過度豐富。朋友無心的一句評價，會在梅花鹿心裡引發海嘯，並在不挑明的情況下突然退縮，讓人無所適從。",
-                loveMatch: "91% (精緻家貓 / 完美天鵝)",
-                loveAdvice: "戀愛相處警告：梅花鹿需要童話般的精神共鳴。如果另一半滿口銅臭、說話粗糙甚至用現實的理性嘲笑他們的浪漫夢想，梅花鹿會心碎並安靜地消失在迷霧森林中。",
-                why: "INFP 熱愛美學、追求脫俗的精神，梅花鹿輕盈、空靈卻又帶著防禦與警覺的姿態，是溫柔 INFP 的化身。",
-                partner: "精緻家貓、完美天鵝",
-                prompt: "A beautiful fairytale vector illustration of a deer with floral antlers in a magical mist forest, pastel violet light theme --ar 1:1"
-            },
-            {
-                name: "秩序長頸鹿", mbti: "ISTJ", category: "草食溫和系", vector: [50, 30, 20, 70, 50],
-                short: "不露聲色的高空觀察員，腳踏實地默默將細節做到極致。",
-                desc: "您安靜務實，習慣站在一個安全的位置不失禮貌地審視周圍。您非常看重契約、規則與時間觀念，討厭任何突如其來的混亂。",
-                traits: "優勢：極其踏實負責、觀察入微、條理井然。盲點：固執守舊，對意外變革的適應速度較慢。",
-                friendAdvice: "做朋友會有的問題：過於死板、不知變通。如果約會遲到五分鐘，長頸鹿臉色會非常難看，甚至在心裡給你的可靠度畫上一個大大的紅叉。",
-                loveMatch: "88% (幾何斑馬 / 工匠河狸)",
-                loveAdvice: "戀愛相處警告：長頸鹿渴望穩定。如果另一半生活混亂無章、不按規矩來或頻繁製造意外驚喜，長頸鹿會感到精神受創，進而用冷暴力和挑剔來折磨彼此。",
-                why: "ISTJ 講求規則、追求簡潔與可靠，長頸鹿腳踏實地、默默按規則運作的沉穩姿態正是其寫照。",
-                partner: "幾何斑馬、工匠河狸",
-                prompt: "A beautiful tall giraffe vector design, minimalistic geometric pastel background, clean artwork with gentle colors --ar 1:1"
-            },
-            {
-                name: "紳士企鵝", mbti: "ESFJ", category: "靈巧適應系", vector: [45, 80, 35, 55, 60],
-                short: "極致團結的禮儀大師，用默契守護著溫暖的集體溫室。",
-                desc: "您穿著得體、行事大方，是維持朋友圈運作的靈魂黏合劑。您樂於承擔繁瑣的組織工作，用對細節的掌控給予大家滿滿安全感。",
-                traits: "優勢：超強社交默契、有禮、極具組織協調力。盲點：害怕被群體邊緣化，容易委曲求全。",
-                friendAdvice: "做朋友會有的問題：容易在無意間傳播八卦或過度干涉他人隱私。因為他們太想融入並管理群體，有時會讓人覺得『管得太寬、太過市儈』。",
-                loveMatch: "92% (忠誠黃金獵犬 / 守護綿羊)",
-                loveAdvice: "戀愛相處警告：企鵝熱愛世俗的家庭溫馨。如果另一半是一個極致追求精神孤獨、排斥家庭聚會、且說話帶刺的靈魂，企鵝會感到深深的受挫與被嫌棄。",
-                why: "ESFJ 重視社會化和諧與家庭責任，企鵝在極地中相互擁抱、彬彬有禮的特性與其高度同步。",
-                partner: "忠誠黃金獵犬、守護綿羊",
-                prompt: "A charming vector design of penguins walking in a neat row, soft polar blue and pastel yellow snow background --ar 1:1"
-            },
-            {
-                name: "完美天鵝", mbti: "INFJ", category: "獨特邊緣系", vector: [95, 30, 40, 75, 50],
-                short: "極致完美主義的美學孤鶩，在靜謐湖面優雅滑行。",
-                desc: "您有著極其挑剔的審美與絕不妥協的精神追求。不論世界多麼混亂，您都要在自己的世界裡優雅到骨子裡。您追求「一生一世一雙人」的絕對純粹。",
-                traits: "優勢：審美品味極高、忠誠專一。盲點：完美主義傾向嚴重，容易給人留下清高不易親近的感覺。",
-                friendAdvice: "做朋友會有的問題：道德標準與心理防線極高。一旦朋友展現出任何庸俗、背叛或是不誠信的舉動，天鵝會默默在心裡將其拉黑，毫無預兆地徹底絕交。",
-                loveMatch: "93% (睿智大象 / 深海藍鯨)",
-                loveAdvice: "戀愛相處警告：天鵝無法容忍平庸的敷衍。如果另一半過於現實、不解風情，甚至將他們的浪漫情懷視為作秀，天鵝會冷酷地拍動翅膀，飛往更安靜的孤寂湖泊。",
-                why: "INFJ 追求完美的精神堅持與深度和諧，天鵝一生守護伴侶、潔身自好的特質正是其寫照。",
-                partner: "睿智大象、深海藍鯨",
-                prompt: "A highly elegant flat vector of a swan floating on dark water, pastel lavender glow background, minimalist design --ar 1:1"
-            },
-            {
-                name: "勤勉乳牛", mbti: "ISFJ", category: "草食溫和系", vector: [35, 50, 15, 30, 35],
-                short: "默默奉獻的生命供養者，在平凡中編織最偉大的穩定與溫柔。",
-                desc: "您不追求奢華與出風頭，只渴望腳踏實地的生活。您默默奉獻自己的光與熱，細緻入微地打理著生活與家庭。您具有驚人的耐心。",
-                traits: "優勢：腳踏實地、財富累積度佳、忠厚老實。盲點：抗拒變化，缺乏一些冒險與突破的精神。",
-                friendAdvice: "做朋友會有的問題：太過卑微和被動。他們極少表達自己的真實渴望，在朋友圈中總是『隨便、都好』，時間長了會讓朋友覺得跟他們相處缺乏靈魂深度。",
-                loveMatch: "90% (溫順白兔 / 守護綿羊)",
-                loveAdvice: "戀愛相處警告：乳牛渴望一成不變的安全生活。如果伴侶是一個極致冒險、頻繁更換城市、或是生活充滿變數的浪子，乳牛會每天活在焦慮失眠中，最終心力交瘁地離開。",
-                why: "ISFJ 注重實際、甘於平凡的付出，乳牛溫順踏實、對環境適應度高的性格正是其真實寫照。",
-                partner: "溫順白兔、守護綿羊",
-                prompt: "A peaceful countryside flat illustration of a cute cow with soft pastel green rolling hills background, warm sunset aesthetic --ar 1:1"
-            },
-            {
-                name: "防禦刺蝟", mbti: "ISTP", category: "靈巧適應系", vector: [45, 10, 80, 50, 35],
-                short: "外剛內柔的邊界建築師，用棘刺守護最細膩的溫柔。",
-                desc: "您具有極其強烈的防禦心與邊界意識。遇到陌生環境或試探，您會本能地「蜷縮起來」展現冷酷的一面。但只要真正走進您內心，就會發現您極度溫柔。",
-                traits: "優勢：自立自強、邊界感分明、實踐動手能力佳。盲點：防備心太重，容易讓人覺得難以突破其心防。",
-                friendAdvice: "做朋友會有的問題：防備心極強，說話帶刺。如果你想主動跨過他們的心理安全線，他們會立刻豎起棘刺，用冷言冷語刺痛你的熱情。",
-                loveMatch: "90% (實踐猛虎 / 變色龍)",
-                loveAdvice: "戀愛相處警告：刺蝟需要極慢的慢熱過程。如果另一半一上來就要求熱戀、要求公開所有隱私或天天黏在一起，刺蝟會因為安全感崩潰而迅速將對方扎得遍體鱗傷。",
-                why: "ISTP 極度注重個人空間與獨立分析，刺蝟用物理荊棘隔絕世界的特性正是其寫照。",
-                partner: "實踐猛虎",
-                prompt: "A lovely flat vector illustration of a tiny hedgehog under a neon yellow mushroom, pastel warm peach background --ar 1:1"
-            },
-            {
-                name: "幾何斑馬", mbti: "ISTJ", category: "靈巧適應系", vector: [55, 65, 45, 50, 55],
-                short: "條理清晰的極簡主義者，黑白分明，行事精準如鐘錶。",
-                desc: "您眼中的世界黑白分明，沒有灰色地帶。您非常看重契約、規則和時間觀念。在團隊中，您是一個隨時保持清醒、用邏輯把關每一處數據的人。",
-                traits: "優勢：行事嚴謹、注重效率與契約、極度可靠。盲點：思維僵化，容錯率較低，對模糊地帶容忍度差。",
-                friendAdvice: "做朋友會有的問題：說話過於直白、得理不饒人。當朋友向他們尋求情感安慰時，斑馬會冷冰冰地指出朋友自身的所有不當細節，讓人感到大潑冷水。",
-                loveMatch: "87% (秩序長頸鹿 / 工匠河狸)",
-                loveAdvice: "戀愛相處警告：斑馬需要生活高度守序。如果伴侶是一個極致隨性、花錢大手大腳、或是生活計畫隨時脫軌的藝術家，斑馬會天天在家裡咆哮，最終分道揚鑣。",
-                why: "ISTJ 講求規則、追求簡潔與可靠，幾何條紋帶來的精準感，是其完美的天然寫照。",
-                partner: "秩序長頸鹿、工匠河狸",
-                prompt: "An artistic minimalist vector of a zebra under geometric background, sharp lines with neon mint accents --ar 1:1"
-            },
-            {
-                name: "深海藍鯨", mbti: "INFJ", category: "草食溫和系", vector: [80, 20, 15, 90, 50],
-                short: "精神宇宙的巨型遊俠，發射著獨一無二的 52 赫茲頻率。",
-                desc: "您的精神空間巨大無比，往往裝載著宏大的哲學、悲憫與藝術。您對淺薄的情感毫無興趣，終其一生都在尋找能聽懂您獨特聲納的靈魂旅伴。",
-                traits: "優勢：思想極具格局、悲天憫人、精神力量強大。盲點：容易感到與世隔絕的孤獨，曲高和寡。",
-                friendAdvice: "做朋友會有的問題：太過高深和冷漠。他們極少主動參與日常娛樂，在聚會中常顯得與世無爭或超凡脫俗，讓人覺得難以建立起真正的世俗交情。",
-                loveMatch: "94% (睿智大象 / 完美天鵝)",
-                loveAdvice: "戀愛相處警告：藍鯨需要完全的精神同頻。如果伴侶完全不懂他們的藝術世界或靈性追求，只關心俗世的利弊與應酬，藍鯨會在心中默默遊向最漆黑、深遂的無光深海。",
-                why: "INFJ 是靈魂的探索者，往往感到與世俗格格不入。藍鯨獨自游動在深海的姿態是其極致隱喻。",
-                partner: "睿智大象、完美天鵝",
-                prompt: "A breathtaking minimalist vector of a blue whale swimming in dark deep ocean with glowing cosmic aurora light --ar 1:1"
-            },
-            {
-                name: "爆發袋鼠", mbti: "ESTP", category: "獨特邊緣系", vector: [35, 70, 30, 45, 80],
-                short: "極致動感與冒險的代名詞，用強悍爆發力衝破重重阻礙。",
-                desc: "您擁有過人的活力，天生就不是一個能安靜坐在辦公桌前的人。您熱愛挑戰體能、面對面的衝突或需要極致應變的動態競爭。",
-                traits: "優勢：膽大無畏、爆發力與應變力極佳。盲點：耐心不足，不擅長處理需要長時間耕耘的靜態計畫。",
-                friendAdvice: "做朋友會有的問題：太過好戰和衝動。常在無意間捲入各種紛爭或肢體碰撞中，讓同行的朋友提心膽戰，甚至在言行中充滿侵略性。",
-                loveMatch: "91% (奔騰野馬 / 實踐猛虎)",
-                loveAdvice: "戀愛相處警告：袋鼠需要極致的征服感。一旦另一半過度溫順、無趣，或是試圖用繁複的日常瑣事鎖住他們，袋鼠會覺得這段戀情索然無味，轉頭尋找下一個對手。",
-                why: "ESTP 是生活中的冒險王，擁有極高的運動本能。袋鼠用爆發性的雙腿在原野中戰勝一切敵人的姿態是其具象化。",
-                partner: "奔騰野馬、實踐猛虎",
-                prompt: "A dynamic flat vector of a kangaroo jumping with glowing neon dust clouds background, high speed feel --ar 1:1"
-            },
-            {
-                name: "工匠河狸", mbti: "ISTJ", category: "靈巧適應系", vector: [30, 40, 35, 85, 75],
-                short: "極致完美的手作狂魔，在細節處建構起固若金湯的城堡。",
-                desc: "您是細節的魔鬼。不論是工作項目、手作、還是生活的邏輯，您都要一磚一瓦、用極限的專注將其打造成無懈可擊的系統。",
-                traits: "優勢：驚人的動手與細部建構能力、務實、細心。盲點：過於注重細部繁瑣程序，有時會忽略整體大局。",
-                friendAdvice: "做朋友會有的問題：強烈強迫症。如果你跟他們一起旅行，不小心弄亂了行程表或放錯了生活用品，河狸會反覆糾正你，讓人感到極大精神緊繃。",
-                loveMatch: "89% (幾何斑馬 / 秩序長頸鹿)",
-                loveAdvice: "戀愛相處警告：河狸用精細的樹枝和驚人毅力建構起完美大壩的工匠本能，是其最好的代言。",
-                why: "ISTJ 是最完美的系統維護與建構者。河狸用精細的樹枝和驚人毅力建構起完美大壩的工匠本能，是其最好的代言。",
-                partner: "幾何斑馬、秩序長頸鹿",
-                prompt: "A highly detailed flat vector of a cute beaver near its log cabin dam, organic clean lineart, soft sunset background --ar 1:1"
-            },
-            {
-                name: "華麗孔雀", mbti: "ESFP", category: "獨特邊緣系", vector: [100, 85, 50, 45, 70],
-                short: "極致華麗的感官主宰，天生就要在聚光燈下綻放百般光彩。",
-                desc: "您的一生絕不容許平淡無奇。您對美、目光有著天然的致命追求。您擅長在社交場所中用華麗的自我表達吸引所有人的眼球。",
-                traits: "優勢：無懈可擊的視覺表現力、社交亮點。盲點：極度依賴外界目光，當失去焦點時容易感到失落焦慮。",
-                friendAdvice: "做朋友會有的問題：太過自我中心（Drama Queen/King）。常常在聊天中搶風頭，把話題強行扭轉回自己身上，讓朋友覺得自己像個無用的陪襯。",
-                loveMatch: "93% (俏皮靈猴 / 活潑松鼠)",
-                loveAdvice: "戀愛相處警告：孔雀開屏需要忠實觀眾。如果另一半生性低調、抗拒公開秀恩愛、或吝於給予誇讚，孔雀會覺得在這段關係中被明珠投暗，進而尋求外界的豔羨目光。",
-                why: "ESFP 熱愛生命之美、追求極致的感官衝擊，孔雀開屏那一瞬間震撼人心的視覺盛宴是其最佳寫照。",
-                partner: "俏皮靈猴、活潑松鼠",
-                prompt: "A stunning colorful flat vector of a peacock displaying its gorgeous feathers, neon emerald green and sapphire blue light --ar 1:1"
-            },
-            {
-                name: "軟萌倉鼠", mbti: "ISFP", category: "獨特邊緣系", vector: [85, 40, 90, 30, 20],
-                short: "精緻物質享樂天才，將自己藏在堆滿美味的溫馨小窩中。",
-                desc: "您是極致感官與物質安逸的收藏家。您喜歡將個人空間塞滿軟綿綿的抱枕、高級甜點與精緻小物。您有些膽小，但溫柔無比。",
-                traits: "優勢：溫順可愛、懂生活、善於營造療癒環境。盲點：過度缺乏安全感，容易對外界未知產生逃避心態。",
-                friendAdvice: "做朋友會有的問題：極度抗拒踏出舒適圈。如果你約他們去爬山、露營、或去新環境社交，倉鼠會死守自己的被窩，找一百個理由推託，是典型的「窩裡橫」。",
-                loveMatch: "92% (沉穩棕熊 / 活潑松鼠)",
-                loveAdvice: "戀愛相處警告：倉鼠在感情中極需安撫與保護。如果伴侶經常對他們大聲說話、說話尖銳或不提供足夠的物質安穩承諾，倉鼠會因為嚇壞了而立刻咬斷情感線，縮回自己的洞穴深處。",
-                why: "ISFP 熱愛物理審美、崇尚安逸且敏感，倉鼠囤積美味、打造溫馨柔軟洞穴的本能是其完美化身。",
-                partner: "沉穩棕熊、活潑松鼠",
-                prompt: "An adorably sweet vector of a fluffy hamster eating seeds inside its cozy nest, pastel warm peach and cream background --ar 1:1"
-            },
-            {
-                name: "偽裝變色龍", mbti: "INTP", category: "獨特邊緣系", vector: [70, 20, 60, 90, 40],
-                short: "深不可測的觀察變色龍，完美融入環境卻保有最純粹的思維。",
-                desc: "您是一個思維發達、且具備驚人適應力的靈魂。您不急於發表意見，而是根據環境變化調整外在狀態，以保護獨立思考的運作。",
-                traits: "優勢：極限環境適應力、冷靜多維思考。盲點：過度隱藏锋芒，容易給人摸不透真實心意的「心機重」印象。",
-                friendAdvice: "做朋友會有的問題：極難猜透他們的真實想法。在人前永遠帶著大方、客氣的偽裝面具，讓你不知道他們何時是真心、何時只是客套。",
-                loveMatch: "90% (理性貓頭鷹 / 防禦刺蝟)",
-                loveAdvice: "戀愛相處警告：變色龍極度討厭情感的深度黏著與監控。一旦對方試圖窺探他們的靈魂死角、限制他們的私密獨立思維，變色龍會瞬間變成與周圍背景一模一樣的顏色，在感情中徹底人間蒸發。",
-                why: "INTP 追求客觀的理性，變色龍默默偽裝、用 360 度獨立旋轉雙眼旁觀剖析世界的姿態正是其象徵。",
-                partner: "理性貓頭鷹、防禦刺蝟",
-                prompt: "An ultra modern vector art of a chameleon blending with colorful geometric tropical leaves, neon mint and hot pink light --ar 1:1"
-            }
-        ];
+       const ANIMALS = [
+    {
+        name: "治癒系水豚", mbti: "ISFP", category: "草食溫和系", rarity: "SR", vector: [85, 30, 10, 45, 20],
+        short: "極致放鬆的社交黑洞，對世間一切紛擾徹底絕緣。",
+        desc: "您溫和不爭，能完美吸收周圍的負能量。您像一隻隨遇而安的水豚，極其專注於當下的感官愉悅（泡溫泉與曬太陽），任何危機在您眼中都只是大自然的一段插曲。",
+        traits: "優勢：情緒穩定度極高、極佳的和諧陪伴感。盲點：過於被動，容易陷入拖延或隨波逐流。",
+        friendAdvice: "做朋友會有的問題：他們極少主動聯繫或邀約，常常給人『已讀隨性』或是不著痕跡的疏離感。如果你想深入挖掘他們的秘密心境，可能會被他們完美的太極防衛彈開。",
+        loveMatch: "92% (忠誠黃金獵犬 / 紳士企鵝)",
+        loveAdvice: "戀愛相處警告：水豚在親密關係中極度抗拒被管束或催促。一旦對手試圖強加人生規劃或瘋狂碎碎念，他們會一言不發地潛入水底「物理失蹤」，避免任何正面衝突。",
+        why: "ISFP 渴望自由且專注於當下審美，水豚極富禪意的鬆弛感是 ISFP 溫和隨性生活型態的極致寫照。",
+        partner: "忠誠黃金獵犬、慵懶無尾熊",
+        prompt: "A gorgeous minimalist flat vector illustration of a cute sleepy capybara with a mini orange on its head in hot springs, pastel cream background, cozy design --ar 1:1"
+    },
+    {
+        name: "忠誠黃金獵犬", mbti: "ESFJ", category: "草食溫和系", rarity: "N", vector: [55, 95, 30, 40, 70],
+        short: "陽光治癒的派對核心，用無條件的愛黏合所有人。",
+        desc: "您擁有融化冰雪的溫柔，天生善於觀察他人的需要。只要有您在，群體就能充滿和諧與秩序，您是朋友圈中最堅實的情感後盾。",
+        traits: "優勢：超強共情力、執行與服務細節完美。盲點：過度在乎他人看法，有自我忽視的傾向。",
+        friendAdvice: "做朋友會有的問題：有時關心過度會演變成令人窒息的『情感綁架』。他們太害怕被孤立，甚至會在無意中當起『討好型雙面人』來討好兩方。",
+        loveMatch: "95% (治癒系水豚 / 溫順白兔)",
+        loveAdvice: "戀愛相處警告：他們在戀愛中需要極大量的言語肯定。如果另一半過於冷漠或是不懂得即時給予情感反饋，黃金獵犬內心的小劇場會崩潰，進而產生無理取鬧的焦慮。",
+        why: "ESFJ 崇尚社會秩序與群體和諧，黃金獵犬將人際互動視為生命核心的本能與其完美契合。",
+        partner: "溫順白兔、紳士企鵝",
+        prompt: "A beautiful minimal vector illustration of a happy fluffy golden retriever, soft daylight, warm pastel sage green background, modern art --ar 1:1"
+    },
+    {
+        name: "精緻家貓", mbti: "INFP", category: "靈巧適應系", rarity: "R", vector: [95, 25, 75, 80, 35],
+        short: "優雅傲嬌的界線守護者，注重極致生活質感與感官哲學。",
+        desc: "您外表看似冷淡疏離，內心卻是一片璀璨溫暖的精神星空。只有在極少數被您「寵幸」的至交面前，您才會露出極致細膩的一面。",
+        traits: "優勢：美學品味超群、獨立、擁有細緻深奧的直覺。盲點：極其敏感，容易築起厚重的心防逃避現實。",
+        friendAdvice: "做朋友會有的問題：他們的友情邊界晴雨不定。可能今天熱情似火，明天卻突然縮進自己的貓窩不見任何人，給人陰晴不定、難以捉摸的怪僻印象。",
+        loveMatch: "90% (優雅梅花鹿 / 理性貓頭鷹)",
+        loveAdvice: "戀愛相處警告：家貓追求純粹的精神共鳴。如果另一半在相處中流露出世俗、粗鄙或是不尊重其獨立空間的舉動，家貓會瞬間收回利爪，冷酷地判處對方精神出局。",
+        why: "INFP 懷揣純真理想並具備強烈的主觀防禦，家貓對環境高度挑剔且守護內心淨土的姿態與其一致。",
+        partner: "優雅梅花鹿、理性貓頭鷹",
+        prompt: "A stylish minimalist flat illustration of an elegant domestic cat looking side-ways, pastel lilac and soft cream white aesthetic --ar 1:1"
+    },
+    {
+        name: "霸氣雄獅", mbti: "ESTJ", category: "肉食領袖系", rarity: "SR", vector: [60, 80, 20, 60, 95],
+        short: "威嚴秩序的掌舵者，帶領團隊開疆闢土的實踐先鋒。",
+        desc: "您有著與生俱來的掌控力，討厭低效率與無規章的混亂。您行事果斷，習慣在混亂中迅速定立紀律，帶領大家邁向既定目標。",
+        traits: "優勢：決策精準、極度負責任、善於管理全局。盲點：行事可能顯得過於強硬，不易接納不同觀點。",
+        friendAdvice: "做朋友會有的問題：他們經常不自覺地把『說教』和『糾偏』帶入友誼，喜歡幫朋友規劃人生，有時令人感到沉重的控制壓迫。",
+        loveMatch: "88% (團隊灰狼 / 秩序長頸鹿)",
+        loveAdvice: "戀愛相處警告：雄獅討厭失控感，在關係中習慣居於主導。如果另一半過度散漫、手無勃雞之力或缺乏責任心，獅子會失去耐心，展開雷霆般的威權壓迫。",
+        why: "ESTJ 堅信社會規範與高效架構，雄獅維護領地尊嚴、嚴格劃分階級與守序的特質是 ESTJ 的化身。",
+        partner: "團隊灰狼、秩序長頸鹿",
+        prompt: "A powerful clean flat vector portrait of a majestic lion with a rich glowing golden mane, mint green background, organic geometry --ar 1:1"
+    },
+    {
+        name: "溫順白兔", mbti: "ISFJ", category: "草食溫和系", rarity: "N", vector: [80, 45, 85, 30, 25],
+        short: "極致貼心的精緻守護者，在溫馨角落打理生活微光。",
+        desc: "您心思極其細密，善於防微杜漸。您容易因外界風吹草動而緊張，但也因此磨練出最頂尖的規劃與防禦本能，將家照料得完美無瑕。",
+        traits: "優勢：無私奉獻、記憶力驚人、善於照顧細節。盲點：抗壓性較弱，面對突發變故容易驚慌內耗。",
+        friendAdvice: "做朋友會有的問題：由於他們極度害怕衝突，遇到問題常選擇『委曲求全』，把不滿憋在心裡，積壓過久容易突然爆發，讓朋友一頭霧水。",
+        loveMatch: "91% (忠誠黃金獵犬 / 守護綿羊)",
+        loveAdvice: "戀愛相處警告：白兔的愛是細水長流的。但如果對方一味享受他們的照顧卻毫無感激之意，白兔會陷入嚴重的內耗，最終在極度失望中絕望且安靜地跳走。",
+        why: "ISFJ 強調安全與對珍愛之人之無聲守護，小白兔保持敏銳警覺與溫柔築巢的本能是其真實鏡像。",
+        partner: "忠誠黃金獵犬、勤勉乳牛",
+        prompt: "An adorable cozy vector illustration of a sweet little white rabbit with cute ears sitting in pastel mint flowers, modern soft art --ar 1:1"
+    },
+    {
+        name: "狡黠紅狐", mbti: "ENTP", category: "肉食領袖系", rarity: "SR", vector: [75, 75, 45, 90, 80],
+        short: "不走尋常路的智多星，以靈慧智慧解構世俗規則。",
+        desc: "您大腦運轉極快，充滿古靈精怪的點子。您熱愛挑戰常規，擅長在矛盾與混沌中捕捉前所未有的生存商機，思維彈性極大。",
+        traits: "優勢：智計百出、口才一流、在極端變局中適應力極強。盲點：缺乏耐力，容易把繁複的細部執行工作半途而廢。",
+        friendAdvice: "做朋友會有的問題：天生好辯 (Debater)，經常為了論證邏輯而與朋友唱反調，有時會讓人覺得他們『愛抬槓、不講情面』。",
+        loveMatch: "89% (智慧海豚 / 偽裝變色龍)",
+        loveAdvice: "戀愛相處警告：紅狐在戀愛中極其需要思想碰撞。如果另一半過於木訥、生活一成不變或極度守舊，紅狐會感到無聊透頂，進而到處尋求新的刺激與探險。",
+        why: "ENTP 熱衷拆解世界與概念思辨，紅狐機敏靈動、不按常理出牌的特質正是這群點子大師的象徵。",
+        partner: "智慧海豚、偽裝變色龍",
+        prompt: "A sleek modern vector art of a clever orange red fox sitting playfully, pastel teal background, bright warm shapes --ar 1:1"
+    },
+    {
+        name: "沉穩棕熊", mbti: "ISTJ", category: "草食溫和系", rarity: "N", vector: [40, 20, 30, 75, 55],
+        short: "腳踏實地的森林隱士，用絕對誠信編織安全壁壘。",
+        desc: "您不尚空談，相信行動和數據才是安身立命之本。您性格堅實，不喜歡鋪張與喧囂，在既定步調中默默累積財富與經驗。",
+        traits: "優勢：極度可靠、行事有始有終。盲點：有些頑固，不輕易改變固有習慣。",
+        friendAdvice: "做朋友會有的問題：過於死板、嚴肅，甚至有些不解風情。有時朋友只是想找個肩膀哭訴，棕熊卻一上來就理性分析、講道理、提方案。",
+        loveMatch: "86% (秩序長頸鹿 / 工匠河狸)",
+        loveAdvice: "戀愛相處警告：棕熊用物質安全感與默默陪伴表達愛，不擅長甜言蜜語。如果另一半追求海誓山盟與戲劇性的浪漫，會覺得棕熊像一塊冰冷的木頭。",
+        why: "ISTJ 注重邏輯、事實與極致的踏實負責，棕熊沉穩、不怒而威卻極其守序的特質與其一致。",
+        partner: "秩序長頸鹿、工匠河狸",
+        prompt: "A cozy flat vector of a big friendly brown bear, deep pine green background, scandinavian design --ar 1:1"
+    },
+    {
+        name: "睿智大象", mbti: "INFJ", category: "草食溫和系", rarity: "SR", vector: [65, 55, 15, 85, 60],
+        short: "精神與悲憫的共情長老，以崇高格局點亮心靈迷霧。",
+        desc: "您看世界的方式具備極強的宏觀精神性，輕易能感知靈魂深處的和諧。您是天然的心靈捕手，總在無聲中給予溫暖與智慧。",
+        traits: "優勢：洞察力驚人、富有遠見與深切的奉獻同理心。盲點：容易過度感同身受他人痛苦，導致自身內耗。",
+        friendAdvice: "做朋友會有的問題：心思太重、太過敏感。有時朋友隨口一句玩笑，大象會在心裡琢磨三天，並默默在內心深處為這段友誼減分。",
+        loveMatch: "93% (完美天鵝 / 深海藍鯨)",
+        loveAdvice: "戀愛相處警告：大象追求靈魂與精神的高純度共鳴。一旦發現另一半思想膚淺、只關心物質瑣事、或對人性缺乏悲憫心，大象會產生深深的孤獨與失望感。",
+        why: "INFJ 一生在追尋深層意義與人道守護，大象長壽、富含情感記憶且默默引領族群前行的崇高感是其具象。",
+        partner: "完美天鵝、深海藍鯨",
+        prompt: "An elegant minimalist illustration of a gentle elephant under a beautiful starry sky, cosmic pastel blue theme --ar 1:1"
+    },
+    {
+        name: "俏皮靈猴", mbti: "ENFP", category: "靈巧適應系", rarity: "R", vector: [50, 90, 50, 70, 75],
+        short: "散播歡樂的靈魂火花，永遠追尋新鮮好玩的樂園。",
+        desc: "您是當之無愧的派對亮點與創意思維發散中心。您拒絕被任何人或常規約束，人生對您而言就是一場沒有終點的奇幻冒險。",
+        traits: "優勢：極具生命感染力、腦洞大開。盲點：專注力不夠，容易在細節執行上丟三落四。",
+        friendAdvice: "做朋友會有的問題：熱度退得太快。可能這週跟你是形影不離的至交，下週被新的有趣事物吸引就突然消失在你的生活圈中。",
+        loveMatch: "94% (智慧海豚 / 華麗孔雀)",
+        loveAdvice: "戀愛相處警告：靈猴需要空間與新奇感。任何試圖用規章、承諾將其套牢，或是生活沉悶枯燥的另一半，都會迅速逼迫靈猴跳到下一棵樹上。",
+        why: "ENFP 充滿新奇聯想與熱情，靈猴熱愛探索、靈動跳躍的性格是其專屬印記。",
+        partner: "智慧海豚、華麗孔雀",
+        prompt: "A vibrant playful vector design of a clever monkey swinging through neon mint tropical leaves, modern colorful palette --ar 1:1"
+    },
+    {
+        name: "團隊灰狼", mbti: "ENTJ", category: "肉食領袖系", rarity: "SR", vector: [55, 70, 25, 85, 90],
+        short: "謀定後動的鐵腕將軍，以極致效率引領團隊攻無不克。",
+        desc: "您有著無與聯比的戰略眼光與鋼鐵般的意志。您重視團隊協作，但堅信只有強大的核心才能帶領群體在弱肉強食的世界中開闢領地。",
+        traits: "優勢：行動力與魄力驚人、條理極其清晰。盲點：有時過於鐵面無私，容易給人留下支配欲過強的威脅感。",
+        friendAdvice: "做朋友會有的問題：太過強勢，對朋友的要求極高。看見朋友生活頹廢或做蠢決定時，會忍不住重拳出擊、嚴厲批評，有時會刺傷脆弱的心靈。",
+        loveMatch: "89% (霸氣雄獅 / 孤高蒼鷹)",
+        loveAdvice: "戀愛相處警告：灰狼在親密關係中依然追求進步。如果另一半過度散漫、不思進取或總是用情感勒索抗拒前進，灰狼會冷酷地快刀斬亂麻，結束這段低效的關係。",
+        why: "ENTJ 代表無畏的執行力與藍圖建構，灰狼高度重視階級秩序、戰術紀律與狼首威嚴的本性完美契合其特質。",
+        partner: "霸氣雄獅、孤高蒼鷹",
+        prompt: "A strong geometric flat vector of a howling grey wolf under a neon moon, cool mint and glowing laser blue background --ar 1:1"
+    },
+    {
+        name: "孤高蒼鷹", mbti: "INTJ", category: "肉食領袖系", rarity: "SSR", vector: [70, 15, 30, 95, 85],
+        short: "高空鳥瞰的戰略大師，在冷靜中謀劃顛覆常規的藍圖。",
+        desc: "您習慣與人群保持絕對的安全距離。您的高傲源自於您那高速運轉、高度嚴密的大腦，不喜盲從，習慣站在更高維度拆解全局。",
+        traits: "優勢：思維嚴密、專注力驚人、目標必達。盲點：極其冷漠，對無關緊要的人際情感缺乏包容力。",
+        friendAdvice: "做朋友會有的問題：極難接近，毒舌且毫不客氣。他們對低智商或情緒化的言論零容忍，容易在無意間用刻薄的邏輯分析擊碎朋友的熱情。",
+        loveMatch: "87% (團隊灰狼 / 理性貓頭鷹)",
+        loveAdvice: "戀愛相處警告：蒼鷹的愛情極其稀有且挑剔。如果另一半習慣用情緒化、大哭大鬧的方式來解決矛盾，蒼鷹會用看『原始生物』的冰冷目光審視對方，並轉身離去。",
+        why: "INTJ 致力於邏輯體系與長遠戰略，蒼鷹遺世獨立、一擊必中的高空姿態完美呼應其傲然風采。",
+        partner: "團隊灰狼、理性貓頭鷹",
+        prompt: "A powerful minimalist vector of a soaring eagle with geometric patterns, deep indigo sky and yellow neon sun background --ar 1:1"
+    },
+    {
+        name: "實踐猛虎", mbti: "ISTP", category: "肉食領袖系", rarity: "SR", vector: [50, 15, 35, 75, 80],
+        short: "冷靜務實的爆發獵手，用頂級行動力解決一切現實難題。",
+        desc: "您話語不多，但每一步都精準無比。您是天生的危機解決大師，當周圍陷入驚慌時，您那理性的冷靜能迅速找出最實用的物理生存手段。",
+        traits: "優勢：危機應變天賦、動手能力極強。盲點：對情感溝通極其冷淡，容易讓人覺得難以走進內心。",
+        friendAdvice: "做朋友會有的問題：超級不愛社交，神隱大師。經常不回訊息、不參加聚會，只在自己感興趣的事物或有求於你時才會現身。",
+        loveMatch: "90% (防禦刺蝟 / 奔騰野馬)",
+        loveAdvice: "戀愛相處警告：猛虎需要極大的物理獨立。如果另一半天天要求報備行程、瘋狂黏人或干涉其個人興趣，猛虎會感到極度窒息，迅速斬斷這條綁在脖子上的繩子。",
+        why: "ISTP 偏愛工具實踐、理性分析與高度應變，猛虎悄無聲息、一擊致命的狩獵本能與 ISTP 高度契合。",
+        partner: "防禦刺蝟、奔騰野馬",
+        prompt: "A sleek modern vector design of a tiger walking silently through dark glowing green bamboo forest, warm neon highlights --ar 1:1"
+    },
+    {
+        name: "守護綿羊", mbti: "ISFJ", category: "草食溫和系", rarity: "N", vector: [65, 60, 40, 35, 30],
+        short: "溫柔合群的奉獻守望者，默默編織最安定的幸福港灣。",
+        desc: "您渴求安定，是群體表中最可靠的溫柔屏障。您不喜歡引人注目，但您的體貼和對細節的默默打理，是所有人離不開的安全感來源。",
+        traits: "優勢：體貼、極度忠誠且守信用。盲點：過於妥協，容易在遭遇霸凌或不公時選擇默默隱忍。",
+        friendAdvice: "做朋友會有的問題：太過敏感和多疑。因為他們習慣為別人付出，如果朋友沒有展現出對等的感激，綿羊會暗自傷心並陷入深深的被害者內耗。",
+        loveMatch: "91% (溫順白兔 / 忠誠黃金獵犬)",
+        loveAdvice: "戀愛相處警告：綿羊全心全意照顧家庭。但如果對方習慣了被伺候、甚至用理所當然的傲慢態度對待他們，綿羊一旦突破忍耐極限，會徹底黑化，永遠收回所有的溫柔。",
+        why: "ISFJ 崇尚穩定與無私守護，綿羊溫順合群、甘當屏障且默默照拂彼此的本能是其真實縮影。",
+        partner: "溫順白兔、勤勉乳牛",
+        prompt: "A lovely flat vector design of fluffy sheep on rolling pastel violet hills under a sunset mint green sky, warm soft mood --ar 1:1"
+    },
+    {
+        name: "活潑松鼠", mbti: "ESFP", category: "靈巧適應系", rarity: "R", vector: [60, 85, 60, 40, 55],
+        short: "活力爆棚的當下玩家，用笑聲點亮平庸生活的調味劑。",
+        desc: "您天生具備捕捉快樂的能力，討厭死板、嚴肅與繁瑣。您樂觀活潑，能把最枯燥的日常過得像一場繽紛燦爛的嘉年華派對。",
+        traits: "優勢：社交魅力十足、極佳的生活情趣與當下行動力。盲點：耐性差，容易被眼前新奇的事物帶偏方向。",
+        friendAdvice: "做朋友會有的問題：做事有些毛躁，經常遲到或忘記約定。他們注意力太容易分散，在嚴肅談話時容易顯得心不在焉、不夠莊重。",
+        loveMatch: "93% (華麗孔雀 / 軟萌倉鼠)",
+        loveAdvice: "戀愛相處警告：松鼠需要熱情、色彩與互動。如果另一半生活刻板、不解風情、甚至試圖用嚴格的財務或行為規範限制他們享受生活，松鼠會感到窒息並迅速溜走。",
+        why: "ESFP 追求極致的感官體驗與當下享樂，松鼠隨時收集美好堅果並向世界展示活力的特質正是其寫照。",
+        partner: "華麗孔雀、軟萌倉鼠",
+        prompt: "A delightful flat vector of a cute squirrel holding a golden acorn with bright autumn neon foliage background, whimsical style --ar 1:1"
+    },
+    {
+        name: "智慧海豚", mbti: "ENFP", category: "靈巧適應系", rarity: "SSR", vector: [75, 95, 30, 85, 70],
+        short: "高智商高共情的水晶精靈，用愛與智慧穿梭於人間海洋。",
+        desc: "您兼具了卓越的頭腦與細膩的情感。您在不同圈子中都能遊刃有餘，在提供精神指導的同時，也源源不絕地散播著治癒與浪漫。",
+        traits: "優勢：天生的溝通大師、悲天憫人且直覺敏銳。盲點：夜深人靜時極易陷入孤獨感，渴望極度深層的理解。",
+        friendAdvice: "做朋友會有的問題：有時顯得過於博愛。因為他們對每個人都很好，常常會讓他們的密友或另一半吃醋，覺得自己對海豚而言『並不夠特別』。",
+        loveMatch: "96% (俏皮靈猴 / 狡黠紅狐)",
+        loveAdvice: "戀愛相處警告：海豚需要高純度的靈魂連結。如果另一半只在乎柴米油鹽、說話冷漠粗俗，海豚會在關係中慢慢乾枯，最後發射寂寞的 52 赫茲信號孤獨地游向深海。",
+        why: "ENFP 熱愛深度連結與精神探索，海豚作為高共情、樂於助人且極高智商的海洋精靈，是其完美化身。",
+        partner: "俏皮靈猴、狡黠紅狐",
+        prompt: "A breathtaking minimalist vector illustration of dolphins jumping out of deep neon blue ocean waves under a pastel sky, cosmic vibes --ar 1:1"
+    },
+    {
+        name: "理性貓頭鷹", mbti: "INTP", category: "靈巧適應系", rarity: "R", vector: [60, 10, 20, 95, 65],
+        short: "黑夜中的無聲解構者，在寂靜中拆解宇宙萬物的底層邏輯。",
+        desc: "您是終其一生的真理追尋者。喧喧鬧鬧的世俗社交只會讓您覺得疲憊，您更喜歡在無人的深夜，將世界拆成一行行完美的代碼與因果邏輯。",
+        traits: "優勢：邏輯推演頂級、理性客觀、思維深邃。盲點：對他人的情感反應遲鈍，不擅長處理細碎的生活情緒。",
+        friendAdvice: "做朋友會有的問題：經常已讀不回，甚至能失蹤幾個月。當你興高采烈地跟他分享一件事，他可能會像個無情的機器人一樣開始挑你語病或指出邏輯漏洞。",
+        loveMatch: "88% (偽裝變色龍 / 慵懶無尾熊)",
+        loveAdvice: "戀愛相處警告：貓頭鷹極度討厭情感勒索。一旦被要求『你愛不愛我、為什麼不陪我』等感性拷問，貓頭鷹的邏輯大腦會瞬間死機，進而用最冷酷、不屑的態度關閉對話。",
+        why: "INTP 核心探索者特質，貓頭鷹在暗夜中獨立思考的孤寂姿態是 INTP 的最佳投射。",
+        partner: "偽裝變色龍、慵懶無尾熊",
+        prompt: "An atmospheric minimalist vector of a wise owl perched on a branch under a starry emerald green and yellow sky, soft glowing elements --ar 1:1"
+    },
+    {
+        name: "奔騰野馬", mbti: "ESTP", category: "肉食領袖系", rarity: "R", vector: [40, 75, 40, 50, 85],
+        short: "現實曠野的熱血開拓者，用速度與勇氣擊碎一切物理阻礙。",
+        desc: "您是實幹派的代名詞，無法忍受冗長無用的紙上談兵。您熱愛速度、體能、競技與當下的生理反饋，相信一切困難都是用來被衝破的。",
+        traits: "優勢：膽大無畏、現實應變力驚人、實戰大師。盲點：容易流於衝動，可能在長遠規劃上缺乏足夠的遠見與耐心。",
+        friendAdvice: "做朋友會有的問題：太過粗線條。經常在言行中得罪心思細密的朋友而不自知，甚至把朋友拉進高風險或高強度的活動中，讓人吃不消。",
+        loveMatch: "91% (實踐猛虎 / 爆發袋鼠)",
+        loveAdvice: "戀愛相處警告：野馬渴望在動態中狂奔。如果另一半試圖用婚姻、責任將其牢牢綁死在安穩的牛棚裡，野馬會暴躁不安，最終野性爆發，踩碎柵欄揚長而去。",
+        why: "ESTP 崇尚冒險與真實生活體驗，駿馬無拘無束、一往無前、在原野中展現極致爆發力的風采是其最佳寫照。",
+        partner: "實踐猛虎、爆發袋鼠",
+        prompt: "A majestic vector illustration of a running wild horse kicking up orange dust under a glowing neon sunset sky, raw dynamic feel --ar 1:1"
+    },
+    {
+        name: "慵懶無尾熊", mbti: "INTP", category: "草食溫和系", rarity: "R", vector: [55, 15, 10, 60, 20],
+        short: "低能耗運作的生活哲學家，在自己的微型宇宙中獨自浪漫。",
+        desc: "您深諳生命的「省電模式」，拒絕任何無謂的內耗與情感攀比。在自己的尤加利樹上，用悠閒的步調打量周圍，就是您最完美的避風港。",
+        traits: "優勢：情緒穩定度極高、隨和、深諳極簡生活哲學。盲點：行動力稍嫌不足，時常把事情拖延到最後一刻。",
+        friendAdvice: "做朋友會有的問題：極度懶散，約不出來。經常在約會前最後一秒因為「床太舒服了」而臨時放鴿子，在朋友圈中是出了名的神隱樹懶。",
+        loveMatch: "89% (沉穩棕熊 / 理性貓頭鷹)",
+        loveAdvice: "戀愛相處警告：無尾熊需要無壓力的伴侶。如果另一半天天要求上進、瘋狂催促或製造生活焦慮，無尾熊會徹底進入冬眠模式，關閉任何心靈溝通的管道。",
+        why: "INTP 超脫的氣質與省電作風在無尾熊身上展露無疑，對世俗爭端保持優雅的疏離。",
+        partner: "沉穩棕熊、理性貓頭鷹",
+        prompt: "A relaxing flat vector of a cute koala hugging a neon green eucalyptus branch, soft pastel cream background, minimalistic scandinavian style --ar 1:1"
+    },
+    {
+        name: "優雅梅花鹿", mbti: "INFP", category: "草食溫和系", rarity: "SR", vector: [90, 35, 70, 60, 30],
+        short: "輕盈空靈的森林隱士，用詩意溫柔守護靈魂的微光。",
+        desc: "您擁有如朝露般純淨、細膩的心靈。喧鬧的鋼筋水泥都市會迅速抽乾您的能量，您熱愛雨天、落葉與所有充滿儀式感的生活微光。",
+        traits: "優勢：審美感知超群、極富同理心。盲點：抗挫折力較弱，受傷時容易縮回自己幻想的殼中。",
+        friendAdvice: "做朋友會有的問題：內心戲過度豐富。朋友無心的一句評價，會在梅花鹿心裡引發海嘯，並在不挑明的情況下突然退縮，讓人無所適從。",
+        loveMatch: "91% (精緻家貓 / 完美天鵝)",
+        loveAdvice: "戀愛相處警告：梅花鹿需要童話般的精神共鳴。如果另一半滿口銅臭、說話粗糙甚至用現實的理性嘲笑他們的浪漫夢想，梅花鹿會心碎並安靜地消失在迷霧森林中。",
+        why: "INFP 熱愛美學、追求脫俗的精神，梅花鹿輕盈、空靈卻又帶著防禦與警覺的姿態，是溫柔 INFP 的化身。",
+        partner: "精緻家貓、完美天鵝",
+        prompt: "A beautiful fairytale vector illustration of a deer with floral antlers in a magical mist forest, pastel violet light theme --ar 1:1"
+    },
+    {
+        name: "秩序長頸鹿", mbti: "ISTJ", category: "草食溫和系", rarity: "N", vector: [50, 30, 20, 70, 50],
+        short: "不露聲色的高空觀察員，腳踏實地默默將細節做到極致。",
+        desc: "您安靜務實，習慣站在一個安全的位置不失禮貌地審視周圍。您非常看重契約、規則與時間觀念，討厭任何突如其來的混亂。",
+        traits: "優勢：極其踏實負責、觀察入微、條理井然。盲點：固執守舊，對意外變革的適應速度較慢。",
+        friendAdvice: "做朋友會有的問題：過於死板、不知變通。如果約會遲到五分鐘，長頸鹿臉色會非常難看，甚至在心裡給你的可靠度畫上一個大大的紅叉。",
+        loveMatch: "88% (幾何斑馬 / 工匠河狸)",
+        loveAdvice: "戀愛相處警告：長頸鹿渴望穩定。如果另一半生活混亂無章、不按規矩來或頻繁製造意外驚喜，長頸鹿會感到精神受創，進而用冷暴力和挑剔來折磨彼此。",
+        why: "ISTJ 講求規則、追求簡潔與可靠，長頸鹿腳踏實地、默默按規則運作的沉穩姿態正是其寫照。",
+        partner: "幾何斑馬、工匠河狸",
+        prompt: "A beautiful tall giraffe vector design, minimalistic geometric pastel background, clean artwork with gentle colors --ar 1:1"
+    },
+    {
+        name: "紳士企鵝", mbti: "ESFJ", category: "靈巧適應系", rarity: "N", vector: [45, 80, 35, 55, 60],
+        short: "極致團結的禮儀大師，用默契守護著溫暖的集體溫室。",
+        desc: "您穿著得體、行事大方，是維持朋友圈運作的靈魂黏合劑。您樂於承擔繁瑣的組織工作，用對細節的掌控給予大家滿滿安全感。",
+        traits: "優勢：超強社交默契、有禮、極具組織協調力。盲點：害怕被群體邊緣化，容易委曲求全。",
+        friendAdvice: "做朋友會有的問題：容易在無意間傳播八卦或過度干涉他人隱私。因為他們太想融入並管理群體，有時會讓人覺得『管得太寬、太過市儈』。",
+        loveMatch: "92% (忠誠黃金獵犬 / 守護綿羊)",
+        loveAdvice: "戀愛相處警告：企鵝熱愛世俗的家庭溫馨。如果另一半是一個極致追求精神孤獨、排斥家庭聚會、且說話帶刺的靈魂，企鵝會感到深深的受挫與被嫌棄。",
+        why: "ESFJ 重視社會化和諧與家庭責任，企鵝在極地中相互擁抱、彬彬有禮的特性與其高度同步。",
+        partner: "忠誠黃金獵犬、守護綿羊",
+        prompt: "A charming vector design of penguins walking in a neat row, soft polar blue and pastel yellow snow background --ar 1:1"
+    },
+    {
+        name: "完美天鵝", mbti: "INFJ", category: "獨特邊緣系", rarity: "SSR", vector: [95, 30, 40, 75, 50],
+        short: "極致完美主義的美學孤鶩，在靜謐湖面優雅滑行。",
+        desc: "您有著極其挑剔的審美與絕不妥協的精神追求。不論世界多麼混亂，您都要在自己的世界裡優雅到骨子裡。您追求「一生一世一雙人」的絕對純粹。",
+        traits: "優勢：審美品味極高、忠誠專一。盲點：完美主義傾向嚴重，容易給人留下清高不易親近的感覺。",
+        friendAdvice: "做朋友會有的問題：道德標準與心理防線極高。一旦朋友展現出任何庸俗、背叛或是不誠信的舉動，天鵝會默默在心裡將其拉黑，毫無預兆地徹底絕交。",
+        loveMatch: "93% (睿智大象 / 深海藍鯨)",
+        loveAdvice: "戀愛相處警告：天鵝無法容忍平庸的敷衍。如果另一半過於現實、不解風情，甚至將他們的浪漫情懷視為作秀，天鵝會冷酷地拍動翅膀，飛往更安靜的孤寂湖泊。",
+        why: "INFJ 追求完美的精神堅持與深度和諧，天鵝一生守護伴侶、潔身自好的特質正是其寫照。",
+        partner: "睿智大象、深海藍鯨",
+        prompt: "A highly elegant flat vector of a swan floating on dark water, pastel lavender glow background, minimalist design --ar 1:1"
+    },
+    {
+        name: "勤勉乳牛", mbti: "ISFJ", category: "草食溫和系", rarity: "N", vector: [35, 50, 15, 30, 35],
+        short: "默默奉獻的生命供養者，在平凡中編織最偉大的穩定與溫柔。",
+        desc: "您不追求奢華與出風頭，只渴望腳踏實地的生活。您默默奉獻自己的光與熱，細緻入微地打理著生活與家庭。您具有驚人的耐心。",
+        traits: "優勢：腳踏實地、財富累積度佳、忠厚老實。盲點：抗拒變化，缺乏一些冒險與突破的精神。",
+        friendAdvice: "做朋友會有的問題：太過卑微和被動。他們極少表達自己的真實渴望，在朋友圈中總是『隨便、都好』，時間長了會讓朋友覺得跟他們相處缺乏靈魂深度。",
+        loveMatch: "90% (溫順白兔 / 守護綿羊)",
+        loveAdvice: "戀愛相處警告：乳牛渴望一成不變的安全生活。如果伴侶是一個極致冒險、頻繁更換城市、或是生活充滿變數的浪子，乳牛會每天活在焦慮失眠中，最終心力交瘁地離開。",
+        why: "ISFJ 注重實際、甘於平凡的付出，乳牛溫順踏實、對環境適應度高的性格正是其真實寫照。",
+        partner: "溫順白兔、守護綿羊",
+        prompt: "A peaceful countryside flat illustration of a cute cow with soft pastel green rolling hills background, warm sunset aesthetic --ar 1:1"
+    },
+    {
+        name: "防禦刺蝟", mbti: "ISTP", category: "靈巧適應系", rarity: "R", vector: [45, 10, 80, 50, 35],
+        short: "外剛內柔的邊界建築師，用棘刺守護最細膩的溫柔。",
+        desc: "您具有極其強烈的防禦心與邊界意識。遇到陌生環境或試探，您會本能地「蜷縮起來」展現冷酷的一面。但只要真正走進您內心，就會發現您極度溫柔。",
+        traits: "優勢：自立自強、邊界感分明、實踐動手能力佳。盲點：防備心太重，容易讓人覺得難以突破其心防。",
+        friendAdvice: "做朋友會有的問題：防備心極強，說話帶刺。如果你想主動跨過他們的心理安全線，他們會立刻豎起棘刺，用冷言冷語刺痛你的熱情。",
+        loveMatch: "90% (實踐猛虎 / 變色龍)",
+        loveAdvice: "戀愛相處警告：刺蝟需要極慢的慢熱過程。如果另一半一上來就要求熱戀、要求公開所有隱私或天天黏在一起，刺蝟會因為安全感崩潰而迅速將對方扎得遍體鱗傷。",
+        why: "ISTP 極度注重個人空間與獨立分析，刺蝟用物理荊棘隔絕世界的特性正是其寫照。",
+        partner: "實踐猛虎",
+        prompt: "A lovely flat vector illustration of a tiny hedgehog under a neon yellow mushroom, pastel warm peach background --ar 1:1"
+    },
+    {
+        name: "幾何斑馬", mbti: "ISTJ", category: "靈巧適應系", rarity: "N", vector: [55, 65, 45, 50, 55],
+        short: "條理清晰的極簡主義者，黑白分明，行事精準如鐘錶。",
+        desc: "您眼中的世界黑白分明，沒有灰色地帶。您非常看重契約、規則和時間觀念。在團隊中，您是一個隨時保持清醒、用邏輯把關每一處數據的人。",
+        traits: "優勢：行事嚴謹、注重效率與契約、極度可靠。盲點：思維僵化，容錯率較低，對模糊地帶容忍度差。",
+        friendAdvice: "做朋友會有的問題：說話過於直白、得理不饒人。當朋友向他們尋求情感安慰時，斑馬會冷冰冰地指出朋友自身的所有不當細節，讓人感到大潑冷水。",
+        loveMatch: "87% (秩序長頸鹿 / 工匠河狸)",
+        loveAdvice: "戀愛相處警告：斑馬需要生活高度守序。如果伴侶是一個極致隨性、花錢大手大腳、或是生活計畫隨時脫軌的藝術家，斑馬會天天在家裡咆哮，最終分道揚鑣。",
+        why: "ISTJ 講求規則、追求簡潔與可靠，幾何條紋帶來的精準感，是其完美的天然寫照。",
+        partner: "秩序長頸鹿、工匠河狸",
+        prompt: "An artistic minimalist vector of a zebra under geometric background, sharp lines with neon mint accents --ar 1:1"
+    },
+    {
+        name: "深海藍鯨", mbti: "INFJ", category: "草食溫和系", rarity: "SSR", vector: [80, 20, 15, 90, 50],
+        short: "精神宇宙的巨型遊俠，發射著獨一無二的 52 赫茲頻率。",
+        desc: "您的精神空間巨大無比，往往裝載著宏大的哲學、悲憫與藝術。您對淺薄的情感毫無興趣，終其一生都在尋找能聽懂您獨特聲納的靈魂旅伴。",
+        traits: "優勢：思想極具格局、悲天憫人、精神力量強大。盲點：容易感到與世隔絕的孤獨，曲高和寡。",
+        friendAdvice: "做朋友會有的問題：太過高深和冷漠。他們極少主動參與日常娛樂，在聚會中常顯得與世無爭或超凡脫俗，讓人覺得難以建立起真正的世俗交情。",
+        loveMatch: "94% (睿智大象 / 完美天鵝)",
+        loveAdvice: "戀愛相處警告：藍鯨需要完全的精神同頻。如果伴侶完全不懂他們的藝術世界或靈性追求，只關心俗世的利弊與應酬，藍鯨會在心中默默遊向最漆黑、深遂的無光深海。",
+        why: "INFJ 是靈魂的探索者，往往感到與世俗格格不入。藍鯨獨自游動在深海的姿態是其極致隱喻。",
+        partner: "睿智大象、完美天鵝",
+        prompt: "A breathtaking minimalist vector of a blue whale swimming in dark deep ocean with glowing cosmic aurora light --ar 1:1"
+    },
+    {
+        name: "爆發袋鼠", mbti: "ESTP", category: "獨特邊緣系", rarity: "R", vector: [35, 70, 30, 45, 80],
+        short: "極致動感與冒險的代名詞，用強悍爆發力衝破重重阻礙。",
+        desc: "您擁有過人的活力，天生就不是一個能安靜坐在辦公桌前的人。您熱愛挑戰體能、面對面的衝突或需要極致應變的動態競爭。",
+        traits: "優勢：膽大無畏、爆發力與應變力極佳。盲點：耐心不足，不擅長處理需要長時間耕耘的靜態計畫。",
+        friendAdvice: "做朋友會有的問題：太過好戰和衝動。常在無意間捲入各種紛爭或肢體碰撞中，讓同行的朋友提心膽戰，甚至在言行中充滿侵略性。",
+        loveMatch: "91% (奔騰野馬 / 實踐猛虎)",
+        loveAdvice: "戀愛相處警告：袋鼠需要極致的征服感。一旦另一半過度溫順、無趣，或是試圖用繁複的日常瑣事鎖住他們，袋鼠會覺得這段戀情索然無味，轉頭尋找下一個對手。",
+        why: "ESTP 是生活中的冒險王，擁有極高的運動本能。袋鼠用爆發性的雙腿在原野中戰勝一切敵人的姿態是其具象化。",
+        partner: "奔騰野馬、實踐猛虎",
+        prompt: "A dynamic flat vector of a kangaroo jumping with glowing neon dust clouds background, high speed feel --ar 1:1"
+    },
+    {
+        name: "工匠河狸", mbti: "ISTJ", category: "靈巧適應系", rarity: "N", vector: [30, 40, 35, 85, 75],
+        short: "極致完美的手作狂魔，在細節處建構起固若金湯的城堡。",
+        desc: "您是細節的魔鬼。不論是工作項目、手作、還是生活的邏輯，您都要一磚一瓦、用極限的專注將其打造成無懈可擊的系統。",
+        traits: "優勢：驚人的動手與細部建構能力、務實、細心。盲點：過於注重細部繁瑣程序，有時會忽略整體大局。",
+        friendAdvice: "做朋友會有的問題：強烈強迫症。如果你跟他們一起旅行，不小心弄亂了行程表或放錯了生活用品，河狸會反覆糾正你，讓人感到極大精神緊繃。",
+        loveMatch: "89% (幾何斑馬 / 秩序長頸鹿)",
+        loveAdvice: "戀愛相處警告：河狸用精細的樹枝和驚人毅力建構起完美大壩的工匠本能，是其最好的代言。",
+        why: "ISTJ 最完美的系統維護與建構者。河狸用精細的樹枝和驚人毅力建構起完美大壩的工匠本能，是其最好的代言。",
+        partner: "幾何斑馬、秩序長頸鹿",
+        prompt: "A highly detailed flat vector of a cute beaver near its log cabin dam, organic clean lineart, soft sunset background --ar 1:1"
+    },
+    {
+        name: "華麗孔雀", mbti: "ESFP", category: "獨特邊緣系", rarity: "SR", vector: [100, 85, 50, 45, 70],
+        short: "極致華麗的感官主宰，天生就要在聚光燈下綻放百般光彩。",
+        desc: "您的一生絕不容許平淡無奇。您對美、目光有著天然的致命追求。您擅長在社交場所中用華麗的自我表達吸引所有人的眼球。",
+        traits: "優勢：無懈可擊的視覺表現力、社交亮點。盲點：極度依賴外界目光，當失去焦點時容易感到失落焦慮。",
+        friendAdvice: "做朋友會有的問題：太過自我中心 (Drama Queen/King)。常常在聊天中搶風頭，把話題強行扭轉回自己身上，讓朋友覺得自己像個無用的陪襯。",
+        loveMatch: "93% (俏皮靈猴 / 活潑松鼠)",
+        loveAdvice: "戀愛相處警告：孔雀開屏需要忠實觀眾。如果另一半生性低調、抗拒公開秀恩愛、或吝於給予誇讚，孔雀會覺得在這段關係中被明珠投暗，進而尋求外界的豔羨目光。",
+        why: "ESFP 熱愛生命之美、追求極致的感官衝擊，孔雀開屏那一瞬間震撼人心的視覺盛宴是其最佳寫照。",
+        partner: "俏皮靈猴、活潑松鼠",
+        prompt: "A stunning colorful flat vector of a peacock displaying its gorgeous feathers, neon emerald green and sapphire blue light --ar 1:1"
+    },
+    {
+        name: "軟萌倉鼠", mbti: "ISFP", category: "獨特邊緣系", rarity: "N", vector: [85, 40, 90, 30, 20],
+        short: "精緻物質享樂天才，將自己藏在堆滿美味的溫馨小窩中。",
+        desc: "您是極致感官與物質安逸的收藏家。您喜歡將個人空間塞滿軟綿綿的抱枕、高級甜點與精緻小物。您有些膽小，但溫柔無比。",
+        traits: "優勢：溫順可愛、懂生活、善於營造療癒環境。盲點：過度缺乏安全感，容易對外界未知產生逃避心態。",
+        friendAdvice: "做朋友會有的問題：極度抗拒踏出舒適圈。如果你約他們去爬山、露營、或去新環境社交，倉鼠會死守自己的被窩，找一百個理由推託，是典型的「窩裡橫」。",
+        loveMatch: "92% (沉穩棕熊 / 活潑松鼠)",
+        loveAdvice: "戀愛相處警告：倉鼠在感情中極需安撫與保護。如果伴侶經常對他們大聲說話、說話尖銳或不提供足夠的物質安穩承諾，倉鼠會因為嚇壞了而立刻咬斷情感線，縮回自己的洞穴死角。",
+        why: "ISFP 熱愛物理審美、崇尚安逸且敏感，倉鼠囤積美味、打造溫馨柔軟洞穴的本能是其完美化身。",
+        partner: "沉穩棕熊、活潑松鼠",
+        prompt: "An adorably sweet vector of a fluffy hamster eating seeds inside its cozy nest, pastel warm peach and cream background --ar 1:1"
+    },
+    {
+        name: "偽裝變色龍", mbti: "INTP", category: "獨特邊緣系", rarity: "SSR", vector: [70, 20, 60, 90, 40],
+        short: "深不可測的觀察變色龍，完美融入環境卻保有最純粹的思維。",
+        desc: "您是一個思維發達、且具備驚人適應力的靈魂。您不急於發表意見，而是根據環境變化調整外在狀態，以保護獨立思考的運作。",
+        traits: "優勢：極限環境適應力、冷靜多維思考。盲點：過度隱藏锋芒，容易給人摸不透真實心意的「心機重」印象。",
+        friendAdvice: "做朋友會有的問題：極難猜透他們的真實想法。在人前永遠帶著大方、客氣的偽裝面具，讓你不知道他們何時是真心、何時只是客套。",
+        loveMatch: "90% (理性貓頭鷹 / 防禦刺蝟)",
+        loveAdvice: "戀愛相處警告：變色龍極度討厭情感的深度黏著與監控。一旦對方試圖窺探他們的靈魂死角、限制他們的私密獨立思維，變色龍會瞬間變成與周圍背景一模一樣的顏色，在感情中徹底人間蒸發。",
+        why: "INTP 追求客觀的理性，變色龍默默偽裝、用 360 度獨立旋轉雙眼旁觀剖析世界的姿態正是其象徵。",
+        partner: "理性貓頭鷹、防禦刺蝟",
+        prompt: "An ultra modern vector art of a chameleon blending with colorful geometric tropical leaves, neon mint and hot pink light --ar 1:1"
+    }
+];
 
         const QUESTIONS = [
             // C1: 美學感知 (Aesthetic)
@@ -2618,948 +2618,946 @@
         }
         animateParticles();
 
-        function drawAnimalProcedural(canvasId, animalName) {
-            const canvas = document.getElementById(canvasId);
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = canvas.width;
-            const h = canvas.height;
-            const isDark = document.body.getAttribute('data-theme') === 'dark';
+       function drawAnimalProcedural(canvasId, animalName) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    const isDark = document.body.getAttribute('data-theme') === 'dark';
 
-            // 清空畫布並繪製炫麗背景
-            ctx.clearRect(0, 0, w, h);
-            const bgGrad = ctx.createRadialGradient(w/2, h/2, 20, w/2, h/2, 160);
-            if (isDark) {
-                bgGrad.addColorStop(0, '#102e21');
-                bgGrad.addColorStop(1, '#050a07');
-            } else {
-                bgGrad.addColorStop(0, '#e8f5e9');
-                bgGrad.addColorStop(1, '#ffffff');
-            }
-            ctx.fillStyle = bgGrad;
-            ctx.fillRect(0, 0, w, h);
+    // 清空畫布並繪製炫麗背景
+    ctx.clearRect(0, 0, w, h);
+    const bgGrad = ctx.createRadialGradient(w/2, h/2, 20, w/2, h/2, 160);
+    if (isDark) {
+        bgGrad.addColorStop(0, '#102e21');
+        bgGrad.addColorStop(1, '#050a07');
+    } else {
+        bgGrad.addColorStop(0, '#e8f5e9');
+        bgGrad.addColorStop(1, '#ffffff');
+    }
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, w, h);
 
-            // 繪製背景發光幾何圓環
-            ctx.strokeStyle = isDark ? 'rgba(0, 255, 204, 0.15)' : 'rgba(102, 187, 106, 0.15)';
-            ctx.lineWidth = 1.5;
+    // 繪製背景發光幾何圓環
+    ctx.strokeStyle = isDark ? 'rgba(0, 255, 204, 0.15)' : 'rgba(102, 187, 106, 0.15)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(w/2, h/2, 110, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(w/2, h/2);
+
+    const primaryColor = isDark ? '#00ffcc' : '#51b055';
+    const secondaryColor = '#ec407a';
+    const accentColor = '#ffd740';
+
+    // 依據 31 種動物進行客製化的 2D 幾何向量繪製
+    if (animalName.includes("水豚")) {
+        ctx.fillStyle = '#8d6e63'; 
+        ctx.beginPath();
+        ctx.roundRect(-50, -30, 100, 75, [25, 25, 15, 15]);
+        ctx.fill();
+
+        ctx.fillStyle = '#5d4037';
+        ctx.beginPath();
+        ctx.arc(-45, -30, 10, 0, Math.PI, true);
+        ctx.arc(45, -30, 10, 0, Math.PI, true);
+        ctx.fill();
+
+        ctx.strokeStyle = '#3e2723';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(-30, -5); ctx.lineTo(-15, -5);
+        ctx.moveTo(15, -5); ctx.lineTo(30, -5);
+        ctx.stroke();
+
+        ctx.fillStyle = '#3e2723';
+        ctx.beginPath();
+        ctx.roundRect(-12, 10, 24, 15, 6);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff9800';
+        ctx.beginPath();
+        ctx.arc(0, -42, 12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#4caf50'; 
+        ctx.beginPath();
+        ctx.ellipse(3, -54, 4, 8, Math.PI/4, 0, Math.PI*2);
+        ctx.fill();
+    } 
+    else if (animalName.includes("家貓")) {
+        ctx.fillStyle = '#cfd8dc';
+        ctx.beginPath();
+        ctx.roundRect(-45, -25, 90, 65, 20);
+        ctx.fill();
+
+        ctx.fillStyle = '#90a4ae';
+        ctx.beginPath();
+        ctx.moveTo(-40, -20); ctx.lineTo(-50, -55); ctx.lineTo(-15, -20);
+        ctx.moveTo(40, -20); ctx.lineTo(50, -55); ctx.lineTo(15, -20);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff8a80';
+        ctx.beginPath();
+        ctx.moveTo(-35, -20); ctx.lineTo(-42, -45); ctx.lineTo(-22, -20);
+        ctx.moveTo(35, -20); ctx.lineTo(42, -45); ctx.lineTo(22, -20);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffd54f';
+        ctx.beginPath();
+        ctx.ellipse(-20, -5, 12, 6, Math.PI/12, 0, Math.PI*2);
+        ctx.ellipse(20, -5, 12, 6, -Math.PI/12, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#263238'; 
+        ctx.beginPath();
+        ctx.ellipse(-20, -5, 3, 6, 0, 0, Math.PI*2);
+        ctx.ellipse(20, -5, 3, 6, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#90a4ae';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-45, 10); ctx.lineTo(-70, 8);
+        ctx.moveTo(-45, 15); ctx.lineTo(-68, 20);
+        ctx.moveTo(45, 10); ctx.lineTo(70, 8);
+        ctx.moveTo(45, 15); ctx.lineTo(68, 20);
+        ctx.stroke();
+    }
+    else if (animalName.includes("黃金獵犬")) {
+        ctx.fillStyle = '#ffe082'; 
+        ctx.beginPath();
+        ctx.roundRect(-45, -25, 90, 65, 22);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffb300';
+        ctx.beginPath();
+        ctx.roundRect(-58, -25, 18, 55, 9);
+        ctx.roundRect(40, -25, 18, 55, 9);
+        ctx.fill();
+
+        ctx.fillStyle = '#3e2723';
+        ctx.beginPath();
+        ctx.arc(-20, -5, 6, 0, Math.PI * 2);
+        ctx.arc(20, -5, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.roundRect(-10, 8, 20, 12, 5);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff8a80';
+        ctx.beginPath();
+        ctx.roundRect(-8, 18, 16, 18, [0, 0, 8, 8]);
+        ctx.fill();
+    }
+    else if (animalName.includes("白兔")) {
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.roundRect(-40, -20, 80, 60, 25);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.roundRect(-30, -75, 18, 60, 9);
+        ctx.roundRect(12, -75, 18, 60, 9);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff8a80'; 
+        ctx.beginPath();
+        ctx.roundRect(-26, -70, 10, 50, 5);
+        ctx.roundRect(16, -70, 10, 50, 5);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(236, 64, 121, 0.4)';
+        ctx.beginPath();
+        ctx.arc(-26, 15, 8, 0, Math.PI * 2);
+        ctx.arc(26, 15, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#d32f2f';
+        ctx.beginPath();
+        ctx.arc(-16, -2, 5, 0, Math.PI * 2);
+        ctx.arc(16, -2, 5, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    else if (animalName.includes("雄獅")) {
+        ctx.fillStyle = '#ff7043'; 
+        ctx.beginPath();
+        ctx.arc(0, 0, 65, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffe082';
+        ctx.beginPath();
+        ctx.roundRect(-35, -25, 70, 55, 18);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-16, -5, 6, 0, Math.PI*2);
+        ctx.arc(16, -5, 6, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#d84315';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(0, -22); ctx.lineTo(0, -12);
+        ctx.moveTo(-8, -17); ctx.lineTo(8, -17);
+        ctx.stroke();
+    }
+    else if (animalName.includes("紅狐")) {
+        ctx.fillStyle = '#ff5722';
+        ctx.beginPath();
+        ctx.moveTo(0, 30);
+        ctx.quadraticCurveTo(-55, -15, -45, -30);
+        ctx.quadraticCurveTo(0, -20, 45, -30);
+        ctx.quadraticCurveTo(55, -15, 0, 30);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.moveTo(-45, -30);
+        ctx.quadraticCurveTo(-25, -25, 0, -5);
+        ctx.quadraticCurveTo(-35, 15, -45, -10);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(45, -30);
+        ctx.quadraticCurveTo(25, -25, 0, -5);
+        ctx.quadraticCurveTo(35, 15, 45, -10);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#3e2723';
+        ctx.beginPath();
+        ctx.moveTo(-45, -30); ctx.lineTo(-55, -60); ctx.lineTo(-20, -27); ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(45, -30); ctx.lineTo(55, -60); ctx.lineTo(20, -27); ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-18, -10, 5, 0, Math.PI*2);
+        ctx.arc(18, -10, 5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, 25, 6, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("灰狼")) {
+        ctx.fillStyle = '#78909c';
+        ctx.beginPath();
+        ctx.moveTo(0, 40);
+        ctx.lineTo(-45, -20);
+        ctx.lineTo(-30, -45);
+        ctx.lineTo(0, -25);
+        ctx.lineTo(30, -45);
+        ctx.lineTo(45, -20);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#37474f';
+        ctx.beginPath();
+        ctx.moveTo(-35, -25); ctx.lineTo(-45, -65); ctx.lineTo(-15, -30); ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(35, -25); ctx.lineTo(55, -65); ctx.lineTo(15, -30); ctx.fill();
+
+        ctx.fillStyle = '#ffd54f';
+        ctx.beginPath();
+        ctx.ellipse(-16, -10, 8, 4, Math.PI/6, 0, Math.PI*2);
+        ctx.ellipse(16, -10, 8, 4, -Math.PI/6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-16, -10, 3, 0, Math.PI*2);
+        ctx.arc(16, -10, 3, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.roundRect(-8, 28, 16, 12, 4);
+        ctx.fill();
+    }
+    else if (animalName.includes("棕熊")) {
+        ctx.fillStyle = '#5d4037';
+        ctx.beginPath();
+        ctx.roundRect(-50, -30, 100, 75, 25);
+        ctx.fill();
+
+        ctx.fillStyle = '#3e2723';
+        ctx.beginPath();
+        ctx.arc(-42, -32, 16, 0, Math.PI*2);
+        ctx.arc(42, -32, 16, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#ff8a80';
+        ctx.beginPath();
+        ctx.arc(-42, -32, 8, 0, Math.PI*2);
+        ctx.arc(42, -32, 8, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#d7ccc8';
+        ctx.beginPath();
+        ctx.ellipse(0, 18, 24, 16, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(0, 10, 6, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-18, -2, 5, 0, Math.PI*2);
+        ctx.arc(18, -2, 5, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("大象")) {
+        ctx.fillStyle = '#b0bec5';
+        ctx.beginPath();
+        ctx.roundRect(-45, -30, 90, 70, 20);
+        ctx.fill();
+
+        ctx.fillStyle = '#90a4ae';
+        ctx.beginPath();
+        ctx.ellipse(-55, -10, 25, 35, Math.PI/12, 0, Math.PI*2);
+        ctx.ellipse(55, -10, 25, 35, -Math.PI/12, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#78909c';
+        ctx.beginPath();
+        ctx.roundRect(-10, 10, 20, 50, 10);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-20, -5, 5, 0, Math.PI*2);
+        ctx.arc(20, -5, 5, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("靈猴")) {
+        ctx.fillStyle = '#5d4037';
+        ctx.beginPath();
+        ctx.arc(0, 0, 48, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#d7ccc8';
+        ctx.beginPath();
+        ctx.ellipse(-16, -8, 20, 20, 0, 0, Math.PI*2);
+        ctx.ellipse(16, -8, 20, 20, 0, 0, Math.PI*2);
+        ctx.ellipse(0, 12, 28, 22, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#5d4037';
+        ctx.beginPath();
+        ctx.arc(-52, 0, 14, 0, Math.PI*2);
+        ctx.arc(52, 0, 14, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#ff8a80';
+        ctx.beginPath();
+        ctx.arc(-52, 0, 7, 0, Math.PI*2);
+        ctx.arc(52, 0, 7, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-15, -8, 6, 0, Math.PI*2);
+        ctx.arc(15, -8, 6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.strokeStyle = '#212121';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(0, 12, 10, 0, Math.PI, false);
+        ctx.stroke();
+    }
+    else if (animalName.includes("蒼鷹")) {
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(0, -10, 45, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#4e342e';
+        ctx.beginPath();
+        ctx.moveTo(-45, -10);
+        ctx.lineTo(-5, -55);
+        ctx.lineTo(45, -10);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#ffca28';
+        ctx.beginPath();
+        ctx.moveTo(-12, -2);
+        ctx.quadraticCurveTo(0, 10, 0, 32);
+        ctx.quadraticCurveTo(8, 10, 12, -2);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-18, -12, 6, 0, Math.PI*2);
+        ctx.arc(18, -12, 6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(-16, -14, 2, 0, Math.PI*2);
+        ctx.arc(20, -14, 2, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("猛虎")) {
+        ctx.fillStyle = '#ff9800';
+        ctx.beginPath();
+        ctx.roundRect(-48, -25, 96, 70, 20);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.ellipse(-16, 18, 22, 14, 0, 0, Math.PI*2);
+        ctx.ellipse(16, 18, 22, 14, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.fillRect(-4, -25, 8, 14);
+        ctx.fillRect(-15, -25, 4, 10);
+        ctx.fillRect(11, -25, 4, 10);
+        ctx.fillRect(-48, -2, 14, 4);
+        ctx.fillRect(-48, 8, 10, 4);
+        ctx.fillRect(34, -2, 14, 4);
+        ctx.fillRect(38, 8, 10, 4);
+
+        ctx.beginPath();
+        ctx.arc(-20, -2, 6, 0, Math.PI*2);
+        ctx.arc(20, -2, 6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, 12, 5, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("綿羊")) {
+        ctx.fillStyle = '#ffffff';
+        const pts = [[-35,-20], [0,-35], [35,-20], [35,15], [0,25], [-35,15], [-20,-5], [20,-5]];
+        pts.forEach(p => {
             ctx.beginPath();
-            ctx.arc(w/2, h/2, 110, 0, Math.PI * 2);
+            ctx.arc(p[0], p[1], 28, 0, Math.PI*2);
+            ctx.fill();
+        });
+
+        ctx.fillStyle = '#cfd8dc';
+        ctx.beginPath();
+        ctx.roundRect(-24, -10, 48, 42, 15);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-10, 2, 4, 0, Math.PI*2);
+        ctx.arc(10, 2, 4, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#b0bec5';
+        ctx.beginPath();
+        ctx.ellipse(-26, 0, 8, 18, Math.PI/4, 0, Math.PI*2);
+        ctx.ellipse(26, 0, 8, 18, -Math.PI/4, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("松鼠")) {
+        ctx.fillStyle = '#e65100';
+        ctx.beginPath();
+        ctx.ellipse(45, -15, 30, 45, Math.PI/6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#ffb74d';
+        ctx.beginPath();
+        ctx.ellipse(45, -15, 18, 30, Math.PI/6, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff7043';
+        ctx.beginPath();
+        ctx.roundRect(-42, -25, 84, 65, 18);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.ellipse(-15, 15, 16, 12, 0, 0, Math.PI*2);
+        ctx.ellipse(15, 15, 16, 12, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillRect(-6, 16, 5, 10);
+        ctx.fillRect(1, 16, 5, 10);
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-16, -2, 6, 0, Math.PI*2);
+        ctx.arc(16, -2, 6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, 8, 4, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("海豚")) {
+        ctx.fillStyle = '#4fc3f7';
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 60, 35, -Math.PI/12, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(-45, 10);
+        ctx.quadraticCurveTo(-75, 45, -65, 55);
+        ctx.quadraticCurveTo(-50, 45, -35, 18);
+        ctx.fill();
+
+        ctx.fillStyle = '#e1f5fe';
+        ctx.beginPath();
+        ctx.ellipse(-5, 12, 45, 20, -Math.PI/12, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-24, -8, 5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.strokeStyle = '#212121';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(-26, 2, 8, 0, Math.PI/2, false);
+        ctx.stroke();
+    }
+    else if (animalName.includes("貓頭鷹")) {
+        ctx.fillStyle = '#795548';
+        ctx.beginPath();
+        ctx.roundRect(-42, -35, 84, 80, 20);
+        ctx.fill();
+
+        ctx.fillStyle = '#d7ccc8';
+        ctx.beginPath();
+        ctx.roundRect(-30, 5, 60, 30, [0, 0, 15, 15]);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffeb3b';
+        ctx.beginPath();
+        ctx.arc(-18, -12, 16, 0, Math.PI*2);
+        ctx.arc(18, -12, 16, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-18, -12, 8, 0, Math.PI*2);
+        ctx.arc(18, -12, 8, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff9800';
+        ctx.beginPath();
+        ctx.moveTo(-6, -8); ctx.lineTo(0, 4); ctx.lineTo(6, -8); ctx.closePath();
+        ctx.fill();
+    }
+    else if (animalName.includes("野馬")) {
+        ctx.fillStyle = '#8d6e63';
+        ctx.beginPath();
+        ctx.roundRect(-35, -30, 70, 75, [18, 18, 5, 5]);
+        ctx.fill();
+
+        ctx.fillStyle = '#4e342e'; 
+        ctx.beginPath();
+        ctx.moveTo(-35, -28);
+        ctx.quadraticCurveTo(-65, -5, -55, 35);
+        ctx.lineTo(-33, 20);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#5d4037';
+        ctx.beginPath();
+        ctx.roundRect(-35, 20, 70, 25, 8);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-14, -8, 5, 0, Math.PI*2);
+        ctx.arc(14, -8, 5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(-10, 32, 3, 0, Math.PI*2);
+        ctx.arc(10, 32, 3, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("無尾熊")) {
+        ctx.fillStyle = '#b0bec5';
+        ctx.beginPath();
+        ctx.roundRect(-44, -22, 88, 62, 22);
+        ctx.fill();
+
+        ctx.fillStyle = '#90a4ae';
+        ctx.beginPath();
+        ctx.arc(-46, -24, 20, 0, Math.PI*2);
+        ctx.arc(46, -24, 20, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(-46, -24, 12, 0, Math.PI*2);
+        ctx.arc(46, -24, 12, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#37474f';
+        ctx.beginPath();
+        ctx.roundRect(-12, -4, 24, 32, 10);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-18, -6, 5, 0, Math.PI*2);
+        ctx.arc(18, -6, 5, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("梅花鹿")) {
+        ctx.fillStyle = '#ffb74d';
+        ctx.beginPath();
+        ctx.roundRect(-40, -20, 80, 65, [22, 22, 12, 12]);
+        ctx.fill();
+
+        ctx.strokeStyle = '#5d4037';
+        ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(-25, -18); ctx.lineTo(-45, -52); ctx.moveTo(-35, -35); ctx.lineTo(-52, -38);
+        ctx.moveTo(25, -18); ctx.lineTo(45, -52); ctx.moveTo(35, -35); ctx.lineTo(52, -38);
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(-15, -8, 3, 0, Math.PI*2);
+        ctx.arc(15, -8, 3, 0, Math.PI*2);
+        ctx.arc(0, -12, 2.5, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-16, 5, 5, 0, Math.PI*2);
+        ctx.arc(16, 5, 5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(0, 18, 6, 4, 0, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("長頸鹿")) {
+        ctx.fillStyle = '#ffd54f';
+        ctx.beginPath();
+        ctx.roundRect(-30, 0, 60, 50, 10);
+        ctx.roundRect(-14, 15, 28, 55, 6); 
+        ctx.fill();
+
+        ctx.fillStyle = '#ffb300'; 
+        ctx.beginPath();
+        ctx.arc(-14, 12, 6, 0, Math.PI*2);
+        ctx.arc(14, 15, 5, 0, Math.PI*2);
+        ctx.arc(0, 36, 7, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#ffb300';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(-15, 2); ctx.lineTo(-25, -18);
+        ctx.moveTo(15, 2); ctx.lineTo(25, -18);
+        ctx.stroke();
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-25, -18, 4, 0, Math.PI*2);
+        ctx.arc(25, -18, 4, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(-12, 12, 4, 0, Math.PI*2);
+        ctx.arc(12, 12, 4, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("企鵝")) {
+        ctx.fillStyle = '#263238';
+        ctx.beginPath();
+        ctx.roundRect(-42, -30, 84, 75, 25);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.ellipse(0, 8, 34, 30, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff9800'; 
+        ctx.beginPath();
+        ctx.moveTo(-10, -4); ctx.lineTo(0, 8); ctx.lineTo(10, -4); ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-14, -10, 5, 0, Math.PI*2);
+        ctx.arc(14, -10, 5, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffd54f'; 
+        ctx.beginPath();
+        ctx.moveTo(-12, 22); ctx.lineTo(12, 30); ctx.lineTo(12, 22); ctx.lineTo(-12, 30); ctx.closePath();
+        ctx.fill();
+    }
+    else if (animalName.includes("天鵝")) {
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.ellipse(20, 20, 42, 20, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.roundRect(-15, -45, 16, 65, 8);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(-7, -45, 12, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff9800'; 
+        ctx.beginPath();
+        ctx.moveTo(-19, -48); ctx.lineTo(-32, -43); ctx.lineTo(-19, -40); ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-11, -48, 2.5, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#4fc3f7';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(0, 36, 60, 0, Math.PI, false);
+        ctx.stroke();
+    }
+    else if (animalName.includes("乳牛")) {
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.roundRect(-42, -25, 84, 65, 20);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121'; 
+        ctx.beginPath();
+        ctx.ellipse(-26, -14, 15, 10, Math.PI/4, 0, Math.PI*2);
+        ctx.ellipse(18, 12, 14, 18, -Math.PI/6, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff8a80'; 
+        ctx.beginPath();
+        ctx.roundRect(-24, 12, 48, 24, 10);
+        ctx.fill();
+        ctx.fillStyle = '#d81b60';
+        ctx.beginPath();
+        ctx.arc(-8, 24, 3, 0, Math.PI*2);
+        ctx.arc(8, 24, 3, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-16, -2, 5, 0, Math.PI*2);
+        ctx.arc(16, -2, 5, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("刺蝟")) {
+        ctx.strokeStyle = '#4e342e';
+        ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
+        for (let a = -Math.PI; a < 0; a += 0.25) {
+            const rInner = 35, rOuter = 58;
+            ctx.beginPath();
+            ctx.moveTo(rInner*Math.cos(a), rInner*Math.sin(a));
+            ctx.lineTo(rOuter*Math.cos(a), rOuter*Math.sin(a));
             ctx.stroke();
-
-            ctx.save();
-            ctx.translate(w/2, h/2);
-
-            // 定義常用色調
-            const primaryColor = isDark ? '#00ffcc' : '#51b055';
-            const secondaryColor = '#ec407a';
-            const accentColor = '#ffd740';
-
-            // 依據 30 種動物進行 100% 完全客製化的 2D 平面插畫
-            if (animalName.includes("水豚")) {
-                ctx.fillStyle = '#8d6e63'; 
-                ctx.beginPath();
-                ctx.roundRect(-50, -30, 100, 75, [25, 25, 15, 15]);
-                ctx.fill();
-
-                ctx.fillStyle = '#5d4037';
-                ctx.beginPath();
-                ctx.arc(-45, -30, 10, 0, Math.PI, true);
-                ctx.arc(45, -30, 10, 0, Math.PI, true);
-                ctx.fill();
-
-                ctx.strokeStyle = '#3e2723';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.moveTo(-30, -5); ctx.lineTo(-15, -5);
-                ctx.moveTo(15, -5); ctx.lineTo(30, -5);
-                ctx.stroke();
-
-                ctx.fillStyle = '#3e2723';
-                ctx.beginPath();
-                ctx.roundRect(-12, 10, 24, 15, 6);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff9800';
-                ctx.beginPath();
-                ctx.arc(0, -42, 12, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = '#4caf50'; 
-                ctx.beginPath();
-                ctx.ellipse(3, -54, 4, 8, Math.PI/4, 0, Math.PI*2);
-                ctx.fill();
-            } 
-            else if (animalName.includes("家貓")) {
-                ctx.fillStyle = '#cfd8dc';
-                ctx.beginPath();
-                ctx.roundRect(-45, -25, 90, 65, 20);
-                ctx.fill();
-
-                ctx.fillStyle = '#90a4ae';
-                ctx.beginPath();
-                ctx.moveTo(-40, -20); ctx.lineTo(-50, -55); ctx.lineTo(-15, -20);
-                ctx.moveTo(40, -20); ctx.lineTo(50, -55); ctx.lineTo(15, -20);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff8a80';
-                ctx.beginPath();
-                ctx.moveTo(-35, -20); ctx.lineTo(-42, -45); ctx.lineTo(-22, -20);
-                ctx.moveTo(35, -20); ctx.lineTo(42, -45); ctx.lineTo(22, -20);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffd54f';
-                ctx.beginPath();
-                ctx.ellipse(-20, -5, 12, 6, Math.PI/12, 0, Math.PI*2);
-                ctx.ellipse(20, -5, 12, 6, -Math.PI/12, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#263238'; 
-                ctx.beginPath();
-                ctx.ellipse(-20, -5, 3, 6, 0, 0, Math.PI*2);
-                ctx.ellipse(20, -5, 3, 6, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.strokeStyle = '#90a4ae';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(-45, 10); ctx.lineTo(-70, 8);
-                ctx.moveTo(-45, 15); ctx.lineTo(-68, 20);
-                ctx.moveTo(45, 10); ctx.lineTo(70, 8);
-                ctx.moveTo(45, 15); ctx.lineTo(68, 20);
-                ctx.stroke();
-            }
-            else if (animalName.includes("黃金獵犬")) {
-                ctx.fillStyle = '#ffe082'; 
-                ctx.beginPath();
-                ctx.roundRect(-45, -25, 90, 65, 22);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffb300';
-                ctx.beginPath();
-                ctx.roundRect(-58, -25, 18, 55, 9);
-                ctx.roundRect(40, -25, 18, 55, 9);
-                ctx.fill();
-
-                ctx.fillStyle = '#3e2723';
-                ctx.beginPath();
-                ctx.arc(-20, -5, 6, 0, Math.PI * 2);
-                ctx.arc(20, -5, 6, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.roundRect(-10, 8, 20, 12, 5);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff8a80';
-                ctx.beginPath();
-                ctx.roundRect(-8, 18, 16, 18, [0, 0, 8, 8]);
-                ctx.fill();
-            }
-            else if (animalName.includes("白兔")) {
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.roundRect(-40, -20, 80, 60, 25);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.roundRect(-30, -75, 18, 60, 9);
-                ctx.roundRect(12, -75, 18, 60, 9);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff8a80'; 
-                ctx.beginPath();
-                ctx.roundRect(-26, -70, 10, 50, 5);
-                ctx.roundRect(16, -70, 10, 50, 5);
-                ctx.fill();
-
-                ctx.fillStyle = 'rgba(236, 64, 121, 0.4)';
-                ctx.beginPath();
-                ctx.arc(-26, 15, 8, 0, Math.PI * 2);
-                ctx.arc(26, 15, 8, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.fillStyle = '#d32f2f';
-                ctx.beginPath();
-                ctx.arc(-16, -2, 5, 0, Math.PI * 2);
-                ctx.arc(16, -2, 5, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            else if (animalName.includes("雄獅")) {
-                ctx.fillStyle = '#ff7043'; 
-                ctx.beginPath();
-                ctx.arc(0, 0, 65, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffe082';
-                ctx.beginPath();
-                ctx.roundRect(-35, -25, 70, 55, 18);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-16, -5, 6, 0, Math.PI*2);
-                ctx.arc(16, -5, 6, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.strokeStyle = '#d84315';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.moveTo(0, -22); ctx.lineTo(0, -12);
-                ctx.moveTo(-8, -17); ctx.lineTo(8, -17);
-                ctx.stroke();
-            }
-            else if (animalName.includes("紅狐")) {
-                ctx.fillStyle = '#ff5722';
-                ctx.beginPath();
-                ctx.moveTo(0, 30);
-                ctx.quadraticCurveTo(-55, -15, -45, -30);
-                ctx.quadraticCurveTo(0, -20, 45, -30);
-                ctx.quadraticCurveTo(55, -15, 0, 30);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.moveTo(-45, -30);
-                ctx.quadraticCurveTo(-25, -25, 0, -5);
-                ctx.quadraticCurveTo(-35, 15, -45, -10);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.moveTo(45, -30);
-                ctx.quadraticCurveTo(25, -25, 0, -5);
-                ctx.quadraticCurveTo(35, 15, 45, -10);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#3e2723';
-                ctx.beginPath();
-                ctx.moveTo(-45, -30); ctx.lineTo(-55, -60); ctx.lineTo(-20, -27); ctx.fill();
-                ctx.beginPath();
-                ctx.moveTo(45, -30); ctx.lineTo(55, -60); ctx.lineTo(20, -27); ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-18, -10, 5, 0, Math.PI*2);
-                ctx.arc(18, -10, 5, 0, Math.PI*2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(0, 25, 6, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("灰狼")) {
-                ctx.fillStyle = '#78909c';
-                ctx.beginPath();
-                ctx.moveTo(0, 40);
-                ctx.lineTo(-45, -20);
-                ctx.lineTo(-30, -45);
-                ctx.lineTo(0, -25);
-                ctx.lineTo(30, -45);
-                ctx.lineTo(45, -20);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#37474f';
-                ctx.beginPath();
-                ctx.moveTo(-35, -25); ctx.lineTo(-45, -65); ctx.lineTo(-15, -30); ctx.fill();
-                ctx.beginPath();
-                ctx.moveTo(35, -25); ctx.lineTo(55, -65); ctx.lineTo(15, -30); ctx.fill();
-
-                ctx.fillStyle = '#ffd54f';
-                ctx.beginPath();
-                ctx.ellipse(-16, -10, 8, 4, Math.PI/6, 0, Math.PI*2);
-                ctx.ellipse(16, -10, 8, 4, -Math.PI/6, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-16, -10, 3, 0, Math.PI*2);
-                ctx.arc(16, -10, 3, 0, Math.PI*2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.roundRect(-8, 28, 16, 12, 4);
-                ctx.fill();
-            }
-            else if (animalName.includes("棕熊")) {
-                ctx.fillStyle = '#5d4037';
-                ctx.beginPath();
-                ctx.roundRect(-50, -30, 100, 75, 25);
-                ctx.fill();
-
-                ctx.fillStyle = '#3e2723';
-                ctx.beginPath();
-                ctx.arc(-42, -32, 16, 0, Math.PI*2);
-                ctx.arc(42, -32, 16, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#ff8a80';
-                ctx.beginPath();
-                ctx.arc(-42, -32, 8, 0, Math.PI*2);
-                ctx.arc(42, -32, 8, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#d7ccc8';
-                ctx.beginPath();
-                ctx.ellipse(0, 18, 24, 16, 0, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(0, 10, 6, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-18, -2, 5, 0, Math.PI*2);
-                ctx.arc(18, -2, 5, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("大象")) {
-                ctx.fillStyle = '#b0bec5';
-                ctx.beginPath();
-                ctx.roundRect(-45, -30, 90, 70, 20);
-                ctx.fill();
-
-                ctx.fillStyle = '#90a4ae';
-                ctx.beginPath();
-                ctx.ellipse(-55, -10, 25, 35, Math.PI/12, 0, Math.PI*2);
-                ctx.ellipse(55, -10, 25, 35, -Math.PI/12, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#78909c';
-                ctx.beginPath();
-                ctx.roundRect(-10, 10, 20, 50, 10);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-20, -5, 5, 0, Math.PI*2);
-                ctx.arc(20, -5, 5, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("靈猴")) {
-                ctx.fillStyle = '#5d4037';
-                ctx.beginPath();
-                ctx.arc(0, 0, 48, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#d7ccc8';
-                ctx.beginPath();
-                ctx.ellipse(-16, -8, 20, 20, 0, 0, Math.PI*2);
-                ctx.ellipse(16, -8, 20, 20, 0, 0, Math.PI*2);
-                ctx.ellipse(0, 12, 28, 22, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#5d4037';
-                ctx.beginPath();
-                ctx.arc(-52, 0, 14, 0, Math.PI*2);
-                ctx.arc(52, 0, 14, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#ff8a80';
-                ctx.beginPath();
-                ctx.arc(-52, 0, 7, 0, Math.PI*2);
-                ctx.arc(52, 0, 7, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-15, -8, 6, 0, Math.PI*2);
-                ctx.arc(15, -8, 6, 0, Math.PI*2);
-                ctx.fill();
-                ctx.strokeStyle = '#212121';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.arc(0, 12, 10, 0, Math.PI, false);
-                ctx.stroke();
-            }
-            else if (animalName.includes("蒼鷹")) {
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(0, -10, 45, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#4e342e';
-                ctx.beginPath();
-                ctx.moveTo(-45, -10);
-                ctx.lineTo(-5, -55);
-                ctx.lineTo(45, -10);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#ffca28';
-                ctx.beginPath();
-                ctx.moveTo(-12, -2);
-                ctx.quadraticCurveTo(0, 10, 0, 32);
-                ctx.quadraticCurveTo(8, 10, 12, -2);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-18, -12, 6, 0, Math.PI*2);
-                ctx.arc(18, -12, 6, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(-16, -14, 2, 0, Math.PI*2);
-                ctx.arc(20, -14, 2, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("猛虎")) {
-                ctx.fillStyle = '#ff9800';
-                ctx.beginPath();
-                ctx.roundRect(-48, -25, 96, 70, 20);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.ellipse(-16, 18, 22, 14, 0, 0, Math.PI*2);
-                ctx.ellipse(16, 18, 22, 14, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.fillRect(-4, -25, 8, 14);
-                ctx.fillRect(-15, -25, 4, 10);
-                ctx.fillRect(11, -25, 4, 10);
-                ctx.fillRect(-48, -2, 14, 4);
-                ctx.fillRect(-48, 8, 10, 4);
-                ctx.fillRect(34, -2, 14, 4);
-                ctx.fillRect(38, 8, 10, 4);
-
-                ctx.beginPath();
-                ctx.arc(-20, -2, 6, 0, Math.PI*2);
-                ctx.arc(20, -2, 6, 0, Math.PI*2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(0, 12, 5, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("綿羊")) {
-                ctx.fillStyle = '#ffffff';
-                const pts = [[-35,-20], [0,-35], [35,-20], [35,15], [0,25], [-35,15], [-20,-5], [20,-5]];
-                pts.forEach(p => {
-                    ctx.beginPath();
-                    ctx.arc(p[0], p[1], 28, 0, Math.PI*2);
-                    ctx.fill();
-                });
-
-                ctx.fillStyle = '#cfd8dc';
-                ctx.beginPath();
-                ctx.roundRect(-24, -10, 48, 42, 15);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-10, 2, 4, 0, Math.PI*2);
-                ctx.arc(10, 2, 4, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#b0bec5';
-                ctx.beginPath();
-                ctx.ellipse(-26, 0, 8, 18, Math.PI/4, 0, Math.PI*2);
-                ctx.ellipse(26, 0, 8, 18, -Math.PI/4, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("松鼠")) {
-                ctx.fillStyle = '#e65100';
-                ctx.beginPath();
-                ctx.ellipse(45, -15, 30, 45, Math.PI/6, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#ffb74d';
-                ctx.beginPath();
-                ctx.ellipse(45, -15, 18, 30, Math.PI/6, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff7043';
-                ctx.beginPath();
-                ctx.roundRect(-42, -25, 84, 65, 18);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.ellipse(-15, 15, 16, 12, 0, 0, Math.PI*2);
-                ctx.ellipse(15, 15, 16, 12, 0, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillRect(-6, 16, 5, 10);
-                ctx.fillRect(1, 16, 5, 10);
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-16, -2, 6, 0, Math.PI*2);
-                ctx.arc(16, -2, 6, 0, Math.PI*2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(0, 8, 4, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("海豚")) {
-                ctx.fillStyle = '#4fc3f7';
-                ctx.beginPath();
-                ctx.ellipse(0, 0, 60, 35, -Math.PI/12, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.moveTo(-45, 10);
-                ctx.quadraticCurveTo(-75, 45, -65, 55);
-                ctx.quadraticCurveTo(-50, 45, -35, 18);
-                ctx.fill();
-
-                ctx.fillStyle = '#e1f5fe';
-                ctx.beginPath();
-                ctx.ellipse(-5, 12, 45, 20, -Math.PI/12, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-24, -8, 5, 0, Math.PI*2);
-                ctx.fill();
-                ctx.strokeStyle = '#212121';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.arc(-26, 2, 8, 0, Math.PI/2, false);
-                ctx.stroke();
-            }
-            else if (animalName.includes("貓頭鷹")) {
-                ctx.fillStyle = '#795548';
-                ctx.beginPath();
-                ctx.roundRect(-42, -35, 84, 80, 20);
-                ctx.fill();
-
-                ctx.fillStyle = '#d7ccc8';
-                ctx.beginPath();
-                ctx.roundRect(-30, 5, 60, 30, [0, 0, 15, 15]);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffeb3b';
-                ctx.beginPath();
-                ctx.arc(-18, -12, 16, 0, Math.PI*2);
-                ctx.arc(18, -12, 16, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-18, -12, 8, 0, Math.PI*2);
-                ctx.arc(18, -12, 8, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff9800';
-                ctx.beginPath();
-                ctx.moveTo(-6, -8); ctx.lineTo(0, 4); ctx.lineTo(6, -8); ctx.closePath();
-                ctx.fill();
-            }
-            else if (animalName.includes("野馬")) {
-                ctx.fillStyle = '#8d6e63';
-                ctx.beginPath();
-                ctx.roundRect(-35, -30, 70, 75, [18, 18, 5, 5]);
-                ctx.fill();
-
-                ctx.fillStyle = '#4e342e'; 
-                ctx.beginPath();
-                ctx.moveTo(-35, -28);
-                ctx.quadraticCurveTo(-65, -5, -55, 35);
-                ctx.lineTo(-33, 20);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#5d4037';
-                ctx.beginPath();
-                ctx.roundRect(-35, 20, 70, 25, 8);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-14, -8, 5, 0, Math.PI*2);
-                ctx.arc(14, -8, 5, 0, Math.PI*2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(-10, 32, 3, 0, Math.PI*2);
-                ctx.arc(10, 32, 3, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("無尾熊")) {
-                ctx.fillStyle = '#b0bec5';
-                ctx.beginPath();
-                ctx.roundRect(-44, -22, 88, 62, 22);
-                ctx.fill();
-
-                ctx.fillStyle = '#90a4ae';
-                ctx.beginPath();
-                ctx.arc(-46, -24, 20, 0, Math.PI*2);
-                ctx.arc(46, -24, 20, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(-46, -24, 12, 0, Math.PI*2);
-                ctx.arc(46, -24, 12, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#37474f';
-                ctx.beginPath();
-                ctx.roundRect(-12, -4, 24, 32, 10);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-18, -6, 5, 0, Math.PI*2);
-                ctx.arc(18, -6, 5, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("梅花鹿")) {
-                ctx.fillStyle = '#ffb74d';
-                ctx.beginPath();
-                ctx.roundRect(-40, -20, 80, 65, [22, 22, 12, 12]);
-                ctx.fill();
-
-                ctx.strokeStyle = '#5d4037';
-                ctx.lineWidth = 4;
-                ctx.lineCap = 'round';
-                ctx.beginPath();
-                ctx.moveTo(-25, -18); ctx.lineTo(-45, -52); ctx.moveTo(-35, -35); ctx.lineTo(-52, -38);
-                ctx.moveTo(25, -18); ctx.lineTo(45, -52); ctx.moveTo(35, -35); ctx.lineTo(52, -38);
-                ctx.stroke();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(-15, -8, 3, 0, Math.PI*2);
-                ctx.arc(15, -8, 3, 0, Math.PI*2);
-                ctx.arc(0, -12, 2.5, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-16, 5, 5, 0, Math.PI*2);
-                ctx.arc(16, 5, 5, 0, Math.PI*2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.ellipse(0, 18, 6, 4, 0, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("長頸鹿")) {
-                ctx.fillStyle = '#ffd54f';
-                ctx.beginPath();
-                ctx.roundRect(-30, 0, 60, 50, 10);
-                ctx.roundRect(-14, 15, 28, 55, 6); 
-                ctx.fill();
-
-                ctx.fillStyle = '#ffb300'; 
-                ctx.beginPath();
-                ctx.arc(-14, 12, 6, 0, Math.PI*2);
-                ctx.arc(14, 15, 5, 0, Math.PI*2);
-                ctx.arc(0, 36, 7, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.strokeStyle = '#ffb300';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.moveTo(-15, 2); ctx.lineTo(-25, -18);
-                ctx.moveTo(15, 2); ctx.lineTo(25, -18);
-                ctx.stroke();
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-25, -18, 4, 0, Math.PI*2);
-                ctx.arc(25, -18, 4, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(-12, 12, 4, 0, Math.PI*2);
-                ctx.arc(12, 12, 4, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("企鵝")) {
-                ctx.fillStyle = '#263238';
-                ctx.beginPath();
-                ctx.roundRect(-42, -30, 84, 75, 25);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.ellipse(0, 8, 34, 30, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff9800'; 
-                ctx.beginPath();
-                ctx.moveTo(-10, -4); ctx.lineTo(0, 8); ctx.lineTo(10, -4); ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-14, -10, 5, 0, Math.PI*2);
-                ctx.arc(14, -10, 5, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffd54f'; 
-                ctx.beginPath();
-                ctx.moveTo(-12, 22); ctx.lineTo(12, 30); ctx.lineTo(12, 22); ctx.lineTo(-12, 30); ctx.closePath();
-                ctx.fill();
-            }
-            else if (animalName.includes("天鵝")) {
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.ellipse(20, 20, 42, 20, 0, 0, Math.PI*2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.roundRect(-15, -45, 16, 65, 8);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(-7, -45, 12, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff9800'; 
-                ctx.beginPath();
-                ctx.moveTo(-19, -48); ctx.lineTo(-32, -43); ctx.lineTo(-19, -40); ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-11, -48, 2.5, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.strokeStyle = '#4fc3f7';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.arc(0, 36, 60, 0, Math.PI, false);
-                ctx.stroke();
-            }
-            else if (animalName.includes("乳牛")) {
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.roundRect(-42, -25, 84, 65, 20);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121'; 
-                ctx.beginPath();
-                ctx.ellipse(-26, -14, 15, 10, Math.PI/4, 0, Math.PI*2);
-                ctx.ellipse(18, 12, 14, 18, -Math.PI/6, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff8a80'; 
-                ctx.beginPath();
-                ctx.roundRect(-24, 12, 48, 24, 10);
-                ctx.fill();
-                ctx.fillStyle = '#d81b60';
-                ctx.beginPath();
-                ctx.arc(-8, 24, 3, 0, Math.PI*2);
-                ctx.arc(8, 24, 3, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-16, -2, 5, 0, Math.PI*2);
-                ctx.arc(16, -2, 5, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("刺蝟")) {
-                ctx.strokeStyle = '#4e342e';
-                ctx.lineWidth = 4;
-                ctx.lineCap = 'round';
-                for (let a = -Math.PI; a < 0; a += 0.25) {
-                    const rInner = 35, rOuter = 58;
-                    ctx.beginPath();
-                    ctx.moveTo(rInner*Math.cos(a), rInner*Math.sin(a));
-                    ctx.lineTo(rOuter*Math.cos(a), rOuter*Math.sin(a));
-                    ctx.stroke();
-                }
-
-                ctx.fillStyle = '#ffe0b2';
-                ctx.beginPath();
-                ctx.ellipse(0, 10, 42, 28, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-20, 10, 4, 0, Math.PI*2);
-                ctx.arc(20, 10, 4, 0, Math.PI*2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(0, 24, 5, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("幾何斑馬")) {
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.roundRect(-38, -25, 76, 70, 18);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121'; 
-                ctx.fillRect(-38, -12, 22, 5);
-                ctx.fillRect(-38, 8, 18, 5);
-                ctx.fillRect(16, -12, 22, 5);
-                ctx.fillRect(20, 8, 18, 5);
-                ctx.fillRect(-10, -25, 20, 8);
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-14, -2, 5, 0, Math.PI*2);
-                ctx.arc(14, -2, 5, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("藍鯨")) {
-                ctx.fillStyle = '#0288d1';
-                ctx.beginPath();
-                ctx.ellipse(0, 10, 62, 35, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#e1f5fe';
-                ctx.beginPath();
-                ctx.ellipse(0, 26, 42, 14, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#29b6f6'; 
-                ctx.fillRect(-2, -45, 4, 24);
-                ctx.beginPath();
-                ctx.arc(-10, -45, 6, 0, Math.PI*2);
-                ctx.arc(10, -45, 6, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.strokeStyle = '#ffffff';
-                ctx.lineWidth = 2.5;
-                ctx.beginPath();
-                ctx.moveTo(-35, 8); ctx.quadraticCurveTo(-25, 14, -15, 8);
-                ctx.stroke();
-            }
-            else if (animalName.includes("袋鼠")) {
-                ctx.fillStyle = '#a1887f';
-                ctx.beginPath();
-                ctx.roundRect(-32, -15, 64, 60, [15, 15, 5, 5]);
-                ctx.fill();
-
-                ctx.fillStyle = '#8d6e63'; 
-                ctx.beginPath();
-                ctx.roundRect(-24, -62, 14, 52, 6);
-                ctx.roundRect(10, -62, 14, 52, 6);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-12, 2, 5, 0, Math.PI*2);
-                ctx.arc(12, 2, 5, 0, Math.PI*2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.ellipse(0, 32, 10, 6, 0, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("河狸")) {
-                ctx.fillStyle = '#5d4037';
-                ctx.beginPath();
-                ctx.roundRect(-45, -25, 90, 65, 22);
-                ctx.fill();
-
-                ctx.fillStyle = '#ff9800'; 
-                ctx.fillRect(-10, 18, 9, 14);
-                ctx.fillRect(1, 18, 9, 14);
-
-                ctx.fillStyle = '#d7ccc8';
-                ctx.beginPath();
-                ctx.ellipse(-18, 12, 14, 10, 0, 0, Math.PI*2);
-                ctx.ellipse(18, 12, 14, 10, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-18, -2, 6, 0, Math.PI*2);
-                ctx.arc(18, -2, 6, 0, Math.PI*2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(0, 10, 5, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("孔雀")) {
-                ctx.fillStyle = '#4caf50'; 
-                for (let a = -Math.PI; a < 0; a += 0.35) {
-                    ctx.beginPath();
-                    ctx.ellipse(75*Math.cos(a), 75*Math.sin(a), 12, 24, a + Math.PI/2, 0, Math.PI*2);
-                    ctx.fill();
-                }
-
-                ctx.fillStyle = '#0288d1';
-                ctx.beginPath();
-                ctx.ellipse(0, 12, 24, 34, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffca28';
-                ctx.beginPath();
-                ctx.moveTo(-6, 2); ctx.lineTo(0, 12); ctx.lineTo(6, 2); ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(-10, -4, 4, 0, Math.PI*2);
-                ctx.arc(10, -4, 4, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("倉鼠")) {
-                ctx.fillStyle = '#ffb74d';
-                ctx.beginPath();
-                ctx.roundRect(-42, -22, 84, 62, 22);
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff'; 
-                ctx.beginPath();
-                ctx.ellipse(0, 18, 24, 18, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#757575'; 
-                ctx.beginPath();
-                ctx.ellipse(0, 14, 8, 12, 0, 0, Math.PI*2);
-                ctx.fill();
-
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-18, -4, 5, 0, Math.PI*2);
-                ctx.arc(18, -4, 5, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#ff8a80'; 
-                ctx.beginPath();
-                ctx.arc(-26, 8, 6, 0, Math.PI*2);
-                ctx.arc(26, 8, 6, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else if (animalName.includes("變色龍")) {
-                ctx.fillStyle = '#4caf50';
-                ctx.beginPath();
-                ctx.roundRect(-42, -25, 84, 60, 18);
-                ctx.fill();
-
-                ctx.strokeStyle = '#4caf50';
-                ctx.lineWidth = 10;
-                ctx.lineCap = 'round';
-                ctx.beginPath();
-                ctx.arc(38, 22, 16, 0, Math.PI*1.5, false);
-                ctx.stroke();
-
-                ctx.fillStyle = '#ffeb3b'; 
-                ctx.beginPath();
-                ctx.arc(-16, -2, 14, 0, Math.PI*2);
-                ctx.fill();
-                ctx.fillStyle = '#212121';
-                ctx.beginPath();
-                ctx.arc(-16, -2, 5, 0, Math.PI*2);
-                ctx.fill();
-            }
-            else {
-                const grad = ctx.createLinearGradient(-40, -40, 40, 40);
-                grad.addColorStop(0, primaryColor);
-                grad.addColorStop(1, secondaryColor);
-                ctx.fillStyle = grad;
-
-                ctx.beginPath();
-                ctx.arc(0, -10, 45, 0, Math.PI, true);
-                ctx.lineTo(45, 20);
-                ctx.lineTo(-45, 20);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = accentColor;
-                ctx.beginPath();
-                ctx.moveTo(-15, -45); ctx.lineTo(0, -65); ctx.lineTo(15, -45);
-                ctx.closePath();
-                ctx.fill();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(-16, -10, 5, 0, Math.PI * 2);
-                ctx.arc(16, -10, 5, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            ctx.restore();
         }
 
+        ctx.fillStyle = '#ffe0b2';
+        ctx.beginPath();
+        ctx.ellipse(0, 10, 42, 28, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-20, 10, 4, 0, Math.PI*2);
+        ctx.arc(20, 10, 4, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, 24, 5, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("幾何斑馬")) {
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.roundRect(-38, -25, 76, 70, 18);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121'; 
+        ctx.fillRect(-38, -12, 22, 5);
+        ctx.fillRect(-38, 8, 18, 5);
+        ctx.fillRect(16, -12, 22, 5);
+        ctx.fillRect(20, 8, 18, 5);
+        ctx.fillRect(-10, -25, 20, 8);
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-14, -2, 5, 0, Math.PI*2);
+        ctx.arc(14, -2, 5, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("藍鯨")) {
+        ctx.fillStyle = '#0288d1';
+        ctx.beginPath();
+        ctx.ellipse(0, 10, 62, 35, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#e1f5fe';
+        ctx.beginPath();
+        ctx.ellipse(0, 26, 42, 14, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#29b6f6'; 
+        ctx.fillRect(-2, -45, 4, 24);
+        ctx.beginPath();
+        ctx.arc(-10, -45, 6, 0, Math.PI*2);
+        ctx.arc(10, -45, 6, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(-35, 8); ctx.quadraticCurveTo(-25, 14, -15, 8);
+        ctx.stroke();
+    }
+    else if (animalName.includes("袋鼠")) {
+        ctx.fillStyle = '#a1887f';
+        ctx.beginPath();
+        ctx.roundRect(-32, -15, 64, 60, [15, 15, 5, 5]);
+        ctx.fill();
+
+        ctx.fillStyle = '#8d6e63'; 
+        ctx.beginPath();
+        ctx.roundRect(-24, -62, 14, 52, 6);
+        ctx.roundRect(10, -62, 14, 52, 6);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-12, 2, 5, 0, Math.PI*2);
+        ctx.arc(12, 2, 5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(0, 32, 10, 6, 0, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("河狸")) {
+        ctx.fillStyle = '#5d4037';
+        ctx.beginPath();
+        ctx.roundRect(-45, -25, 90, 65, 22);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff9800'; 
+        ctx.fillRect(-10, 18, 9, 14);
+        ctx.fillRect(1, 18, 9, 14);
+
+        ctx.fillStyle = '#d7ccc8';
+        ctx.beginPath();
+        ctx.ellipse(-18, 12, 14, 10, 0, 0, Math.PI*2);
+        ctx.ellipse(18, 12, 14, 10, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-18, -2, 6, 0, Math.PI*2);
+        ctx.arc(18, -2, 6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, 10, 5, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("孔雀")) {
+        ctx.fillStyle = '#4caf50'; 
+        for (let a = -Math.PI; a < 0; a += 0.35) {
+            ctx.beginPath();
+            ctx.ellipse(75*Math.cos(a), 75*Math.sin(a), 12, 24, a + Math.PI/2, 0, Math.PI*2);
+            ctx.fill();
+        }
+
+        ctx.fillStyle = '#0288d1';
+        ctx.beginPath();
+        ctx.ellipse(0, 12, 24, 34, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffca28';
+        ctx.beginPath();
+        ctx.moveTo(-6, 2); ctx.lineTo(0, 12); ctx.lineTo(6, 2); ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(-10, -4, 4, 0, Math.PI*2);
+        ctx.arc(10, -4, 4, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("倉鼠")) {
+        ctx.fillStyle = '#ffb74d';
+        ctx.beginPath();
+        ctx.roundRect(-42, -22, 84, 62, 22);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff'; 
+        ctx.beginPath();
+        ctx.ellipse(0, 18, 24, 18, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#757575'; 
+        ctx.beginPath();
+        ctx.ellipse(0, 14, 8, 12, 0, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-18, -4, 5, 0, Math.PI*2);
+        ctx.arc(18, -4, 5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#ff8a80'; 
+        ctx.beginPath();
+        ctx.arc(-26, 8, 6, 0, Math.PI*2);
+        ctx.arc(26, 8, 6, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else if (animalName.includes("變色龍")) {
+        ctx.fillStyle = '#4caf50';
+        ctx.beginPath();
+        ctx.roundRect(-42, -25, 84, 60, 18);
+        ctx.fill();
+
+        ctx.strokeStyle = '#4caf50';
+        ctx.lineWidth = 10;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.arc(38, 22, 16, 0, Math.PI*1.5, false);
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffeb3b'; 
+        ctx.beginPath();
+        ctx.arc(-16, -2, 14, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#212121';
+        ctx.beginPath();
+        ctx.arc(-16, -2, 5, 0, Math.PI*2);
+        ctx.fill();
+    }
+    else {
+        const grad = ctx.createLinearGradient(-40, -40, 40, 40);
+        grad.addColorStop(0, primaryColor);
+        grad.addColorStop(1, secondaryColor);
+        ctx.fillStyle = grad;
+
+        ctx.beginPath();
+        ctx.arc(0, -10, 45, 0, Math.PI, true);
+        ctx.lineTo(45, 20);
+        ctx.lineTo(-45, 20);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = accentColor;
+        ctx.beginPath();
+        ctx.moveTo(-15, -45); ctx.lineTo(0, -65); ctx.lineTo(15, -45);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(-16, -10, 5, 0, Math.PI * 2);
+        ctx.arc(16, -10, 5, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    ctx.restore();
+}
         let isMusicPlaying = false;
         const bgMusic = document.getElementById("bg-music");
         const musicBtn = document.getElementById("music-toggle");
