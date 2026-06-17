@@ -1299,7 +1299,7 @@
     <canvas id="particle-canvas"></canvas>
 
     <!-- 音樂 HTML5 MP3 播放核心元件：更換為您指定的本地/相對路徑 Music.mp3 -->
-    <audio id="bg-music" loop src="Music.mp3"></audio>
+   <audio id="bg-music" src="Music1.mp3"></audio>
     <!-- 動態光暈背景 -->
     <div class="ambient-background">
         <div class="orb orb-1"></div>
@@ -1395,7 +1395,6 @@
                         <h4 class="text-xl font-bold mb-2">大腦認知 (COG)</h4>
                         <p class="text-sm text-gray-500 leading-relaxed">解構決策模型。您是透過縝密數據公式，還是驚人神準的直覺與人性的溫度來導航生活？</p>
                     </div>
-                    <!-- 修正卡片5標籤斷聯問題：確實關閉結構，徹底修復 image_2cd65e.jpg 中的版面錯位！ -->
                     <div class="dimension-card" style="--dim-color: var(--color-drive)">
                         <div class="dim-icon"><i class="fa-solid fa-rocket"></i></div>
                         <h4 class="text-xl font-bold mb-2">驅動動力 (DRV)</h4>
@@ -1410,7 +1409,6 @@
                     <h2 class="text-3xl md:text-5xl font-extrabold mb-4" style="font-family: 'Comfortaa', cursive;">今日靈魂之星</h2>
                     <p class="text-gray-500 max-w-2xl mx-auto">每日午夜零點自動刷新！透過 ANTI 演算法隨機推薦今日靈魂動物，搶先體驗深度分析。</p>
                     
-                    <!-- 倒數計時器 -->
                     <div class="mt-4 inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-dashed border-emerald-500/30 text-sm font-semibold text-emerald-500 bg-emerald-500/5">
                         <i class="fa-regular fa-clock animate-pulse"></i>
                         <span>距離今日推薦刷新：</span>
@@ -1419,7 +1417,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
-                    <!-- 左：Canvas 動態著色插圖 -->
                     <div class="flex flex-col items-center">
                         <div class="animal-canvas-wrapper shadow-2xl">
                             <canvas id="showcase-animal-canvas" class="animal-canvas" width="320" height="320"></canvas>
@@ -1430,11 +1427,12 @@
                             <button class="showcase-tab" id="btn-daily-random-2" data-animal="團隊灰狼">肉食領袖：灰狼</button>
                         </div>
                     </div>
-                    <!-- 右：深度細項分析與配對 -->
                     <div class="flex flex-col gap-6">
                         <div class="flex items-center gap-4">
                             <span class="mbti-tag" id="showcase-mbti">ISFP</span>
                             <span class="animal-classification" id="showcase-class">草食溫和系</span>
+                            <!-- ✨ 稀有度標籤已直接放入這裡 -->
+                            <span id="showcase-rarity" class="px-3.5 py-1 rounded-full text-xs font-black tracking-wider transition-all duration-300 hidden"></span>
                         </div>
                         <h3 class="text-4xl font-extrabold" id="showcase-name">治癒系水豚</h3>
                         <p class="text-lg font-bold text-emerald-500" id="showcase-short">極致放鬆的社交黑洞，對世間一切紛擾徹底絕緣。</p>
@@ -1514,7 +1512,6 @@
                     <h2 id="question-text">如果你要為自己的秘密避難所漆上顏色，你會選擇？</h2>
                 </div>
 
-                <!-- 四選一選項排版 -->
                 <div class="options-container" id="options-container">
                     <!-- JS 動態生成四選項 -->
                 </div>
@@ -1547,7 +1544,6 @@
                     </div>
                 </div>
 
-                <!-- 30種動物卡片網格 -->
                 <div class="catalog-grid" id="catalog-grid-container">
                     <!-- JS 動態填入 -->
                 </div>
@@ -1577,14 +1573,14 @@
             <!-- 畫面 5：結果頁 (Result Screen) -->
             <div id="screen-result" class="screen hidden">
                 <div class="result-layout">
-                    <!-- 左半：動態著色 Canvas & 特色 -->
                     <div class="result-left">
                         <div class="result-badge-row">
                             <span class="mbti-tag" id="res-mbti">ISFP</span>
                             <span class="animal-classification" id="res-class">草食溫和系</span>
+                            <!-- ✨ 稀有度標籤已直接放入這裡 -->
+                            <span id="res-rarity" class="px-3.5 py-1 rounded-full text-xs font-black tracking-wider transition-all duration-300 hidden"></span>
                         </div>
                         
-                        <!-- 動態著色插圖容器 -->
                         <div class="animal-canvas-wrapper my-4">
                             <canvas id="result-animal-canvas" class="animal-canvas" width="320" height="320"></canvas>
                         </div>
@@ -1598,7 +1594,7 @@
                         </div>
 
                         <div class="analysis-box">
-                            <h3><i class="fa-solid fa-heart"></i> 本質特徵分析</h3>
+                            <h3><i class="fa-solid fa-heart"></i> 本質特徵 analysis-box分析</h3>
                             <p id="res-full-desc">載入中...</p>
                         </div>
 
@@ -1628,7 +1624,6 @@
                         </div>
                     </div>
 
-                    <!-- 右半：雷達圖 & 影子動物 -->
                     <div class="result-right" style="display: flex; flex-direction: column; gap: 24px;">
                         <div class="radar-chart-container">
                             <h3>5 次元性格雷達</h3>
@@ -1665,7 +1660,6 @@
                     </div>
                 </div>
 
-                <!-- 社群分享與多功能引導專區 -->
                 <div class="mt-8 pt-8 border-t border-emerald-500/20 w-full text-center">
                     <h3 class="text-xl font-bold mb-4 flex items-center justify-center gap-2" style="font-family: 'Comfortaa', cursive;">
                         <i class="fa-solid fa-share-nodes text-emerald-500 dark:text-emerald-400"></i> 分享你的內在動物
@@ -1673,27 +1667,21 @@
                     <p class="text-sm text-gray-500 mb-6">將這份驚人準確的心理分析成果發布給好友，讓大家也一起玩吧！</p>
                     
                     <div class="flex flex-wrap justify-center gap-4 mb-8">
-                        <!-- Facebook -->
                         <button class="px-5 py-3 rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-500 font-bold text-sm hover:bg-blue-500 hover:text-white transition shadow-lg hover:shadow-blue-500/20 flex items-center gap-2" onclick="shareToFacebook()">
                             <i class="fa-brands fa-facebook text-lg"></i> FB 分享
                         </button>
-                        <!-- Line -->
                         <button class="px-5 py-3 rounded-xl border border-[#06C755]/30 bg-[#06C755]/10 text-[#06C755] font-bold text-sm hover:bg-[#06C755] hover:text-white transition shadow-lg hover:shadow-[#06C755]/20 flex items-center gap-2" onclick="shareToLine()">
                             <i class="fa-brands fa-line text-lg"></i> LINE 分享
                         </button>
-                        <!-- Threads -->
                         <button class="px-5 py-3 rounded-xl border border-slate-500/30 bg-slate-500/10 text-slate-800 dark:text-slate-200 font-bold text-sm hover:bg-slate-800 dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 transition shadow-lg hover:shadow-slate-500/20 flex items-center gap-2" onclick="shareToThreads()">
                             <i class="fa-brands fa-threads text-lg"></i> Threads 發布
                         </button>
-                        <!-- X / Twitter -->
                         <button class="px-5 py-3 rounded-xl border border-sky-500/30 bg-sky-500/10 text-sky-500 font-bold text-sm hover:bg-sky-500 hover:text-white transition shadow-lg hover:shadow-sky-500/20 flex items-center gap-2" onclick="shareToTwitter()">
                             <i class="fa-brands fa-x-twitter text-lg"></i> X 分享
                         </button>
-                        <!-- Instagram -->
                         <button class="px-5 py-3 rounded-xl border border-pink-500/30 bg-pink-500/10 text-pink-500 font-bold text-sm hover:bg-pink-500 hover:text-white transition shadow-lg hover:shadow-pink-500/20 flex items-center gap-2" onclick="copyForInstagram()">
                             <i class="fa-brands fa-instagram text-lg"></i> 複製 IG 貼文/限動文案
                         </button>
-                        <!-- Discord -->
                         <button class="px-5 py-3 rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-500 font-bold text-sm hover:bg-indigo-500 hover:text-white transition shadow-lg hover:shadow-indigo-500/20 flex items-center gap-2" onclick="copyForDiscord()">
                             <i class="fa-brands fa-discord text-lg"></i> 複製 Discord 格式
                         </button>
@@ -2117,6 +2105,82 @@
         prompt: "An ultra modern vector art of a chameleon blending with colorful geometric tropical leaves, neon mint and hot pink light --ar 1:1"
     }
 ];
+                // ==================== 1. 稀有度膠囊標籤視覺設定 ====================
+        const rarityStyles = {
+        SSR: { 
+            tier: "SSR 幻之神獸", 
+            // 滿版金橘漸層 + 黑色極粗字 + 外發光呼吸特效
+            tagClass: "bg-gradient-to-r from-amber-400 to-orange-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.5)] animate-pulse"
+        },
+        SR: { 
+            tier: "SR 絕跡秘寶", 
+            // 滿版迷幻紫粉 + 白色字 + 紫色光暈
+            tagClass: "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-[0_0_10px_rgba(168,85,247,0.4)]"
+        },
+        R: { 
+            tier: "R 獨特指標", 
+            // 滿版亮藍色 + 黑色字
+            tagClass: "bg-[#00D2FF] text-black"
+        },
+        N: { 
+            tier: "N 地表基石", 
+            // 採用跟你原本「肉食領袖系」一樣的暗色線框風格，維持畫面質感
+            tagClass: "border border-slate-700 bg-slate-800/40 text-slate-400 font-medium"
+        }
+        };
+
+        // ==================== 2. 31 種動物稀有度完整對照表 ====================
+        // 格式為 "你的動物名稱": rarityStyles.階級
+        // 💡 提示：這裡我先幫你分好一部分，剩下的你可以照格式自己增減。沒填寫的動物程式會自動抓預設的 R 級，絕對不會當機！
+        const animalRarityMap = {
+        // SSR 級 (極度稀有)
+        "孤高蒼鷹": rarityStyles.SSR,
+        "智慧海豚": rarityStyles.SSR,
+        "完美天鵝": rarityStyles.SSR,
+        "深海藍鯨": rarityStyles.SSR,
+        "偽裝變色龍": rarityStyles.SSR,
+
+        // SR 級 (珍貴少見)
+        "治癒系水豚": rarityStyles.SR,
+        "霸氣雄獅": rarityStyles.SR,
+        "狡黠紅狐": rarityStyles.SR,
+        "睿智大象": rarityStyles.SR,
+        "團隊灰狼": rarityStyles.SR,
+        "實踐猛虎": rarityStyles.SR,
+        "優雅梅花鹿": rarityStyles.SR,
+        "華麗孔雀": rarityStyles.SR,
+
+        // R 級 (獨特指標)
+        "精緻家貓": rarityStyles.R,
+        "俏皮靈猴": rarityStyles.R,
+        "活潑松鼠": rarityStyles.R,
+        "理性貓頭鷹": rarityStyles.R,
+        "奔騰野馬": rarityStyles.R,
+        "慵懶無尾熊": rarityStyles.R,
+        "防禦刺蝟": rarityStyles.R,
+        "爆發袋鼠": rarityStyles.R,
+
+        // N 級 (地表基石)
+        "忠誠黃金獵犬": rarityStyles.N,
+        "溫順白兔": rarityStyles.N,
+        "沉穩棕熊": rarityStyles.N,
+        "守護綿羊": rarityStyles.N,
+        "秩序長頸鹿": rarityStyles.N,
+        "紳士企鵝": rarityStyles.N,
+        "勤勉乳牛": rarityStyles.N,
+        "幾何斑馬": rarityStyles.N,
+        "工匠河狸": rarityStyles.N,
+        "軟萌倉鼠": rarityStyles.N
+    };
+
+        // ==================== 3. 自動注入機制 ====================
+        // 直接巡覽你 index.html 裡的 ANIMALS 陣列，把稀有度資料塞進去
+        if (typeof ANIMALS !== 'undefined') {
+        ANIMALS.forEach(animal => {
+            // 根據名稱配對稀有度，如果在上面清單中找不到，就預設為 R 級
+            animal.rarity = animalRarityMap[animal.name] || rarityStyles.R;
+        });
+        }
 
         const QUESTIONS = [
             // C1: 美學感知 (Aesthetic)
@@ -3558,79 +3622,120 @@
 
     ctx.restore();
 }
-        let isMusicPlaying = false;
-        const bgMusic = document.getElementById("bg-music");
-        const musicBtn = document.getElementById("music-toggle");
-        const volumeSlider = document.getElementById("volume-slider");
+                let isMusicPlaying = false;
+            const bgMusic = document.getElementById("bg-music");
+            const musicBtn = document.getElementById("music-toggle");
+            const volumeSlider = document.getElementById("volume-slider");
 
-        bgMusic.volume = 0.5;
+            // 🎵 背景音樂歌單設定（整理到最上方，看起來更乾淨）
+            const playlist = [
+                "Music1.mp3",
+                "Music2.mp3",
+                "Music3.mp3",
+                "Music4.mp3",
+                "Music5.mp3",
+                "Music6.mp3",
+                "Music7.mp3",
+                "Music8.mp3",
+                "Music9.mp3",
+                "Music10.mp3",
+                "Music11.mp3"
+            ];
+            let currentTrackIndex = 0; // 從第一首開始播
 
-        function toggleMusic() {
-            if (!isMusicPlaying) {
+            // 設定初始音量
+            bgMusic.volume = 0.5;
+
+            // 控制播放與暫停
+            function toggleMusic() {
+                if (!isMusicPlaying) {
+                    bgMusic.play().then(() => {
+                        isMusicPlaying = true;
+                        musicBtn.innerHTML = `<i class="fa-solid fa-volume-high text-green-500"></i>`;
+                        musicBtn.classList.add("music-playing");
+                        showToast("fa-volume-high", "音樂已啟用，開始放鬆體驗...");
+                    }).catch(err => {
+                        showToast("fa-circle-exclamation", "瀏覽器限制，請點擊畫面再次試試！");
+                    });
+                } else {
+                    bgMusic.pause();
+                    isMusicPlaying = false;
+                    musicBtn.innerHTML = `<i class="fa-solid fa-volume-xmark"></i>`;
+                    musicBtn.classList.remove("music-playing");
+                    showToast("fa-volume-xmark", "背景音樂已靜音");
+                }
+            }
+
+            // ✨ 監聽音樂播放結束的事件（已修正重複宣告的 bug）
+            bgMusic.addEventListener("ended", function() {
+                // 序號加 1，自動回到 0 達成循環
+                currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+                
+                // 1. 更換音檔來源
+                bgMusic.src = playlist[currentTrackIndex];
+                
+                // 2. 自動播放下一首
                 bgMusic.play().then(() => {
                     isMusicPlaying = true;
+                }).catch(error => {
+                    console.log("播放被瀏覽器阻擋，可能需要使用者點擊網頁後才能繼續播放", error);
+                    // 💡 修正漏洞：如果切換下一首被阻擋，要把畫面圖示與狀態同步改回「靜音狀態」
+                    isMusicPlaying = false;
+                    musicBtn.innerHTML = `<i class="fa-solid fa-volume-xmark"></i>`;
+                    musicBtn.classList.remove("music-playing");
+                });
+            });
+
+            // 音量滑桿控制
+            volumeSlider.addEventListener("input", (e) => {
+                const vol = e.target.value;
+                bgMusic.volume = vol;
+                if (vol == 0) {
+                    musicBtn.innerHTML = `<i class="fa-solid fa-volume-xmark text-gray-400"></i>`;
+                    musicBtn.classList.remove("music-playing");
+                } else if (isMusicPlaying) {
                     musicBtn.innerHTML = `<i class="fa-solid fa-volume-high text-green-500"></i>`;
                     musicBtn.classList.add("music-playing");
-                    showToast("fa-volume-high", "音樂已啟用，開始放鬆體驗...");
-                }).catch(err => {
-                    showToast("fa-circle-exclamation", "瀏覽器限制，請點擊畫面再次試試！");
-                });
-            } else {
-                bgMusic.pause();
-                isMusicPlaying = false;
-                musicBtn.innerHTML = `<i class="fa-solid fa-volume-xmark"></i>`;
-                musicBtn.classList.remove("music-playing");
-                showToast("fa-volume-xmark", "背景音樂已靜音");
+                }
+            });
+
+            // ==================== 彈出視窗與 Toast 通知功能 ====================
+            let pendingAction = null;
+
+            function askConfirm(callback) {
+                pendingAction = callback;
+                document.getElementById("confirm-modal").classList.remove("hidden");
             }
-        }
 
-        volumeSlider.addEventListener("input", (e) => {
-            const vol = e.target.value;
-            bgMusic.volume = vol;
-            if (vol == 0) {
-                musicBtn.innerHTML = `<i class="fa-solid fa-volume-xmark text-gray-400"></i>`;
-                musicBtn.classList.remove("music-playing");
-            } else if (isMusicPlaying) {
-                musicBtn.innerHTML = `<i class="fa-solid fa-volume-high text-green-500"></i>`;
-                musicBtn.classList.add("music-playing");
-            }
-        });
+            document.getElementById("btn-confirm-ok").addEventListener("click", () => {
+                document.getElementById("confirm-modal").classList.add("hidden");
+                if (pendingAction) {
+                    pendingAction();
+                    pendingAction = null;
+                }
+            });
 
-        let pendingAction = null;
-
-        function askConfirm(callback) {
-            pendingAction = callback;
-            document.getElementById("confirm-modal").classList.remove("hidden");
-        }
-
-        document.getElementById("btn-confirm-ok").addEventListener("click", () => {
-            document.getElementById("confirm-modal").classList.add("hidden");
-            if (pendingAction) {
-                pendingAction();
+            document.getElementById("btn-confirm-cancel").addEventListener("click", () => {
+                document.getElementById("confirm-modal").classList.add("hidden");
                 pendingAction = null;
+            });
+
+            function showToast(icon, message) {
+                const container = document.getElementById("toast-container");
+                if (!container) return; // 安全檢查，防錯
+                
+                const toast = document.createElement("div");
+                toast.className = "toast-msg";
+                toast.innerHTML = `
+                    <i class="${icon}"></i>
+                    <span>${message}</span>
+                `;
+                container.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
             }
-        });
-
-        document.getElementById("btn-confirm-cancel").addEventListener("click", () => {
-            document.getElementById("confirm-modal").classList.add("hidden");
-            pendingAction = null;
-        });
-
-        function showToast(icon, message) {
-            const container = document.getElementById("toast-container");
-            const toast = document.createElement("div");
-            toast.className = "toast-msg";
-            toast.innerHTML = `
-                <i class="${icon}"></i>
-                <span>${message}</span>
-            `;
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-
         /* ==========================================================================
            狀態管理與答題系統
            ========================================================================== */
